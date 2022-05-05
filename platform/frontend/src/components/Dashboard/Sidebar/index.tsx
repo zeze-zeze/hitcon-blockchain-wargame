@@ -14,6 +14,10 @@ const SidebarWrapper = styled(Box)(
         background: theme.sidebar.background,
         boxShadow: theme.sidebar.boxShadow,
         height: '100%',
+        position: 'fixed',
+        zIndex: 8,
+        borderTopRightRadius: theme.general.borderRadius,
+        borderBottomRightRadius: theme.general.borderRadius,
     })
 );
 
