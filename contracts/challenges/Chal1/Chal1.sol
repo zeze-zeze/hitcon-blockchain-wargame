@@ -15,6 +15,7 @@ contract Chal1 is Ownable, Vuln1 {
   *************************/
   CheckSolvedInterface checkSolvedContract;
   address[] public solvers;
+  mapping (address => bool) public addressToSolved;
 
   constructor(address _checkSolvedAddress) {
     checkSolvedContract = CheckSolvedInterface(_checkSolvedAddress);
@@ -25,19 +26,18 @@ contract Chal1 is Ownable, Vuln1 {
   *************************/
   event newSolved(address indexed _solver);
   event hadSolved(address indexed _solver);
-  
+
   /*************************
   **     USERS SECTION    **
   *************************/
   /// @notice Check if the challenge is solved by the address.
   /// @dev The address which had solved the challenge before would return.
   function win() public winCondition {
-    for (uint i = 0; i < solvers.length; i++) {
-      if (solvers[i] == tx.origin) {
-        emit hadSolved(tx.origin);
-        return;
-      }
+    if (addressToSolved[tx.origin]) {
+      emit hadSolved(tx.origin);
+      return;
     }
+    addressToSolved[tx.origin] = true;
     solvers.push(tx.origin);
     checkSolvedContract.chal1Solved(tx.origin);
     emit newSolved(tx.origin);
