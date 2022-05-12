@@ -1,11 +1,11 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useState, useContext } from 'react';
 import { Box, Drawer, Hidden } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
-
 import SidebarMenu from './SidebarMenu';
-import Logo from './Logo';
+import SidebarLogo from './SidebarLogo';
+import { SidebarToggledContext } from '../../../App';
 
 const SidebarWrapper = styled(Box)(
     ({ theme }) => ({
@@ -16,54 +16,48 @@ const SidebarWrapper = styled(Box)(
         height: '100%',
         position: 'fixed',
         zIndex: 8,
-        borderTopRightRadius: theme.general.borderRadius,
-        borderBottomRightRadius: theme.general.borderRadius,
     })
 );
 
-/*
-        [`@media (min-width: ${theme.breakpoints.values.lg}px)`]: {
-                position: 'fixed',
-                zIndex: 10,
-                borderTopRightRadius: theme.general.borderRadius,
-                borderBottomRightRadius: theme.general.borderRadius,
-        }
-*/
+const Sidebar: FC = () => {
 
-const Sidebar: FC = ({ sidebarToggled, toggleSidebar }) => {
+    const theme = useTheme();
+    const { sidebarToggled, toggleSidebar, lgUp } = useContext(SidebarToggledContext);
+
     return (
         <>
-            <Hidden lgDown>
+        {
+            lgUp ? <Drawer
+                anchor="left"
+                open={sidebarToggled}
+                onClose={toggleSidebar}
+                variant="persistent"
+                elevation={5}
+            >
                 <SidebarWrapper>
                     <Scrollbars autoHide>
-                        <Logo />
+                        <SidebarLogo />
                         <SidebarMenu />
                     </Scrollbars>
                 </SidebarWrapper>
-            </Hidden>
-            <Hidden lgUp>
-                <Drawer
-                    anchor="left"
-                    open={sidebarToggled}
-                    onClose={() => toggleSidebar()}
-                    variant="temporary"
-                    elevation={9}
-                >
-                    <SidebarWrapper>
-                        <Scrollbars autoHide>
-                            <Logo />
-                            <SidebarMenu />
-                        </Scrollbars>
-                    </SidebarWrapper>
-                </Drawer>
-            </Hidden>
+            </Drawer>
+            : <Drawer
+                anchor="left"
+                open={sidebarToggled}
+                onClose={toggleSidebar}
+                variant="temporary"
+                elevation={5}
+            >
+                <SidebarWrapper>
+                    <Scrollbars autoHide>
+                        <SidebarLogo />
+                        <SidebarMenu />
+                    </Scrollbars>
+                </SidebarWrapper>
+            </Drawer>
+        }
         </>
     );
 };
-
-Sidebar.propTypes = {
-    sidebarToggled: PropTypes.bool.isRequired,
-    toggleSidebar: PropTypes.func.isRequired,
-}
 
 export default Sidebar;

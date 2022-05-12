@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Box, Hidden } from '@mui/material';
+import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
@@ -52,28 +52,21 @@ const LogoText: FC = styled(Box)(
     })
 );
 
-const Logo: FC = () => {
+
+const SidebarLogo: FC = () => {
+
     return (
         <LogoWrapper>
-            <Hidden smDown>
-                <LogoContainerWrapper to="/">
-                    <LogoImageWrapper>
-                        <Image src={LogoImage} alt="logo" disableSpinner disableTransition />
-                    </LogoImageWrapper>
-                    <LogoTextWrapper>
-                        <LogoText>HITCON Wargame</LogoText>
-                    </LogoTextWrapper>
-                </LogoContainerWrapper>
-            </Hidden>
-            <Hidden smUp>
-                <LogoContainerWrapper to="/">
-                    <LogoImageWrapper>
-                        <Image src={LogoImage} alt="logo" disableSpinner disableTransition />
-                    </LogoImageWrapper>
-                </LogoContainerWrapper>
-            </Hidden>
+            <LogoContainerWrapper to="/">
+                <LogoImageWrapper>
+                    <Image src={LogoImage} alt="logo" disableSpinner disableTransition />
+                </LogoImageWrapper>
+                <LogoTextWrapper>
+                    <LogoText>HITCON Wargame</LogoText>
+                </LogoTextWrapper>
+            </LogoContainerWrapper>
         </LogoWrapper>
     );
 }
 
-export default Logo;
+export default SidebarLogo;
