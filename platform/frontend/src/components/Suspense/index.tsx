@@ -1,6 +1,17 @@
 import { useEffect, FC } from 'react';
 import { Box, CircularProgress } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import NProgress from 'nprogress';
+
+const SuspenseComponentWrapper = styled(Box)(
+    ({ theme }) => ({
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    })
+);
 
 const SuspenseComponent: FC = () => {
     useEffect(() => {
@@ -8,22 +19,11 @@ const SuspenseComponent: FC = () => {
         return () => {
             NProgress.done();
         };
-    });
+    }, []);
     return (
-        <Box
-            sx={{
-                position: 'fixed',
-                display: 'block',
-                left: 0,
-                top: 0,
-                width: '100%',
-                height: '100%',
-            }}
-            alignItems="center"
-            justifyContent="center"
-        >
+        <SuspenseComponentWrapper>
             <CircularProgress />
-        </Box>
+        </SuspenseComponentWrapper>
     );
 };
 

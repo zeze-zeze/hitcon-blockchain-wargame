@@ -1,30 +1,32 @@
-import { FC } from 'react';
-import { Box, Hidden, IconButton, Tooltip, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
-import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
-import HeaderButtons from './Buttons';
+import { FC, useContext } from 'react';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import HeaderButtons from './HeaderButtons';
+import HeaderUserMenu from './HeaderUserMenu';
+import { SidebarMenu } from '../../Dashboard';
+import { SidebarToggledContext } from '../../../App';
 
-const HeaderWrapperLg: FC = styled(Box)(
+const HeaderWrapper: FC = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         position: 'fixed',
         top: 0,
-        left: theme.sidebar.width,
+        left: 0,
         right: 0,
         width: 'auto',
         height: theme.header.height,
         color: theme.header.textColor,
         padding: theme.spacing(3),
-        zIndex: -8,
         backgroundColor: theme.header.background,
         boxShadow: theme.header.boxShadow,
     })
 );
 
-const RightButtonsWrapperLg: FC = styled(Box)(
+const HeaderComponentsWrapper: FC = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
         flexWrap: 'nowrap',
@@ -33,25 +35,45 @@ const RightButtonsWrapperLg: FC = styled(Box)(
     })
 );
 
-const Header: FC = ({ sidebarToggled, toggleSidebar }) => {
+
+const Header: FC = () => {
+
+    const theme = useTheme();
+    const { sidebarToggled, toggleSidebar, lgUp } = useContext(SidebarToggledContext);
+
     return (
-        <Hidden lgDown>
-            <HeaderWrapperLg>
-                <Typography variant="h3" component="h3">
-                    Dashboard
-                </Typography>
-                <RightButtonsWrapperLg>
-                    <HeaderButtons />
+        <>
+        {
+            lgUp ? <HeaderWrapper sx={{ left: sidebarToggled ? theme.sidebar.width: 0 }}>
+                <HeaderComponentsWrapper>
                     <Tooltip arrow title="Toggle Menu">
                         <IconButton color="primary" onClick={toggleSidebar}>
-                            {!sidebarToggled ? <MenuTwoToneIcon /> : <CloseTwoToneIcon />}
+                            {sidebarToggled ? <MenuOpenIcon /> : <MenuIcon />}
                         </IconButton>
                     </Tooltip>
-                </RightButtonsWrapperLg>
-            </HeaderWrapperLg>
-        </Hidden>
+                </HeaderComponentsWrapper>
+                <HeaderComponentsWrapper>
+                    <HeaderButtons />
+                    <HeaderUserMenu />
+                </HeaderComponentsWrapper>
+            </HeaderWrapper>
+            : <HeaderWrapper>
+                <HeaderComponentsWrapper>
+                    <Tooltip arrow title="Toggle Menu">
+                        <IconButton color="primary" onClick={toggleSidebar}>
+                            {sidebarToggled ? <MenuOpenIcon /> : <MenuIcon />}
+                        </IconButton>
+                    </Tooltip>
+                </HeaderComponentsWrapper>
+                <HeaderComponentsWrapper>
+                    <HeaderButtons />
+                    <HeaderUserMenu />
+                </HeaderComponentsWrapper>
+            </HeaderWrapper>
+        }
+        </>
     )
 };
 
 export default Header;
-/* <HeaderUserbox /> */
+

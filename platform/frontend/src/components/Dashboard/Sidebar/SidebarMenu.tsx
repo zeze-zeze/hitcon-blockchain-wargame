@@ -2,26 +2,23 @@ import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, List, ListItem, ListSubheader } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
-import menuConfig from '../../../config/MenuConfig';
+import SchoolIcon from '@mui/icons-material/School';
+import FlagIcon from '@mui/icons-material/Flag';
 
 const MenuEntryWrapper: FC = styled(List)(
     ({ theme }) => ({
         marginBottom: theme.spacing(1),
         padding: 0,
         '& > .MuiList-root': {
-            paddingTop: 0,
-            paddingRight: theme.spacing(2),
-            paddingBottom: theme.spacing(2),
-            paddingLeft: theme.spacing(2),
+            padding: theme.spacing(0, 2, 2, 2)
         },
         '.MuiListSubheader-root': {
+            color: theme.sidebar.menuItemHeadingColor,
+            padding: theme.spacing(1, 2),
             textTransform: 'uppercase',
             fontWeight: 'bold',
             fontSize: theme.typography.pxToRem(12),
             lineHeight: '1.4px',
-            color: theme.sidebar.menuItemHeadingColor,
-            padding: theme.spacing(0.8, 2),
         }
     })
 );
@@ -100,23 +97,18 @@ const SidebarMenu: FC = () => {
                     Dashboard
                 </ListSubheader>
             }/>
-            {
-                <MenuSubEntryWrapper>
-                {
-                    menuConfig.map(({ title, link, icon }) => (
-                        <ListItem key={title}>
-                            <Button
-                                component={NavLink}
-                                startIcon={icon}
-                                to={link}
-                            >
-                            {title}
-                            </Button>
-                        </ListItem>
-                    ))
-                }
-                </MenuSubEntryWrapper>
-            }
+            <MenuSubEntryWrapper>
+                <ListItem>
+                    <Button component={NavLink} startIcon={<SchoolIcon />} to="/tutorial" >
+                        Tutorial
+                    </Button>
+                </ListItem>
+                <ListItem>
+                    <Button component={NavLink} startIcon={<FlagIcon />} to="/problems" >
+                        Problems
+                    </Button>
+                </ListItem>
+            </MenuSubEntryWrapper>
         </>
     );
 };

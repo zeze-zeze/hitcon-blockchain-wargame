@@ -1,27 +1,23 @@
 import { FC, Suspense, lazy } from 'react';
 import { PartialRouteObject } from 'react-router';
 import PropTypes from 'prop-types';
-
-import Dashboard from '../components/Dashboard';
 import SuspenseComponent from '../components/Suspense';
 
-const SuspenseLoader: FC = ({ content }) => {
-    return (
+const SuspenseWrapper: FC = (Component) => {
+    return () => (
         <Suspense fallback={<SuspenseComponent />}>
-            {content}
+            <Component />
         </Suspense>
     );
 };
 
-SuspenseLoader.propTypes = {
-    content: PropTypes.node,
-}
+const Home = SuspenseWrapper(lazy(() => import('../components/Home')));
 
 /* React router setting */
 const routes: PartialRouteObject[] = [
     {
         path: "/",
-        element: <Dashboard />
+        element: <Home />
     }
 ];
 
