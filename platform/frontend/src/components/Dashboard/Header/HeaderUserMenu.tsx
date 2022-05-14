@@ -1,10 +1,7 @@
 import { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Avatar, Box, Button, Divider, lighten, List, ListItem, ListItemText, Popover, Typography } from '@mui/material';
-
-import InboxIcon from '@mui/icons-material/Inbox';
+import { Avatar, Box, Button, Divider, List, ListItem, ListItemText, Popover, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -16,16 +13,6 @@ const UserBoxButton: FC = styled(Button)(
         alignItems: 'center',
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
-    })
-);
-
-const MenuUserBox: FC = styled(Box)(
-    ({ theme }) => ({
-        display: 'flex',
-        justifyContent: 'left',
-        alignItems: 'center',
-        background: theme.colors.alpha.black[5],
-        padding: theme.spacing(2),
     })
 );
 
@@ -45,12 +32,6 @@ const UserBoxLabel: FC = styled(Typography)(
         overflow: 'hidden',
         maxWidth: '156px',
         textOverflow: 'ellipsis',
-    })
-);
-
-const UserBoxDescription: FC = styled(Typography)(
-    ({ theme }) => ({
-        color: lighten(theme.palette.secondary.main, 0.5),
     })
 );
 

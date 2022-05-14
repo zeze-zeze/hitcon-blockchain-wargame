@@ -1,11 +1,10 @@
 import { FC, useContext } from 'react';
-import { Box, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import HeaderButtons from './HeaderButtons';
 import HeaderUserMenu from './HeaderUserMenu';
-import { SidebarMenu } from '../../Dashboard';
 import { SidebarToggledContext } from '../../../App';
 
 const HeaderWrapper: FC = styled(Box)(
@@ -41,23 +40,21 @@ const Header: FC = () => {
     const theme = useTheme();
     const { sidebarToggled, toggleSidebar, lgUp } = useContext(SidebarToggledContext);
 
+    /* 
+     * Adjust the width & left property according to
+     * 1. current screen size
+     * 2. whether the current left sidebar is toggled
+     */
+
     return (
         <>
         {
-            lgUp ? <HeaderWrapper sx={{ left: sidebarToggled ? theme.sidebar.width: 0 }}>
-                <HeaderComponentsWrapper>
-                    <Tooltip arrow title="Toggle Menu">
-                        <IconButton color="primary" onClick={toggleSidebar}>
-                            {sidebarToggled ? <MenuOpenIcon /> : <MenuIcon />}
-                        </IconButton>
-                    </Tooltip>
-                </HeaderComponentsWrapper>
-                <HeaderComponentsWrapper>
-                    <HeaderButtons />
-                    <HeaderUserMenu />
-                </HeaderComponentsWrapper>
-            </HeaderWrapper>
-            : <HeaderWrapper>
+            /* 
+             * If the current window size is big enough & left sidebar is toggled,
+             * the header should not span across the menu.
+             * Otherwise, the header's width should be equivalent to the screen's width
+             */
+            <HeaderWrapper sx={{ left: lgUp && sidebarToggled ? theme.sidebar.width: 0 }}>
                 <HeaderComponentsWrapper>
                     <Tooltip arrow title="Toggle Menu">
                         <IconButton color="primary" onClick={toggleSidebar}>

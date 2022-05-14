@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# Description
+## Hierarchy
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Frontend
 
-## Available Scripts
+* 主要存前端的部份，包括網頁界面，與後端溝通的程式碼等等
 
-In the project directory, you can run:
+```
+├── App.tsx
+├── assets
+│   └── logo.svg
+├── components
+│   ├── Dashboard
+│   │   ├── Header
+│   │   │   ├── HeaderButtons.tsx
+│   │   │   ├── HeaderUserMenu.tsx
+│   │   │   └── index.tsx
+│   │   ├── index.tsx
+│   │   └── Sidebar
+│   │       ├── index.tsx
+│   │       ├── SidebarLogo.tsx
+│   │       └── SidebarMenu.tsx
+│   ├── MainComponent
+│   │   ├── index.tsx
+│   │   ├── Home
+│   │   │   └── index.tsx
+│   │   ├── Problems
+│   │   │   └── index.tsx
+│   │   └── Tutorial
+│   │       └── index.tsx
+│   └── Suspense
+│       └── index.tsx
+├── index.css
+├── index.tsx
+├── router
+│   └── Routes.tsx
+└── theme
+    ├── MainTheme.ts
+    └── ThemeProvider.tsx
+```
+* `public`: 存一些靜態的檔案，如 index.html, robots.txt 等等
+* `src`: React 的所有程式碼都在這
+    * `App.tsx`: 此 App 的主體
+    * `Router`: 此 App 的路由
+        * `/route.tsx`: 前端路由設定檔。此用 React Router
+    * `components`: 此 App 的所有組件都在這
+        * `Dashboard`: 左側與上側的儀表板
+            * `Sidebar`: 左側的儀表板
+                * `SidebarLogo`: 左上方的標誌
+                * `SidebarMenu`: 目錄
+            * `Header`: 上側的儀表板
+                * `HeaderUserMenu`: 右上角的下拉選單
+                * `HeaderButtons`: 上側儀表板的所有按鈕
+        * `MainComponent`: 主要的組件
+            * `Home`: 首頁
+            * `Tutorial`: 教學
+            * `Problems`: 所有的題目
+    * `index.tsx`: 此 App 的進入點
+    * `index.css`: 此 App 的主要 CSS
+    * `theme`:
+        * `MainTheme`: 此 App 使用的樣式。
+        * `ThemeProvider.tsx`: 把上面的樣式包成一個 provider
+        * [source](https://github.com/bloomui/tokyo-free-white-react-admin-dashboard/blob/main/src/theme/ThemeProvider.tsx)
 
-### `yarn start`
+### How to add an own component?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+假設你想要創造新的組件叫 Meow
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. 在 `components/MainComponent` 創建 `Meow/index.tsx` （可從 `Template/index.tsx` 複製模板）
+2. 在 `components/Dashboard/Sidebar/SidebarMenu.tsx` 中增添一個 menu entry
+3. 在 `router/route.tsx` 增加路徑
 
-### `yarn test`
+## API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

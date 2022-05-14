@@ -1,9 +1,11 @@
 import { useEffect, FC } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
+
+/* TODO: nprogress is not successfully loaded. */
 import NProgress from 'nprogress';
 
-const SuspenseComponentWrapper = styled(Box)(
+const SuspenseComponentWrapper: FC = styled(Box)(
     ({ theme }) => ({
         width: '100%',
         height: '100%',
