@@ -1301,7 +1301,7 @@ const mainTheme = createTheme({
         htmlFontSize: 15,
         h1: {
             fontWeight: 700,
-            fontSize: 30
+            fontSize: 40
         },
         h2: {
             fontWeight: 700,

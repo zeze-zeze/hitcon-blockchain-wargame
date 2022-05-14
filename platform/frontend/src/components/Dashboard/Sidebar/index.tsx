@@ -1,7 +1,7 @@
 import { FC, ReactNode, useState, useContext } from 'react';
 import { Box, Drawer, Hidden } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 import PropTypes from 'prop-types';
 import SidebarMenu from './SidebarMenu';
 import SidebarLogo from './SidebarLogo';

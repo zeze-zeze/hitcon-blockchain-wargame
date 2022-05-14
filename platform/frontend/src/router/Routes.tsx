@@ -12,13 +12,23 @@ const SuspenseWrapper: FC = (Component) => {
 };
 
 const Home = SuspenseWrapper(lazy(() => import('../components/Home')));
+const Tutorial = SuspenseWrapper(lazy(() => import('../components/Tutorial')));
+const Problems = SuspenseWrapper(lazy(() => import('../components/Problems')));
 
 /* React router setting */
 const routes: PartialRouteObject[] = [
     {
-        path: "/",
-        element: <Home />
-    }
+        path: '/',
+        element: <Home />,
+    },
+    {
+        path: '/tutorial',
+        element: <Tutorial />,
+    },
+    {
+        path: '/problems',
+        element: <Problems />,
+    },
 ];
 
 export default routes;

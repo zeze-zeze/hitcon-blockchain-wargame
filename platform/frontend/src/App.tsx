@@ -8,9 +8,13 @@ import routes from './router/Routes';
 
 const MainComponentWrapper: FC = styled(Box)(
     ({ theme }) => ({
-        position: 'absolute',
-        justifyContent: 'center',
         top: theme.header.height,
+        position: 'absolute',
+        display: 'flex',
+        height: `calc(100% - ${theme.header.height})`,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        alignContent: 'center',
     })
 );
 
