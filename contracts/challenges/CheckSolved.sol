@@ -24,11 +24,11 @@ contract CheckSolved is ERC1155Supply, Ownable, ReentrancyGuard {
     /*************************
      **    HELPER SECTION    **
      *************************/
-    modifier checkSource(uint256 chalNum) {
-        require(chalNum > 0 && chalNum <= 5, "out of range");
-        require(chalContract[chalNum] != address(0), "chalContract not set");
+    modifier checkSource(uint256 _chalNum) {
+        require(_chalNum > 0 && _chalNum <= 5, "out of range");
+        require(chalContract[_chalNum] != address(0), "chalContract not set");
         require(
-            msg.sender == chalContract[chalNum],
+            msg.sender == chalContract[_chalNum],
             "chalContract mismatch sender"
         );
         _;
@@ -38,15 +38,20 @@ contract CheckSolved is ERC1155Supply, Ownable, ReentrancyGuard {
      **     USERS SECTION    **
      *************************/
 
-    function uri(uint256 tokenId) public view override returns (string memory) {
-        require(exists(tokenId), "tokenId does not exist");
+    function uri(uint256 _tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        require(exists(_tokenId), "tokenId does not exist");
 
         return
             string(
                 abi.encodePacked(
-                    super.uri(tokenId),
+                    super.uri(_tokenId),
                     "/",
-                    Strings.toString(tokenId),
+                    Strings.toString(_tokenId),
                     ".json"
                 )
             );
@@ -81,17 +86,17 @@ contract CheckSolved is ERC1155Supply, Ownable, ReentrancyGuard {
      *************************/
 
     /// @notice Set the CheckSolved contract address by owner.
-    function setChalContractAddress(uint256 chalNum, address _address)
+    function setChalContractAddress(uint256 _chalNum, address _address)
         external
         onlyOwner
     {
-        require(chalNum > 0 && chalNum <= 5, "out of range");
-        chalContract[chalNum] = _address;
+        require(_chalNum > 0 && _chalNum <= 5, "out of range");
+        chalContract[_chalNum] = _address;
     }
 
     /// @notice Set the new URI for the ERC1155.
     /// @dev    Becareful of the uri issue.
-    function setURI(string memory newuri) public onlyOwner {
-        super._setURI(newuri);
+    function setURI(string memory _newuri) public onlyOwner {
+        super._setURI(_newuri);
     }
 }
