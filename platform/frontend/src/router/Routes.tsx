@@ -1,6 +1,5 @@
 import { FC, Suspense, lazy } from 'react';
 import { PartialRouteObject } from 'react-router';
-import PropTypes from 'prop-types';
 import SuspenseComponent from '../components/Suspense';
 
 const SuspenseWrapper: FC = (Component) => {
@@ -11,9 +10,10 @@ const SuspenseWrapper: FC = (Component) => {
     );
 };
 
-const Home = SuspenseWrapper(lazy(() => import('../components/Home')));
-const Tutorial = SuspenseWrapper(lazy(() => import('../components/Tutorial')));
-const Problems = SuspenseWrapper(lazy(() => import('../components/Problems')));
+const Home = SuspenseWrapper(lazy(() => import('../components/MainComponent/Home')));
+const Tutorial = SuspenseWrapper(lazy(() => import('../components/MainComponent/Tutorial')));
+const Problems = SuspenseWrapper(lazy(() => import('../components/MainComponent/Problems'))); 
+const Template = SuspenseWrapper(lazy(() => import('../components/MainComponent/Template')));
 
 /* React router setting */
 const routes: PartialRouteObject[] = [
@@ -28,6 +28,11 @@ const routes: PartialRouteObject[] = [
     {
         path: '/problems',
         element: <Problems />,
+    },
+    /* Add new path here */
+    {
+        path: '/template',
+        element: <Template />,
     },
 ];
 

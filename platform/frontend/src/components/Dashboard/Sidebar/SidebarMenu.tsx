@@ -4,6 +4,7 @@ import { Button, List, ListItem, ListSubheader } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SchoolIcon from '@mui/icons-material/School';
 import FlagIcon from '@mui/icons-material/Flag';
+import CodeIcon from '@mui/icons-material/Code';
 
 const MenuEntryWrapper: FC = styled(List)(
     ({ theme }) => ({
@@ -24,38 +25,17 @@ const MenuEntryWrapper: FC = styled(List)(
 );
 
 const MenuSubEntryWrapper: FC = styled(List)(
+    /* style menu entries */
     ({ theme }) => ({
         '&.MuiList-root': {
             padding: 0,
-            '.MuiList-root .MuiList-root .MuiListItem-root .MuiButton-root': {
-                fontWeight: 'normal !important',
-            },
             '.MuiListItem-root': {
-                paddingTop: '2px',
-                paddingRight: theme.spacing(2),
-                paddingBottom: '2px',
-                paddingLeft: theme.spacing(2),
+                padding: theme.spacing(0.5, 2),
                 '.MuiButton-root': {
                     display: 'flex',
                     color: theme.sidebar.menuItemColor,
-                    backgroundColor: theme.sidebar.menuItemBg,
                     width: '100%',
                     justifyContent: 'flex-start',
-                    fontSize: theme.typography.pxToRem(13),
-                    paddingTop: theme.spacing(0.8),
-                    paddingBottom: theme.spacing(0.8),
-                    position: 'relative',
-                    '.MuiBadge-root': {
-                        position: 'absolute',
-                        right: theme.spacing(4),
-                        '.MuiBadge-standard': {
-                            background: theme.colors.primary.main,
-                            fontSize: theme.typography.pxToRem(9),
-                            fontWeight: 'bold',
-                            textTransform: 'uppercase',
-                            color: theme.palette.primary.contrastText,
-                        }
-                    },
                     '.MuiButton-startIcon, .MuiButton-endIcon': {
                         transition: theme.transitions.create(['color']),
                         '.MuiSvgIcon-root': {
@@ -65,25 +45,17 @@ const MenuSubEntryWrapper: FC = styled(List)(
                     },
                     '.MuiButton-startIcon': {
                         fontSize: theme.typography.pxToRem(26),
-                        marginRight: theme.spacing(1.5),
+                        marginRight: theme.spacing(2),
                         color: theme.sidebar.menuItemIconColor,
-                    },
-                    '.MuiButton-endIcon': {
-                        marginLeft: 'auto',
-                        fontSize: theme.typography.pxToRem(22),
                     },
                     '&.Mui-active, &:hover': {
                         backgroundColor: theme.sidebar.menuItemBgActive,
                         color: theme.sidebar.menuItemColorActive,
-                        '.MuiButton-startIcon, .MuiButton-endIcon': {
-                                color: theme.sidebar.menuItemIconColorActive,
+                        '.MuiButton-startIcon': {
+                            color: theme.sidebar.menuItemIconColorActive,
                         }
                     },
                 },
-                '&.Mui-children': {
-                    flexDirection: 'column',
-                    lineHeight: 1,
-                }
             }
         }
     })
@@ -98,6 +70,7 @@ const SidebarMenu: FC = () => {
                 </ListSubheader>
             }/>
             <MenuSubEntryWrapper>
+                { /* Add new menu entries here */ }
                 <ListItem>
                     <Button component={NavLink} startIcon={<SchoolIcon />} to="/tutorial" >
                         Tutorial
@@ -106,6 +79,11 @@ const SidebarMenu: FC = () => {
                 <ListItem>
                     <Button component={NavLink} startIcon={<FlagIcon />} to="/problems" >
                         Problems
+                    </Button>
+                </ListItem>
+                <ListItem>
+                    <Button component={NavLink} startIcon={<CodeIcon />} to="/template" >
+                        Template
                     </Button>
                 </ListItem>
             </MenuSubEntryWrapper>
