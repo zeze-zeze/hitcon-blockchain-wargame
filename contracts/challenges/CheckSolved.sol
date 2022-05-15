@@ -19,13 +19,17 @@ contract CheckSolved is ERC1155Supply, Ownable, ReentrancyGuard {
     ///         without the '/{id}.json part'. Eg: uri = https://hitcoin
     /// @dev    Becareful when setting the uri_. Remeber to follow the rule
     ///         https://eips.ethereum.org/EIPS/eip-1155#metadata
-    constructor(string memory uri_) ERC1155(uri_) {}
+    constructor(string memory _uri) ERC1155(_uri) {}
 
     /*************************
      **    HELPER SECTION    **
      *************************/
-    modifier checkSource(uint256 _chalNum) {
+    modifier validChalNum(uint256 _chalNum) {
         require(_chalNum > 0 && _chalNum <= 5, "out of range");
+        _;
+    }
+
+    modifier checkSource(uint256 _chalNum) {
         require(chalContract[_chalNum] != address(0), "chalContract not set");
         require(
             msg.sender == chalContract[_chalNum],
@@ -61,23 +65,48 @@ contract CheckSolved is ERC1155Supply, Ownable, ReentrancyGuard {
     ///         logic of preventing double minting was implemented in chalContract
     /// @dev    Prevent double minting and reentery attack. Make sure chalContract
     ///         address is correct and preventing double minting logic is correct.
-    function chal1Solved(address _solver) external checkSource(1) nonReentrant {
+    function chal1Solved(address _solver)
+        external
+        validChalNum(1)
+        checkSource(1)
+        nonReentrant
+    {
         _mint(_solver, 1, 1, "");
     }
 
-    function chal2Solved(address _solver) external checkSource(2) nonReentrant {
+    function chal2Solved(address _solver)
+        external
+        validChalNum(2)
+        checkSource(2)
+        nonReentrant
+    {
         _mint(_solver, 2, 1, "");
     }
 
-    function chal3Solved(address _solver) external checkSource(3) nonReentrant {
+    function chal3Solved(address _solver)
+        external
+        validChalNum(3)
+        checkSource(3)
+        nonReentrant
+    {
         _mint(_solver, 3, 1, "");
     }
 
-    function chal4Solved(address _solver) external checkSource(4) nonReentrant {
+    function chal4Solved(address _solver)
+        external
+        validChalNum(4)
+        checkSource(4)
+        nonReentrant
+    {
         _mint(_solver, 4, 1, "");
     }
 
-    function chal5Solved(address _solver) external checkSource(5) nonReentrant {
+    function chal5Solved(address _solver)
+        external
+        validChalNum(5)
+        checkSource(5)
+        nonReentrant
+    {
         _mint(_solver, 5, 1, "");
     }
 
