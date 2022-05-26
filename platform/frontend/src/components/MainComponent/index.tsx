@@ -64,21 +64,21 @@ const MainWrapper: FC = ({ title, children }) => {
     const theme = useTheme();
     const { sidebarToggled, lgUp } = useContext(SidebarToggledContext);
 
+    /* 
+     * Adjust the width & left property according to
+     * 1. current screen size
+     * 2. whether the current left sidebar is toggled
+     */
+    const calculatedLeft = sidebarToggled && lgUp ? theme.sidebar.width : 0;
+    const calculatedWidth = sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%';
+
     return (
         <>
             <Helmet>
                 <title>{title}</title>
             </Helmet>
             <Dashboard />
-            <MainComponentWrapper sx={{
-                /* 
-                 * Adjust the width & left property according to
-                 * 1. current screen size
-                 * 2. whether the current left sidebar is toggled
-                 */
-                left: sidebarToggled && lgUp ? theme.sidebar.width : 0,
-                width: sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%',
-            }}>
+            <MainComponentWrapper sx={{ left: calculatedLeft, width: calculatedWidth }}>
                 <Scrollbars autoHide>
                     <Container>
                     {children}
