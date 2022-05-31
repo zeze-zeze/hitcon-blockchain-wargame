@@ -3,7 +3,7 @@ import { Typography, Box, Paper, Container } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import Dashboard from '../Dashboard';
 import { SidebarToggledContext, MainComponentWrapper } from '../../App';
-import { Helmet } from 'react-helmet';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
 /* Some convenient wrappers (headers, subtitles, texts) to use */
@@ -73,7 +73,7 @@ const MainWrapper: FC = ({ title, children }) => {
     const calculatedWidth = sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%';
 
     return (
-        <>
+        <HelmetProvider>
             <Helmet>
                 <title>{title}</title>
             </Helmet>
@@ -85,8 +85,17 @@ const MainWrapper: FC = ({ title, children }) => {
                     </Container>
                 </Scrollbars>
             </MainComponentWrapper>
-        </>
+        </HelmetProvider>
     );
 }
 
-export { MainWrapper, HeaderWrapper, HeaderTypography, SubtitleTypography, SubHeaderTypography, BodyTypography, PaperComponentWrapper };
+export {
+    HeaderWrapper,
+    HeaderTypography,
+    SubtitleTypography,
+    SubHeaderTypography,
+    BodyTypography,
+    PaperComponentWrapper
+};
+
+export default MainWrapper;

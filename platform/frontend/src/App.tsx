@@ -4,7 +4,7 @@ import { useRoutes } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 
 import ThemeProvider from './theme/ThemeProvider';
-import routes from './router/Routes';
+import routes from './router/Router';
 
 const MainComponentWrapper: FC = styled(Box)(
     ({ theme }) => ({
