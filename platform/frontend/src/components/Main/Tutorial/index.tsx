@@ -1,11 +1,16 @@
 import { FC } from 'react';
-import { Grid, Button, Container } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import { MainWrapper, HeaderWrapper, HeaderTypography, SubtitleTypography, SubHeaderTypography, BodyTypography, PaperComponentWrapper } from '..';
+import { Grid, Container } from '@mui/material';
+import MainWrapper from '..';
+import {
+    HeaderWrapper,
+    HeaderTypography,
+    SubtitleTypography,
+    SubHeaderTypography,
+    BodyTypography,
+    PaperComponentWrapper
+} from '..';
 
 const Tutorial: FC = () => {
-    const theme = useTheme();
-
     return (
         <MainWrapper>
             <Grid container>

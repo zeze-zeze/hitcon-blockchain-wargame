@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Grid, Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { MainWrapper, HeaderWrapper, HeaderTypography, SubtitleTypography } from '..';
+import MainWrapper, { HeaderWrapper, HeaderTypography, SubtitleTypography } from '..';
 
 const Home: FC = () => {
     const theme = useTheme();
