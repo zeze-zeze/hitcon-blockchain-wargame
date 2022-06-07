@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import axios from "axios";
-import { useState } from "react";
+import { FC, useState } from "react";
 
 const ConnectButton: FC = () => {
   const { account, active } = useWeb3React();
