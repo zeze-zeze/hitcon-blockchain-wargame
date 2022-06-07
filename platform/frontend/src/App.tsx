@@ -4,7 +4,7 @@ import { useRoutes } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 
 import ThemeProvider from "./theme/ThemeProvider";
-// import routes from "./router/Routes";
+import routes from "./router/Router";
 
 import { Web3ReactProvider } from "@web3-react/core";
 import Web3 from "web3/dist/web3.min.js";
@@ -43,7 +43,7 @@ const App: FC = () => {
       >
         <CssBaseline />
         <Web3ReactProvider getLibrary={getLibrary}>
-          {/* {router} */}
+          {/* {routes} */}
           <ConnectButton />
           <FaucetButton />
         </Web3ReactProvider>

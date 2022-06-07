@@ -3,6 +3,7 @@ import createError from "http-errors";
 import asyncHandler from "express-async-handler";
 import { checkAddress } from "../web3/utils";
 import { web3 } from "../web3/index";
+import config from "../config";
 
 const { BadRequest, UnprocessableEntity } = createError;
 
@@ -19,12 +20,12 @@ const send = async (address: string) => {
   const options = {
     to: FaucetABI["address"],
     data: transaction.encodeABI(),
-    gas: await transaction.estimateGas({ from: process.env.TEST_ADDRESS }),
+    gas: await transaction.estimateGas({ from: config.PublicKey }),
     gasPrice: await web3.eth.getGasPrice(),
   };
   const signed = await web3.eth.accounts.signTransaction(
     options,
-    String(process.env.TEST_PRIVATE_KEY)
+    config.PrivateKey
   );
   const receipt = await web3.eth.sendSignedTransaction(
     String(signed.rawTransaction)
