@@ -1,0 +1,34 @@
+{
+    "title": "Example Challenge - Storage",
+    "description": "Just a contract that store a value.",
+    "tutorial": "Store and see what is stored.",
+    "address": "0x150De08744BD3111726ba139A29F9F0356AF0460",
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "num",
+            "type": "uint256"
+          }
+        ],
+        "name": "store",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "retrieve",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]   
+}
