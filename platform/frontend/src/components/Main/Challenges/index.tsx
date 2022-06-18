@@ -11,11 +11,69 @@ import {
 } from '..';
 import MainWrapper from 'components/Main';
 import Error404 from 'components/Error/_404.tsx';
+import HighLight from 'react-highlight';
+
+const SolidityCodeBlock: FC = ({ code }) => {
+    return (
+        <pre>
+        { code }
+        </pre>
+    );
+};
 
 const Challenge: FC = () => {
     const { id } = useParams();
     const problemId = Number(id);
     const problemNum = Number(process.env.REACT_APP_PROBLEM_NUM);
+
+    const chal = `
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.6.0;
+
+import '@openzeppelin/contracts/math/SafeMath.sol';
+
+contract Fallback {
+
+    using SafeMath for uint256;
+    mapping(address => uint) public contributions;
+    address payable public owner;
+
+    constructor() public {
+        owner = msg.sender;
+        contributions[msg.sender] = 1000 * (1 ether);
+    }
+
+    modifier onlyOwner {
+                require(
+                        msg.sender == owner,
+                        "caller is not the owner"
+                );
+                _;
+        }
+
+    function contribute() public payable {
+        require(msg.value < 0.001 ether);
+        contributions[msg.sender] += msg.value;
+        if(contributions[msg.sender] > contributions[owner]) {
+            owner = msg.sender;
+        }
+    }
+
+    function getContribution() public view returns (uint) {
+        return contributions[msg.sender];
+    }
+
+    function withdraw() public onlyOwner {
+        owner.transfer(address(this).balance);
+    }
+
+    receive() external payable {
+        require(msg.value > 0 && contributions[msg.sender] > 0);
+        owner = msg.sender;
+    }
+}
+`;
+    
     if (Number.isInteger(problemId) && problemId >= 1 && problemId <= problemNum) {
         return (
             <MainWrapper>
@@ -23,10 +81,16 @@ const Challenge: FC = () => {
                     <Grid xs={12}>
                         <HeaderWrapper>
                             <HeaderTypography>
-                                Hello Ethernaut
+                                Fallback
                             </HeaderTypography>
                             <SubtitleTypography>
-                                This level walks you through the very basics of how to play the game.
+                                Look carefully at the contract's code below. You will beat this level if
+                                <ol>
+                                    <li>you claim ownership of the contract</li>
+                                    <li>you reduce its balance to 0</li>
+                                </ol>
+                            </SubtitleTypography>
+                            <SubtitleTypography>
                             </SubtitleTypography>
                         </HeaderWrapper>
                     </Grid>
@@ -34,59 +98,10 @@ const Challenge: FC = () => {
                         <PaperComponentWrapper>
                             <Container>
                                 <SubHeaderTypography>
-                                    1. Set up MetaMask
+                                    Source
                                 </SubHeaderTypography>
                                 <BodyTypography>
-                                    If you don't have it already, install the <a href="https://metamask.io/">MetaMask browser extension</a> (in Chrome, Firefox, Brave or Opera on your desktop machine). Set up the extension's wallet and use the network selector to point to the 'Rinkeby test network' in the top left of the extension's interface.
-                                </BodyTypography>
-                                <SubHeaderTypography>
-                                    2. Open the browser's console
-                                </SubHeaderTypography>
-                                <BodyTypography>
-                                    Open your browser's console: <code>Tools &gt; Developer Tools</code>.
-                                </BodyTypography>
-                                <BodyTypography>
-                                    You should see a few messages from the game. One of them should state your player's address. This will be important during the game! You can always see your player address by entering the following command:
-                                </BodyTypography>
-                                <BodyTypography>
-                                    <code>player</code>
-                                </BodyTypography>
-                                <BodyTypography>
-                                    Keep an eye out for warnings and errors, since they could provide important information during gameplay.
-                                </BodyTypography>
-                                <SubHeaderTypography>
-                                    3. Use the console helpers
-                                </SubHeaderTypography>
-                                <BodyTypography>
-                                    You can also see your current ether balance by typing:
-                                </BodyTypography>
-                                <BodyTypography>
-                                    <code>getBalance(player)</code>
-                                </BodyTypography>
-                                <BodyTypography>
-                                    NOTE: Expand the promise to see the actual value, even if it reads "pending". If you're using Chrome v62, you can use await getBalance(player) for a cleaner console experience.
-        Great! To see what other utility functions you have in the console type:
-                                </BodyTypography>
-                                <BodyTypography>
-                                    <code>help()</code>
-                                </BodyTypography>
-                                <BodyTypography>
-                                    These will be super handy during gameplay.
-                                </BodyTypography>
-                                <SubHeaderTypography>
-                                    4. The ethernaut contract
-                                </SubHeaderTypography>
-                                <BodyTypography>
-                                    Enter the following command in the console:
-                                </BodyTypography>
-                                <BodyTypography>
-                                    <code>ethernaut</code>
-                                </BodyTypography>
-                                <BodyTypography>
-                                    This is the game's main smart contract. You don't need to interact with it directly through the console (as this app will do that for you) but you can if you want to. Playing around with this object now is a great way to learn how to interact with the other smart contracts of the game.
-                                </BodyTypography>
-                                <BodyTypography>
-                                    Go ahead and expand the ethernaut object to see what's inside.
+                                    <SolidityCodeBlock code={chal} />
                                 </BodyTypography>
                             </Container>
                         </PaperComponentWrapper>
