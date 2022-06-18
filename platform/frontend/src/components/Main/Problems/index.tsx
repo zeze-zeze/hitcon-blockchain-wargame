@@ -1,7 +1,8 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Grid, Box, Card, Button, CardContent, Typography } from '@mui/material';
 import { useTheme, styled } from '@mui/material/styles';
-import MainWrapper from '..';
+import MainWrapper from 'components/Main';
 import EmojiFlagsTwoToneIcon from '@mui/icons-material/EmojiFlagsTwoTone';
 
 const StatusBadge = styled(Box)(
@@ -55,7 +56,13 @@ const ProblemContent: FC = styled(Box)(
 );
 
 const Problem: FC = ({ index, title, solved }) => {
+
     const theme = useTheme();
+    const navigate = useNavigate();
+    const handleNavigateChallenge = () => {
+        navigate(`/problems/${index}`);
+    };
+
     return (
         <ProblemCard>
             <ProblemWrapper>
@@ -78,7 +85,11 @@ const Problem: FC = ({ index, title, solved }) => {
                     }}>
                         Solved
                     </StatusBadge>
-                    <Button variant="contained" style={{ marginTop: theme.spacing(2) }}>
+                    <Button
+                        variant="contained"
+                        style={{ marginTop: theme.spacing(2) }}
+                        onClick={handleNavigateChallenge}
+                    >
                         Start Challenge
                     </Button>
                 </ProblemContent>

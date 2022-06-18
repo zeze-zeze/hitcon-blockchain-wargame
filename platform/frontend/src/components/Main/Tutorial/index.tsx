@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Grid, Container } from '@mui/material';
-import MainWrapper from '..';
+import MainWrapper from 'components/Main';
 import {
     HeaderWrapper,
     HeaderTypography,
@@ -8,7 +8,9 @@ import {
     SubHeaderTypography,
     BodyTypography,
     PaperComponentWrapper
-} from '..';
+} from 'components/Main';
+import { useWeb3React } from "@web3-react/core";
+import useEagerConnect from "components/Connector/EagerConnection";
 
 const Tutorial: FC = () => {
     return (

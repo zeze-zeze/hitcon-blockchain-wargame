@@ -1,11 +1,10 @@
-import { FC, useState, createContext } from "react";
+import { FC, useState } from "react";
 import { Box, CssBaseline, useMediaQuery } from "@mui/material";
 import { useRoutes } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
-
-import ThemeProvider from "./theme/ThemeProvider";
-import routes from "./router/Router";
-
+import ThemeProvider from "theme/ThemeProvider";
+import routes from "router/Router";
+import SidebarToggledContext from "contexts/SidebarToggledContext";
 import { Web3ReactProvider } from "@web3-react/core";
 import Web3 from "web3/dist/web3.min.js";
 
@@ -22,8 +21,6 @@ const MainComponentWrapper: FC = styled(Box)(({ theme }) => ({
   alignItems: "stretch",
   alignContent: "center",
 }));
-
-const SidebarToggledContext = createContext<any>();
 
 const App: FC = () => {
   /* Use javascript object (rather than <Routes>) to define routes */
@@ -46,5 +43,5 @@ const App: FC = () => {
   );
 };
 
-export { SidebarToggledContext, MainComponentWrapper };
+export { MainComponentWrapper };
 export default App;

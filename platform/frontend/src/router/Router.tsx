@@ -1,44 +1,64 @@
-import { FC, Suspense, lazy } from 'react';
+import { FC, ReactNode, Suspense, lazy } from 'react';
 import { PartialRouteObject } from 'react-router';
-import SuspenseComponent from '../components/Suspense';
+import { useWeb3React } from "@web3-react/core";
+import SuspenseComponent from 'components/Suspense';
+import { Web3ReactProvider } from "@web3-react/core";
+import Web3 from "web3/dist/web3.min.js";
+
+type WrapperProps = {
+    children?: ReactNode;
+};
+
+const getLibrary = (provider: any) => {
+    return new Web3(provider);
+};
+
+const Web3ReactProviderWrapper: FC = (props: ReactNode) => {
+    return (
+        <Web3ReactProvider getLibrary={getLibrary}>
+        { props.children }
+        </Web3ReactProvider>
+    )
+};
 
 const SuspenseWrapper: FC = (Component) => {
     return () => (
-        <Suspense fallback={<SuspenseComponent />}>
-            <Component />
-        </Suspense>
+        <Web3ReactProviderWrapper>
+            <Suspense fallback={<SuspenseComponent />}>
+                <Component />
+            </Suspense>
+        </Web3ReactProviderWrapper>
     );
 };
 
-const Landing = SuspenseWrapper(lazy(() => import('../components/Landing')));
-const Home = SuspenseWrapper(lazy(() => import('../components/Main/Home')));
-const Tutorial = SuspenseWrapper(lazy(() => import('../components/Main/Tutorial')));
-const Problems = SuspenseWrapper(lazy(() => import('../components/Main/Problems'))); 
-const Challenge = SuspenseWrapper(lazy(() => import('../components/Main/Challenges'))); 
-const Template = SuspenseWrapper(lazy(() => import('../components/Main/Template')));
-const Login = SuspenseWrapper(lazy(() => import('../components/Auth/Login')));
-const Register = SuspenseWrapper(lazy(() => import('../components/Auth/Register')));
-const Error404 = SuspenseWrapper(lazy(() => import('../components/Error/_404')));
+const Home = SuspenseWrapper(lazy(() => import('components/Main/Home')));
+const Login = SuspenseWrapper(lazy(() => import('components/Login')));
+const Tutorial = SuspenseWrapper(lazy(() => import('components/Main/Tutorial')));
+const Problems = SuspenseWrapper(lazy(() => import('components/Main/Problems'))); 
+const Faucet = SuspenseWrapper(lazy(() => import('components/Main/Faucet'))); 
+const Challenge = SuspenseWrapper(lazy(() => import('components/Main/Challenges'))); 
+const Template = SuspenseWrapper(lazy(() => import('components/Main/Template')));
+const Error404 = SuspenseWrapper(lazy(() => import('components/Error/_404')));
 
 /* React router setting */
 const router: PartialRouteObject[] = [
     {
-        path: '/',
-        exact: true,
-        element: <Landing />,
-    },
-    {
-        path: '/home',
+        path: '',
         exact: true,
         element: <Home />,
     },
     {
-        path: '/tutorial',
+        path: 'tutorial',
         exact: true,
         element: <Tutorial />,
     },
     {
-        path: '/problems',
+        path: 'login',
+        exact: true,
+        element: <Login />,
+    },
+    {
+        path: 'problems',
         children: [
             {
                 path: '',
@@ -47,22 +67,17 @@ const router: PartialRouteObject[] = [
             {
                 path: ':id',
                 element: <Challenge />
-            }
+            },
         ]
     },
     {
-        path: '/login',
+        path: 'faucet',
         exact: true,
-        element: <Login />,
-    },
-    {
-        path: '/register',
-        exact: true,
-        element: <Register />,
+        element: <Faucet />,
     },
     /* Add new path here */
     {
-        path: '/template',
+        path: 'template',
         exact: true,
         element: <Template />,
     },

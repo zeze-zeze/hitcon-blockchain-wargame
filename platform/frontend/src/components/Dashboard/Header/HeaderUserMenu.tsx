@@ -1,10 +1,12 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Avatar, Box, Button, Divider, List, ListItem, ListItemText, Popover, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useWeb3React } from "@web3-react/core";
+import useShortWallet from 'hooks/useShortWallet';
 
 const UserBoxButton: FC = styled(Button)(
     ({ theme }) => ({
@@ -42,13 +44,12 @@ const UserBoxSignoutBox: FC = styled(Box)(
 );
 
 const HeaderUserMenu: FC = () => {
-    const user = {
-        name: 'Doge',
-        avatar: '/static/images/avatars/1.jpg',
-    };
 
     const ref = useRef<any>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const { deactivate } = useWeb3React();
+
+    const walletAddress = useShortWallet();
 
     const handleOpen = () => {
         setIsOpen(true);
@@ -61,9 +62,9 @@ const HeaderUserMenu: FC = () => {
     return (
         <>
             <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-                <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+                <Avatar variant="rounded" src="https://i.imgur.com/Osl0YMx.jpeg" />
                 <UserBoxText>
-                    <UserBoxLabel>{user.name}</UserBoxLabel>
+                    <UserBoxLabel>{walletAddress}</UserBoxLabel>
                 </UserBoxText>
             </UserBoxButton>
             <Popover
@@ -91,8 +92,16 @@ const HeaderUserMenu: FC = () => {
                 </List>
                 <Divider />
                 <UserBoxSignoutBox>
-                    <Button color="primary" fullWidth>
-                        <LockOpenIcon sx={{ mr: 1 }} />
+                    <Button
+                        color="primary"
+                        variant="text"
+                        onClick={() => {
+                            deactivate();
+                            localStorage.removeItem("_hitcon_wargame_");
+                        }}
+                        fullWidth
+                    >
+                        <LogoutIcon sx={{ mr: 1 }} />
                         Sign out
                     </Button>
                 </UserBoxSignoutBox>

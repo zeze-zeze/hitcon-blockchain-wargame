@@ -1,7 +1,28 @@
-import { Box, Button, Card, Container, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Box, Button, Card, Container, Grid, Typography, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { styled, useTheme } from '@mui/material/styles';
+import { useWeb3React } from "@web3-react/core";
+import ConnectButton from 'components/Connector';
+
+const LoginWrapper: FC = styled(Box)(
+    ({ theme }) => ({
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: theme.spacing(4),
+    })
+);
+
+const LoginAvatar: FC = styled(Avatar)(
+    ({ theme }) => ({
+        backgroundColor: theme.colors.error.light,
+        width: '128px',
+        height: '128px',
+        margin: 'auto',
+    })
+);
 
 const LandingWrapper = styled(Container)(
     ({ theme }) => ({
@@ -23,7 +44,7 @@ const LandingHeaderTypography = styled(Typography)(
     ({ theme }) => ({
         fontSize: theme.typography.pxToRem(50),
         textAlign: 'center',
-        paddingBottom: theme.spacing(5),
+        padding: theme.spacing(5, 0),
     })
 );
 
@@ -38,13 +59,14 @@ const LandingSubLandingHeaderTypography = styled(Typography)(
 const LandingButtonsWrapper = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
     })
 );
 
 const Landing = () => {
     const theme = useTheme();
     const mdUp = useMediaQuery(theme.breakpoints.up('md'));
+
     return (
         <HelmetProvider>
             <Helmet>
@@ -54,8 +76,11 @@ const Landing = () => {
                 <LandingCard>
                     <Grid spacing={10} container>
                         <Grid item md={10} lg={8} mx="auto">
+                            <LoginAvatar>
+                                <LockOutlinedIcon sx={{ fontSize: '72px' }} />
+                            </LoginAvatar>
                             <LandingHeaderTypography component="h1" variant="h1">
-                                Hitcon Wargame
+                                Login
                             </LandingHeaderTypography>
                             <LandingSubLandingHeaderTypography
                                 sx={{ lineHeight: 1.5, pb: 4 }}
@@ -66,24 +91,7 @@ const Landing = () => {
                                 Welcome to the hitcon wargame.
                             </LandingSubLandingHeaderTypography>
                             <LandingButtonsWrapper>
-                                <Button
-                                    component={Link}
-                                    to="/login"
-                                    variant="contained"
-                                    color="success"
-                                    style={{ margin: theme.spacing(1) }}
-                                >
-                                    Login
-                                </Button>
-                                <Button
-                                    component={Link}
-                                    to="/register"
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ margin: theme.spacing(1) }}
-                                >
-                                    Register
-                                </Button>
+                                <ConnectButton />
                             </LandingButtonsWrapper>
                         </Grid>
                     </Grid>

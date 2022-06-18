@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
 import Image from 'material-ui-image';
-import LogoImage from '../../../assets/logo.svg';
+import LogoImage from 'assets/logo.svg';
 
 const LogoWrapper = styled(Box)(
     ({ theme }) => ({
