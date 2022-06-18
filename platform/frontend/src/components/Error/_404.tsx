@@ -41,7 +41,6 @@ const Error404 = () => {
             <ErrorWrapper>
                 <Container maxWidth="md">
                     <Box textAlign="center">
-                        <img alt="404" height={360} src="https://http.cat/404" />
                         <Typography variant="h2" sx={{ my: 4 }}>
                             Oops! Page not found!
                         </Typography>
@@ -55,7 +54,8 @@ const Error404 = () => {
                         </Typography>
                         <Button
                             variant="contained"
-                            color="primary"
+                            color="error"
+                            size="large"
                             onClick={() => { navigate(-1); }}
                         >
                             Back

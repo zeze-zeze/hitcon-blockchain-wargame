@@ -1,10 +1,10 @@
 import { FC, useContext } from 'react';
-import { Box, Drawer } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Drawer, useMediaQuery } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import SidebarMenu from './SidebarMenu';
 import SidebarLogo from './SidebarLogo';
-import { SidebarToggledContext } from '../../../App';
+import SidebarToggledContext from 'contexts/SidebarToggledContext';
 
 const SidebarWrapper: FC = styled(Box)(
     ({ theme }) => ({
@@ -20,7 +20,9 @@ const SidebarWrapper: FC = styled(Box)(
 
 const Sidebar: FC = () => {
 
-    const { sidebarToggled, toggleSidebar, lgUp } = useContext(SidebarToggledContext);
+    const theme = useTheme();
+    const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
+    const { sidebarToggled, toggleSidebar } = useContext(SidebarToggledContext);
 
     /* 
      * If the current window size is big enough, use a persistent drawer>

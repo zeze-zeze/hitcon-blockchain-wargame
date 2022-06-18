@@ -5,6 +5,7 @@ import {
   NoEthereumProviderError,
   UserRejectedRequestError as UserRejectedRequestErrorInjected,
 } from "@web3-react/injected-connector";
+import { Snackbar } from "@mui/material";
 
 // import local components
 import { injected } from "./InjectedConnector";

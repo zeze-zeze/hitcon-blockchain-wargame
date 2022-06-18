@@ -1,10 +1,49 @@
 import { FC } from 'react';
-import { Grid, Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import MainWrapper, { HeaderWrapper, HeaderTypography, SubtitleTypography } from '..';
+import { NavLink } from 'react-router-dom';
+import { Grid, Typography, Paper, Container, Button, useMediaQuery } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
+import MainWrapper, { 
+    HeaderWrapper,
+    HeaderTypography,
+    SubHeaderTypography,
+    SubtitleTypography,
+    PaperCenteredComponentWrapper,
+} from 'components/Main';
+import ConnectButton from 'components/Connector';
+import useEagerConnect from 'components/Connector/EagerConnection';
+
+const FixedSubHeaderContainer: FC = styled(Container)(
+    ({ theme }) => ({
+        height: '60%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    })
+);
+
+const FixedButtonContainer: FC = styled(Container)(
+    ({ theme }) => ({
+        height: '40%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    })
+);
+
+const FixedSubHeaderTypography: FC = ({ children }) => {
+    const theme = useTheme();
+    return (
+        <Typography align="center" variant="h2" component="h2">
+        { children }
+        </Typography>
+    )
+};
 
 const Home: FC = () => {
+
     const theme = useTheme();
+    const smUp = useMediaQuery(theme.breakpoints.up("sm"));
+
     return (
         <MainWrapper title="Home">
             <Grid container>
@@ -16,19 +55,57 @@ const Home: FC = () => {
                         <SubtitleTypography>
                             The Ethernaut is a Web3/Solidity based wargame inspired on overthewire.org, played in the Ethereum Virtual Machine. Each level is a smart contract that needs to be 'hacked'.
                         </SubtitleTypography>
-                        <SubtitleTypography>
-    The game is 100% open source and all levels are contributions made by other players. Do you have an interesting idea? PRs are welcome at github.com/OpenZeppelin/ethernaut.
-                        </SubtitleTypography>
-                        <SubtitleTypography>
-    Are you interested in smart contract development or security? Does securing the world’s blockchain infrastructure sound exciting to you? We are hiring!
-                        </SubtitleTypography>
-                        <SubtitleTypography>
-    You like the game but your language is not available? Contribute a translation!
-                        </SubtitleTypography>
-                        <Button variant="contained" color="success" sx={{ marginTop: theme.spacing(4) }}>
-                            Get started!
-                        </Button>
                     </HeaderWrapper>
+                </Grid>
+                <Grid container justifyContent="center" xs={smUp ? 6 : 12}>
+                    <PaperCenteredComponentWrapper sx={{
+                        width: '75%',
+                        height: '240px',
+                        margin: theme.spacing(5),
+                    }}>
+                        <FixedSubHeaderContainer>
+                            <FixedSubHeaderTypography>
+                                New to blockchain?
+                            </FixedSubHeaderTypography>
+                        </FixedSubHeaderContainer>
+                        <FixedButtonContainer>
+                            <Button
+                                component={NavLink}
+                                to="/tutorial"
+                                variant="contained"
+                                size="large"
+                                color="success"
+                                sx={{ 'textAlign': 'center' }}
+                            >
+                                Start Tutorial
+                            </Button>
+                        </FixedButtonContainer>
+                    </PaperCenteredComponentWrapper>
+                </Grid>
+                <Grid container justifyContent="center" xs={smUp ? 6 : 12}>
+                    <PaperCenteredComponentWrapper sx={{
+                        width: '75%',
+                        height: '240px',
+                        margin: theme.spacing(5),
+                    }}>
+                        <FixedSubHeaderContainer>
+                            <FixedSubHeaderTypography>
+                                Already familiar with blockchain?
+                            </FixedSubHeaderTypography>
+                        </FixedSubHeaderContainer>
+                        <FixedButtonContainer>
+                            <Button
+                                component={NavLink}
+                                to="/problems"
+                                variant="contained"
+                                size="large"
+                                color="primary"
+                                sx={{ 'textAlign': 'center' }}
+                            >
+                                Start Playing
+                            </Button>
+                        </FixedButtonContainer>
+                    </PaperCenteredComponentWrapper>
                 </Grid>
             </Grid>
         </MainWrapper>

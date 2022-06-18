@@ -1,11 +1,13 @@
 import { FC, useContext } from 'react';
-import { Box, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import HeaderButtons from './HeaderButtons';
 import HeaderUserMenu from './HeaderUserMenu';
-import { SidebarToggledContext } from '../../../App';
+import SidebarToggledContext from 'contexts/SidebarToggledContext';
+import { useWeb3React } from '@web3-react/core';
+import LoginButton from './LoginButton';
 
 const HeaderWrapper: FC = styled(Box)(
     ({ theme }) => ({
@@ -38,7 +40,9 @@ const HeaderComponentsWrapper: FC = styled(Box)(
 const Header: FC = () => {
 
     const theme = useTheme();
-    const { sidebarToggled, toggleSidebar, lgUp } = useContext(SidebarToggledContext);
+    const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
+    const { sidebarToggled, toggleSidebar } = useContext(SidebarToggledContext);
+    const { active } = useWeb3React();
 
     /* 
      * Adjust the width & left property according to
@@ -64,7 +68,13 @@ const Header: FC = () => {
                 </HeaderComponentsWrapper>
                 <HeaderComponentsWrapper>
                     <HeaderButtons />
-                    <HeaderUserMenu />
+                    {
+                        active ? (
+                            <HeaderUserMenu />
+                        ) : (
+                            <LoginButton />
+                        )
+                    }
                 </HeaderComponentsWrapper>
             </HeaderWrapper>
         }

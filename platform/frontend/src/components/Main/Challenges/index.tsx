@@ -9,8 +9,8 @@ import {
     BodyTypography,
     PaperComponentWrapper
 } from '..';
-import MainWrapper from '..';
-import Error404 from '../../Error/_404.tsx';
+import MainWrapper from 'components/Main';
+import Error404 from 'components/Error/_404.tsx';
 
 const Challenge: FC = () => {
     const { id } = useParams();
@@ -20,7 +20,7 @@ const Challenge: FC = () => {
         return (
             <MainWrapper>
                 <Grid container>
-                    <Grid item xs={12}>
+                    <Grid xs={12}>
                         <HeaderWrapper>
                             <HeaderTypography>
                                 Hello Ethernaut
