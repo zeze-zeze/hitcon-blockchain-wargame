@@ -21,11 +21,11 @@ const ConnectButton: FC = () => {
         address: account,
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setShowSnackBar(1);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setShowSnackBar(2);
       });
     setShowBackDrop(false);

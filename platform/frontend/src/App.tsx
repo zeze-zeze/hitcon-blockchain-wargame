@@ -8,8 +8,6 @@ import routes from "./router/Router";
 
 import { Web3ReactProvider } from "@web3-react/core";
 import Web3 from "web3/dist/web3.min.js";
-import ConnectButton from "./components/Connector";
-import FaucetButton from "./components/Faucet";
 
 const getLibrary = (provider: any) => {
   return new Web3(provider);
@@ -29,7 +27,7 @@ const SidebarToggledContext = createContext<any>();
 
 const App: FC = () => {
   /* Use javascript object (rather than <Routes>) to define routes */
-  // const router = useRoutes(routes);
+  const router = useRoutes(routes);
 
   const theme = useTheme();
   const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
@@ -42,11 +40,7 @@ const App: FC = () => {
         value={{ sidebarToggled, toggleSidebar, lgUp }}
       >
         <CssBaseline />
-        <Web3ReactProvider getLibrary={getLibrary}>
-          {/* {routes} */}
-          <ConnectButton />
-          <FaucetButton />
-        </Web3ReactProvider>
+        <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>
       </SidebarToggledContext.Provider>
     </ThemeProvider>
   );
