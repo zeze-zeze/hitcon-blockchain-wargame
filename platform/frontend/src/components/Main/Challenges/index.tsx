@@ -25,14 +25,20 @@ const Challenge: FC = () => {
                 method: "eth_requestAccounts",
             });
             const account = Web3.utils.toChecksumAddress(accounts[0]);
-            console.log(account);
+            window.player = account;
         }
 
         const web3 = new Web3(Web3.givenProvider);
+        window.web3 = web3;
         const contract = new web3.eth.Contract(info.abi, info.address);
-        const result = await contract.methods.retrieve().call();
-        //const result = await contract.methods.store(200).send({from: "0x7a68133e3cB03B23C2ECcEbCc937b170b3bFe0F5"});
-        console.log(result); 
+        window.contract = contract;
+    }
+
+    // TODO: Add more function and have a better style.
+    window.help = () => {
+        console.log('player: current player address\n',
+            'web3: web3 object\n',
+            'contract: current level contract instance (if connected)');
     }
     
     const [chal, setChal] = useState("");
@@ -55,7 +61,8 @@ const Challenge: FC = () => {
             setVuln(text);
         });
     });
-
+    
+    // TODO: better style for code block
     if (Number.isInteger(problemId) && problemId >= 0 && problemId <= problemNum) {
         if (problemId === 0){
             return (
@@ -161,9 +168,7 @@ const Challenge: FC = () => {
                                         {info.tutorial}
                                     </BodyTypography>
                                     <BodyTypography>
-                                        <CodeBlock
-                                          text={vuln}
-                                        /> 
+                                        <CodeBlock text={vuln}/> 
                                     </BodyTypography>
                                 </Container>
                             </PaperComponentWrapper>
