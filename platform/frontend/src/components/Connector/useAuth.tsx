@@ -13,7 +13,7 @@ import { setupNetwork } from "./walletNetwork";
 const useAuth = () => {
   const { active, connector, activate, deactivate } = useWeb3React();
 
-  if (active && connector == injected) {
+  if (active && connector === injected) {
     localStorage.setItem("_hitcon_wargame_", "Injected");
   }
 

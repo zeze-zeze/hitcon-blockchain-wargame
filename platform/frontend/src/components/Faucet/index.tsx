@@ -51,10 +51,10 @@ const ConnectButton: FC = () => {
       >
         <Alert
           onClose={handleClose}
-          severity={showSnackBar == 1 ? "success" : "error"}
+          severity={showSnackBar === 1 ? "success" : "error"}
           sx={{ width: "100%" }}
         >
-          {showSnackBar == 1 ? "Request ETH Success" : "ERROR! Request failed"}
+          {showSnackBar === 1 ? "Request ETH Success" : "ERROR! Request failed"}
         </Alert>
       </Snackbar>
 
