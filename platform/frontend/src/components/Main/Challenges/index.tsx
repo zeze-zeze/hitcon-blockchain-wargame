@@ -32,11 +32,20 @@ const Challenge: FC = () => {
         window.web3 = web3;
         const contract = new web3.eth.Contract(info.abi, info.address);
         window.contract = contract;
+        if (contract.events.newSolved) {
+            contract.events.newSolved(function(error, result) {
+                // TODO: Simply reload NFT
+                if(result._solver === player) {
+                    window.location.reload(false);
+                }
+            });
+        }
+        window.help();
     }
 
     // TODO: Add more function and have a better style.
     window.help = () => {
-        console.log('player: current player address\n',
+        console.log(' player: current player address\n',
             'web3: web3 object\n',
             'contract: current level contract instance (if connected)');
     }
