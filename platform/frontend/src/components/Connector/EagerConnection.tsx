@@ -7,7 +7,7 @@ const useEagerConnect = () => {
   useEffect(() => {
     const connecetedWallet = localStorage.getItem("_hitcon_wargame_");
 
-    if (connecetedWallet == "Injected") {
+    if (connecetedWallet === "Injected") {
       login();
     }
   }, [login]); // intentionally only running on mount (make sure it's only mounted once :))
