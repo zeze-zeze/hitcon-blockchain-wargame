@@ -65,7 +65,7 @@ const PaperComponentWrapper: FC = styled(Paper)(
         padding: theme.spacing(3),
         display: 'flex',
         justifyContent: 'flex-start',
-        margin: theme.spacing(0, 8),
+        margin: theme.spacing(0, 8, 8, 8),
         borderRadius: '32px',
         boxShadow: 'rgb(0 0 0 / 20%) 0px 2px 4px -1px, rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px',
     })

@@ -77,7 +77,7 @@ const HeaderButtons: FC = () => {
                         <Box flex="1">
                             <Box display="flex" justifyContent="space-between">
                                 <Typography sx={{ fontWeight: 'bold' }}>
-                                    Notification Header
+                                    Horray! You solved Challenge 1.
                                 </Typography>
                                 <Typography variant="caption" sx={{ textTransform: 'none' }}>
                                     {formatDistance(subDays(new Date(), 3), new Date(), {
@@ -90,7 +90,7 @@ const HeaderButtons: FC = () => {
                                 variant="body2"
                                 color="text.secondary"
                             >
-                                Notification Text
+                                You gained a gift <code>NFT1</code>
                             </Typography>
                         </Box>
                     </ListItem>

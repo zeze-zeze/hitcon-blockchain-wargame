@@ -3,7 +3,6 @@ import { Grid, Box, Container, Card, Button, Paper, CardContent, Typography } fr
 import { styled, useTheme } from '@mui/material/styles';
 import MainWrapper from 'components/Main';
 import { useWeb3React } from "@web3-react/core";
-import ReCAPTCHA from "react-google-recaptcha";
 import {
     HeaderWrapper,
     HeaderTypography,
@@ -59,12 +58,6 @@ const Faucet: FC = () => {
                                 <kbd>0.1 ETH</kbd>
                             </BodyTypography>
                             { /*Testing sitekey*/ }
-                            <BodyTypography>
-                                <ReCAPTCHA
-                                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                                    onChange={() => {}}
-                                />
-                            </BodyTypography>
                             <BodyTypography>
                                 <FaucetButton />
                             </BodyTypography>
