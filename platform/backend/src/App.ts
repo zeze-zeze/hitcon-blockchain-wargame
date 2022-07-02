@@ -3,7 +3,7 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import cors, { CorsOptions } from 'cors';
 import morgan from 'morgan';
-import router from './routes';
+import router from './Routes';
 
 const app: Express = express();
 
