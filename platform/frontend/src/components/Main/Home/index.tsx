@@ -57,55 +57,57 @@ const Home: FC = () => {
                         </SubtitleTypography>
                     </HeaderWrapper>
                 </Grid>
-                <Grid container justifyContent="center" xs={smUp ? 6 : 12}>
-                    <PaperCenteredComponentWrapper sx={{
-                        width: '75%',
-                        height: '240px',
-                        margin: theme.spacing(5),
-                    }}>
-                        <FixedSubHeaderContainer>
-                            <FixedSubHeaderTypography>
-                                New to blockchain?
-                            </FixedSubHeaderTypography>
-                        </FixedSubHeaderContainer>
-                        <FixedButtonContainer>
-                            <Button
-                                component={NavLink}
-                                to="/tutorial"
-                                variant="contained"
-                                size="large"
-                                color="success"
-                                sx={{ 'textAlign': 'center' }}
-                            >
-                                Start Tutorial
-                            </Button>
-                        </FixedButtonContainer>
-                    </PaperCenteredComponentWrapper>
-                </Grid>
-                <Grid container justifyContent="center" xs={smUp ? 6 : 12}>
-                    <PaperCenteredComponentWrapper sx={{
-                        width: '75%',
-                        height: '240px',
-                        margin: theme.spacing(5),
-                    }}>
-                        <FixedSubHeaderContainer>
-                            <FixedSubHeaderTypography>
-                                Already familiar with blockchain?
-                            </FixedSubHeaderTypography>
-                        </FixedSubHeaderContainer>
-                        <FixedButtonContainer>
-                            <Button
-                                component={NavLink}
-                                to="/problems"
-                                variant="contained"
-                                size="large"
-                                color="primary"
-                                sx={{ 'textAlign': 'center' }}
-                            >
-                                Start Playing
-                            </Button>
-                        </FixedButtonContainer>
-                    </PaperCenteredComponentWrapper>
+                <Grid container justifyContent="center" alignItems="center">
+                    <Grid item xs={smUp ? 6 : 12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <PaperCenteredComponentWrapper sx={{
+                            width: '75%',
+                            height: '240px',
+                            margin: theme.spacing(5),
+                        }}>
+                            <FixedSubHeaderContainer>
+                                <FixedSubHeaderTypography>
+                                    New to blockchain?
+                                </FixedSubHeaderTypography>
+                            </FixedSubHeaderContainer>
+                            <FixedButtonContainer>
+                                <Button
+                                    component={NavLink}
+                                    to="/tutorial"
+                                    variant="contained"
+                                    size="large"
+                                    color="success"
+                                    sx={{ 'textAlign': 'center' }}
+                                >
+                                    Start Tutorial
+                                </Button>
+                            </FixedButtonContainer>
+                        </PaperCenteredComponentWrapper>
+                    </Grid>
+                    <Grid item xs={smUp ? 6 : 12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <PaperCenteredComponentWrapper sx={{
+                            width: '75%',
+                            height: '240px',
+                            margin: theme.spacing(5),
+                        }}>
+                            <FixedSubHeaderContainer>
+                                <FixedSubHeaderTypography>
+                                    Already familiar with blockchain?
+                                </FixedSubHeaderTypography>
+                            </FixedSubHeaderContainer>
+                            <FixedButtonContainer>
+                                <Button
+                                    component={NavLink}
+                                    to="/problems"
+                                    variant="contained"
+                                    size="large"
+                                    color="primary"
+                                    sx={{ 'textAlign': 'center' }}
+                                >
+                                    Start Playing
+                                </Button>
+                            </FixedButtonContainer>
+                        </PaperCenteredComponentWrapper>
+                    </Grid>
                 </Grid>
             </Grid>
         </MainWrapper>

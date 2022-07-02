@@ -46,23 +46,27 @@ const Header: FC = () => {
 
     const nftInfo = [
         {
-            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            url: 'https://i.imgur.com/nHHO5Q8.jpg',
             gain: true,
         },
         {
-            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            url: 'https://i.imgur.com/nHHO5Q8.jpg',
             gain: true,
         },
         {
-            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            url: 'https://i.imgur.com/nHHO5Q8.jpg',
             gain: false,
         },
         {
-            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            url: 'https://i.imgur.com/nHHO5Q8.jpg',
             gain: false,
         },
         {
-            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            url: 'https://i.imgur.com/nHHO5Q8.jpg',
+            gain: false,
+        },
+        {
+            url: 'https://i.imgur.com/nHHO5Q8.jpg',
             gain: false,
         },
     ];
@@ -98,7 +102,7 @@ const Header: FC = () => {
                                         variant="rounded"
                                         src={url}
                                         sx={{
-                                            opacity: gain ? '100%' : '50%',
+                                            opacity: gain ? '100%' : '40%',
                                         }}
                                     />
                                 </Grid>
