@@ -8,7 +8,6 @@ import faucetCallBack from "./api/Faucet";
 const router = express.Router({ caseSensitive: true });
 
 router.post("/register", registerCallback);
-
 router.post("/faucet", faucetCallBack);
 
 export default router;

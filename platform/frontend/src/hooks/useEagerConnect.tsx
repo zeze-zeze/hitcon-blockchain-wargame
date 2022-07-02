@@ -9,7 +9,7 @@ const useEagerConnect = () => {
 
     useEffect(() => {
         const connecetedWallet = localStorage.getItem("_hitcon_wargame_");
-        if (connecetedWallet == "Injected") {
+        if (connecetedWallet === "Injected") {
             injected.isAuthorized().then((authorized: boolean) => {
                 if (authorized) {
                     activate(injected, undefined, true).catch(() => {
