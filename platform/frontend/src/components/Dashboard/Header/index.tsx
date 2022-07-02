@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { Box, Button, IconButton, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, Avatar, Button, Grid, IconButton, Tooltip, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -44,6 +44,29 @@ const Header: FC = () => {
     const { sidebarToggled, toggleSidebar } = useContext(SidebarToggledContext);
     const { active } = useWeb3React();
 
+    const nftInfo = [
+        {
+            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            gain: true,
+        },
+        {
+            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            gain: true,
+        },
+        {
+            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            gain: false,
+        },
+        {
+            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            gain: false,
+        },
+        {
+            url: 'https://i.imgur.com/Osl0YMx.jpeg',
+            gain: false,
+        },
+    ];
+
     /* 
      * Adjust the width & left property according to
      * 1. current screen size
@@ -65,6 +88,23 @@ const Header: FC = () => {
                             {sidebarToggled ? <MenuOpenIcon /> : <MenuIcon />}
                         </IconButton>
                     </Tooltip>
+                </HeaderComponentsWrapper>
+                <HeaderComponentsWrapper>
+                    <Grid container justifyContent="center" alignItems="center" spacing={7}>
+                        {
+                            nftInfo.map(({ url, gain }, id) => (
+                                <Grid item xs={1} key={id}>
+                                    <Avatar
+                                        variant="rounded"
+                                        src={url}
+                                        sx={{
+                                            opacity: gain ? '100%' : '50%',
+                                        }}
+                                    />
+                                </Grid>
+                            ))
+                        }
+                    </Grid>
                 </HeaderComponentsWrapper>
                 <HeaderComponentsWrapper>
                     <HeaderButtons />

@@ -98,7 +98,7 @@ const MainWrapper: FC = ({ title, children }) => {
     const calculatedLeft = sidebarToggled && lgUp ? theme.sidebar.width : 0;
     const calculatedWidth = sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%';
 
-    const tried = useEagerConnect();
+    useEagerConnect();
 
     return (
         <HelmetProvider>
