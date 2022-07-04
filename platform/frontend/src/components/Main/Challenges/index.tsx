@@ -1,22 +1,39 @@
 import { FC } from 'react';
 import { useParams} from "react-router-dom";
-import { Button, Grid, Container } from '@mui/material';
+import { Button, Grid, Container, Typography, createTheme, ThemeProvider } from '@mui/material';
 import {
     HeaderWrapper,
     HeaderTypography,
     SubtitleTypography,
     SubHeaderTypography,
+    SubSubHeaderTypography,
     BodyTypography,
     PaperComponentWrapper
 } from '..';
 import MainWrapper from '..';
 import Error404 from '../../Error/_404.tsx';
 import Web3 from 'web3';
+import { styled } from '@mui/material/styles';
 import { useState } from "react";
-import { CodeBlock } from "react-code-blocks";
+import { CopyBlock, dracula } from "react-code-blocks";
 import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
 import { useEffect } from 'react';
+
+const CopyBlockWrapper = styled(Container)(
+    ({ theme }) => ({
+        '&.MuiContainer-root': {
+            fontFamily: 'monospace',
+            fontSize: '16px',
+            span: {
+                code: {
+                    backgroundColor: 'transparent',
+                    color: 'white',
+                }
+            }
+        }
+    })
+);
 
 const Challenge: FC = () => {
     const clickConnect = async () => {
@@ -169,16 +186,21 @@ const Challenge: FC = () => {
                             <PaperComponentWrapper>
                                 <Container>
                                     <SubHeaderTypography>
+                                        <Button variant="contained" onClick={clickConnect}>
+                                            Connect contract
+                                        </Button>
                                     </SubHeaderTypography>
-                                    <Button variant="contained" onClick={clickConnect}>
-                                        Connect contract.
-                                    </Button>
-                                    <BodyTypography>
+                                    <SubSubHeaderTypography>
                                         {info.tutorial}
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <CodeBlock text={vuln}/> 
-                                    </BodyTypography>
+                                    </SubSubHeaderTypography>
+                                    <CopyBlockWrapper>
+                                        <CopyBlock
+                                            text={vuln}
+                                            theme={dracula}
+                                            language="javascript"
+                                            showLineNumbers
+                                        /> 
+                                    </CopyBlockWrapper>
                                 </Container>
                             </PaperComponentWrapper>
                         </Grid>
