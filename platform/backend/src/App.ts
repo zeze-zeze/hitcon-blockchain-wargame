@@ -12,8 +12,9 @@ if (process.env.NODE_ENV === 'development') {
     /* Setup CORS for the development environment */
 
     const corsOption: CorsOptions = {
-        origin: 'http://localhost:3000',
+        origin: '*',
     };
+
     /* Enable Pre-flight CORS */
     const corsMidware = cors(corsOption);
     app.use(corsMidware);

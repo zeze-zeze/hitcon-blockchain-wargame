@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import Joi, { ValidationError } from 'joi';
-import ErrorMessages from '../error/ErrorMessages.json';
 
 type RegisterResponse = {
     status: string,

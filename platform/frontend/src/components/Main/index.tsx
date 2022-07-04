@@ -51,6 +51,15 @@ const SubHeaderTypography: FC = ({ children }) => {
     )
 };
 
+const SubSubHeaderTypography: FC = ({ children }) => {
+    const theme = useTheme();
+    return (
+        <Typography variant="h3" sx={{ margin: theme.spacing(3, 0) }}>
+        { children }
+        </Typography>
+    )
+};
+
 const BodyTypography: FC = ({ children }) => {
     const theme = useTheme();
     return (
@@ -122,6 +131,7 @@ export {
     HeaderTypography,
     SubtitleTypography,
     SubHeaderTypography,
+    SubSubHeaderTypography,
     BodyTypography,
     PaperComponentWrapper,
     PaperCenteredComponentWrapper,
