@@ -1,19 +1,8 @@
-import { Avatar, Box, Button, Card, Container, Grid, Typography, useMediaQuery } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Avatar, Box, Card, Container, Grid, Typography, useMediaQuery } from '@mui/material';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { styled, useTheme } from '@mui/material/styles';
-import { useWeb3React } from "@web3-react/core";
 import ConnectButton from 'components/Connector';
-
-const LoginWrapper = styled(Box)(
-    ({ theme }) => ({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: theme.spacing(4),
-    })
-);
 
 const LoginAvatar = styled(Avatar)(
     ({ theme }) => ({
@@ -25,7 +14,7 @@ const LoginAvatar = styled(Avatar)(
 );
 
 const LandingWrapper = styled(Container)(
-    ({ theme }) => ({
+    () => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -57,7 +46,7 @@ const LandingSubLandingHeaderTypography = styled(Typography)(
 );
 
 const LandingButtonsWrapper = styled(Box)(
-    ({ theme }) => ({
+    () => ({
         display: 'flex',
         justifyContent: 'space-evenly',
     })

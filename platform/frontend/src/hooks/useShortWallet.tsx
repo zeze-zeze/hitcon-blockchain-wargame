@@ -10,7 +10,7 @@ const useEthAddress = () => {
         } else {
             setAddress('Anonymous');
         }
-    }, [active, account]);
+    }, []);
     return address;
 };
 
