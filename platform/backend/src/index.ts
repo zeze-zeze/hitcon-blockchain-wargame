@@ -4,6 +4,7 @@ import app from "./App";
 import router from "./Routes";
 import cors, { CorsOptions } from "cors";
 import morgan from "morgan";
+import mongoose from 'mongoose';
 import createError from "http-errors";
 import bodyParser from "body-parser";
 import compression from "compression";
@@ -12,7 +13,9 @@ import helmet from "helmet";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const port: string = process.env.PORT ?? "8080";
+const mongoUrl: string = process.env.MONGOOSE_URL ?? 'mongodb://localhost:27017/hitcon';
 
+/* Setup express */
 if (process.env.NODE_ENV === "development") {
   /* Setup CORS for the development environment */
 
@@ -51,3 +54,16 @@ app.use((err: any, req: any, res: any, next: any) => {
 app.listen(port, () => {
   console.log(`[express]: Running at port ${port}`);
 });
+
+/* Setup mongoose */
+const run = async () => {
+  try {
+    await mongoose.connect(mongoUrl);
+    console.log(`[mongodb]: Running at ${mongoUrl}`);
+  } catch (err) {
+    console.error(err);
+  }
+  
+};
+
+run();

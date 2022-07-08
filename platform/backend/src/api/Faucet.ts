@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import createError from "http-errors";
 import asyncHandler from "express-async-handler";
 import { checkAddress } from "../web3/utils";
@@ -33,13 +33,13 @@ const send = async (address: string) => {
   return receipt;
 };
 
-const faucetCallBack = asyncHandler(async (req: any, res: any, next: any) => {
-  console.log(req.body);
+const faucetCallBack = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+
   if (!req.body.address) {
     return next(new BadRequest("Missing Address or Amount."));
   }
 
-  const { address } = req.body;
+  const { address }  = req.body;
 
   if (!checkAddress(address)) {
     return next(new UnprocessableEntity("Incorrect Wallet Address."));
@@ -47,7 +47,9 @@ const faucetCallBack = asyncHandler(async (req: any, res: any, next: any) => {
 
   await send(address);
 
-  if (res.status === 500) return res.status(500);
+  if (res.statusCode === 500) {
+    return res.status(500);
+  }
   else {
     return res.status(200).json({
       ok: true,

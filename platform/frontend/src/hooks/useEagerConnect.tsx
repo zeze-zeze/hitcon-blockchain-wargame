@@ -5,7 +5,7 @@ import { injected } from "components/Connector/InjectedConnector";
 
 const useEagerConnect = () => {
     const { activate, active } = useWeb3React();
-    const [tried, setTried] = useState(false);
+    const [tried, setTried] = useState<boolean>(false);
 
     useEffect(() => {
         const connecetedWallet = localStorage.getItem("_hitcon_wargame_");

@@ -3,6 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 
 const useSolvedProblems = () => {
     const [solvedProblems, setSolvedProblems] = useState<Array<boolean>>([false, false, false, false, false, false]);
+    const { active } = useWeb3React();
     useEffect(() => {
         if (active) {
             /* Procure all solved problems */
@@ -11,9 +12,8 @@ const useSolvedProblems = () => {
         } else {
             setSolvedProblems([false, false, false, false, false, false]);
         }
-    }, [solvedProblems]);
-    const { active, account } = useWeb3React();
-    return solvedProblems;
+    }, []);
+    return { solvedProblems, setSolvedProblems };
 };
 
 export default useSolvedProblems;
