@@ -6,7 +6,7 @@ import SidebarMenu from './SidebarMenu';
 import SidebarLogo from './SidebarLogo';
 import SidebarToggledContext from 'contexts/SidebarToggledContext';
 
-const SidebarWrapper: FC = styled(Box)(
+const SidebarWrapper = styled(Box)(
     ({ theme }) => ({
         width: theme.sidebar.width,
         color: theme.sidebar.textColor,

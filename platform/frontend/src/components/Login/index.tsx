@@ -6,7 +6,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { useWeb3React } from "@web3-react/core";
 import ConnectButton from 'components/Connector';
 
-const LoginWrapper: FC = styled(Box)(
+const LoginWrapper = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',
@@ -15,7 +15,7 @@ const LoginWrapper: FC = styled(Box)(
     })
 );
 
-const LoginAvatar: FC = styled(Avatar)(
+const LoginAvatar = styled(Avatar)(
     ({ theme }) => ({
         backgroundColor: theme.colors.error.light,
         width: '128px',
@@ -79,7 +79,7 @@ const Landing = () => {
                             <LoginAvatar>
                                 <LockOutlinedIcon sx={{ fontSize: '72px' }} />
                             </LoginAvatar>
-                            <LandingHeaderTypography component="h1" variant="h1">
+                            <LandingHeaderTypography variant="h1">
                                 Login
                             </LandingHeaderTypography>
                             <LandingSubLandingHeaderTypography

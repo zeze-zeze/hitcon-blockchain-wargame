@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Snackbar } from "@mui/material";
 import MuiAlert from '@mui/material/Alert';

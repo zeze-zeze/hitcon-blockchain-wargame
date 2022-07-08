@@ -1,5 +1,10 @@
 import { createContext } from 'react';
 
-const SidebarToggledContext = createContext<any>();
+type SidebarToggledContentType = {
+    sidebarToggled: boolean,
+    toggleSidebar: () => void;
+};
+
+const SidebarToggledContext = createContext<SidebarToggledContentType>({} as SidebarToggledContentType);
 
 export default SidebarToggledContext;

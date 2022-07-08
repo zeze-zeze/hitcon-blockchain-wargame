@@ -19,9 +19,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "typeRoots": {
-      "./node_modules/@types/"
-    },
     "baseUrl": "src"
   },
   "include": [

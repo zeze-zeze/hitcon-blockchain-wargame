@@ -9,7 +9,7 @@ import SidebarToggledContext from 'contexts/SidebarToggledContext';
 import { useWeb3React } from '@web3-react/core';
 import LoginButton from './LoginButton';
 
-const HeaderWrapper: FC = styled(Box)(
+const HeaderWrapper = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
         justifyContent: 'space-between',
@@ -27,7 +27,7 @@ const HeaderWrapper: FC = styled(Box)(
     })
 );
 
-const HeaderComponentsWrapper: FC = styled(Box)(
+const HeaderComponentsWrapper = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
         flexWrap: 'nowrap',
