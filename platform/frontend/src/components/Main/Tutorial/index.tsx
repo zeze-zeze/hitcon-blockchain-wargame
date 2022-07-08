@@ -14,7 +14,7 @@ import useEagerConnect from "components/Connector/EagerConnection";
 
 const Tutorial: FC = () => {
     return (
-        <MainWrapper>
+        <MainWrapper title="Tutorial">
             <Grid container>
                 <Grid item xs={12}>
                     <HeaderWrapper>

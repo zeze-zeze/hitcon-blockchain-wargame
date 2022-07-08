@@ -19,7 +19,7 @@ const LogoWrapper = styled(Box)(
     })
 );
 
-const LogoContainerWrapper: FC = styled(Link)(
+const LogoContainerWrapper = styled(Link)(
     ({ theme }) => ({
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightBold,
@@ -29,21 +29,21 @@ const LogoContainerWrapper: FC = styled(Link)(
     })
 );
 
-const LogoImageWrapper: FC = styled(Box)(
+const LogoImageWrapper = styled(Box)(
     ({ theme }) => ({
         width: '48px',
         height: '48px',
     })
 );
 
-const LogoTextWrapper: FC = styled(Box)(
+const LogoTextWrapper = styled(Box)(
     ({ theme }) => ({
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
     })
 );
 
-const LogoText: FC = styled(Box)(
+const LogoText = styled(Box)(
     ({ theme }) => ({
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightBold,

@@ -5,6 +5,12 @@ import { useTheme, styled } from '@mui/material/styles';
 import MainWrapper from 'components/Main';
 import EmojiFlagsTwoToneIcon from '@mui/icons-material/EmojiFlagsTwoTone';
 
+type ProblemProps = {
+    index: number,
+    title: string,
+    solved: boolean,
+}
+
 const StatusBadge = styled(Box)(
     ({ theme }) => ({
         padding: theme.spacing(0.75, 1.5),
@@ -17,7 +23,7 @@ const StatusBadge = styled(Box)(
     })
 );
 
-const ProblemCard: FC = styled(Card)(
+const ProblemCard = styled(Card)(
     ({ theme }) => ({
         height: '240px',
         minWidth: '240px',
@@ -25,7 +31,7 @@ const ProblemCard: FC = styled(Card)(
     })
 );
 
-const ProblemWrapper: FC = styled(CardContent)(
+const ProblemWrapper = styled(CardContent)(
     ({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',
@@ -35,7 +41,7 @@ const ProblemWrapper: FC = styled(CardContent)(
     })
 );
 
-const ProblemTitle: FC = styled(Typography)(
+const ProblemTitle = styled(Typography)(
     ({ theme }) => ({
         margin: theme.spacing(2),
         display: 'flex',
@@ -44,7 +50,7 @@ const ProblemTitle: FC = styled(Typography)(
     })
 );
 
-const ProblemContent: FC = styled(Box)(
+const ProblemContent = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',
@@ -55,7 +61,7 @@ const ProblemContent: FC = styled(Box)(
     })
 );
 
-const Problem: FC = ({ index, title, solved }) => {
+const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
 
     const theme = useTheme();
     const navigate = useNavigate();
@@ -121,7 +127,7 @@ const Problems: FC = () => {
     ];
 
     return (
-        <MainWrapper>
+        <MainWrapper title="Problems">
             <Grid container justifyContent="center">
                 {
                     problems.map(({ title }, index) => {

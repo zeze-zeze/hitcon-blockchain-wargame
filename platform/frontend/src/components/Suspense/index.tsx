@@ -2,7 +2,7 @@ import { useEffect, FC } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-const SuspenseComponentWrapper: FC = styled(Box)(
+const SuspenseComponentWrapper = styled(Box)(
     ({ theme }) => ({
         width: '100%',
         height: '100%',

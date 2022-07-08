@@ -1,5 +1,5 @@
 import { alpha, Badge, Box, Divider, IconButton, List, ListItem, Popover, Tooltip, Typography } from '@mui/material';
-import { useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { styled } from '@mui/material/styles';
 import { formatDistance, subDays } from 'date-fns';

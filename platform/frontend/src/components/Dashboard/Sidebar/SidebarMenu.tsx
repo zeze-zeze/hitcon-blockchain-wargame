@@ -15,7 +15,7 @@ const WaterDropIcon: FC = () => {
     );
 };
 
-const MenuEntryWrapper: FC = styled(List)(
+const MenuEntryWrapper = styled(List)(
     ({ theme }) => ({
         marginBottom: theme.spacing(1),
         padding: 0,
@@ -33,7 +33,7 @@ const MenuEntryWrapper: FC = styled(List)(
     })
 );
 
-const MenuSubEntryWrapper: FC = styled(List)(
+const MenuSubEntryWrapper = styled(List)(
     /* style menu entries */
     ({ theme }) => ({
         '&.MuiList-root': {

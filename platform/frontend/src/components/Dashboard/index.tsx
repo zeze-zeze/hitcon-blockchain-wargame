@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
-const DashboardWrapper: FC = styled(Box)(
+const DashboardWrapper = styled(Box)(
     ({ theme }) => ({
         width: '100%',
         height: '100%',

@@ -13,7 +13,7 @@ import {
 } from 'components/Main';
 import FaucetButton from 'components/Faucet';
 
-const FaucetContentWrapper: FC = styled(Container)(
+const FaucetContentWrapper = styled(Container)(
     ({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',

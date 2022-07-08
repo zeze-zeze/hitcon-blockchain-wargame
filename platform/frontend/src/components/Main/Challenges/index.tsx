@@ -1,24 +1,46 @@
 import { FC } from 'react';
 import { useParams} from "react-router-dom";
-import { Button, Grid, Container, Typography, createTheme, ThemeProvider } from '@mui/material';
+import { Alert, Button, Grid, Container, Snackbar } from '@mui/material';
 import {
     HeaderWrapper,
     HeaderTypography,
     SubtitleTypography,
     SubHeaderTypography,
     SubSubHeaderTypography,
-    BodyTypography,
     PaperComponentWrapper
 } from '..';
 import MainWrapper from '..';
-import Error404 from '../../Error/_404.tsx';
+import Error404 from 'components/Error/_404';
 import Web3 from 'web3';
+import { Contract } from 'web3-eth-contract';
 import { styled } from '@mui/material/styles';
 import { useState } from "react";
 import { CopyBlock, dracula } from "react-code-blocks";
 import chalExample from './chalExample.sol';
-import infoExample from './infoExample.json';
+//import infoExample from './infoExample.json';
+import infoExample from './testExample.json';
 import { useEffect } from 'react';
+import useSolvedProblems from 'hooks/useSolvedProblems';
+
+/* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
+
+declare global {
+    interface Window {
+        ethereum: any;
+        web3: Web3;
+        player: string;
+        contract: Contract;
+        help: () => void;
+    }
+}
+
+type InfoType = {
+    title: string;
+    description: string;
+    tutorial: string;
+    address: string;
+    abi: Array<any>;
+};
 
 const CopyBlockWrapper = styled(Container)(
     ({ theme }) => ({
@@ -50,12 +72,26 @@ const Challenge: FC = () => {
         const contract = new web3.eth.Contract(info.abi, info.address);
         window.contract = contract;
         if (contract.events.newSolved) {
-            contract.events.newSolved(function(error, result) {
-                // TODO: Simply reload NFT
-                if(result._solver === player) {
-                    window.location.reload(false);
-                }
-            });
+            if (contract.events.hasSolved) {
+                contract.events.hasSolved()
+                .on('data', () => {
+                    setErrorMessage("ERROR! You have already solved the problem!");
+                    setShowSnackBar(true);
+                })
+                .on('error', (error: Error) => {
+                    setErrorMessage(error.message);
+                    setShowSnackBar(true);
+                });
+            } else if (contract.events.newSolved) {
+                contract.events.newSolved()
+                .on('data', () => {
+
+                })
+                .on('error', (error: Error) => {
+                    setErrorMessage(error.message);
+                    setShowSnackBar(true);
+                });
+            }
         }
         window.help();
     }
@@ -67,12 +103,23 @@ const Challenge: FC = () => {
             'contract: current level contract instance (if connected)');
     }
     
-    const [chal, setChal] = useState("");
-    const [info, setInfo] = useState([]);
-    const [vuln, setVuln] = useState("");
+    const [chal, setChal] = useState<string>("");
+    const [info, setInfo] = useState<InfoType>({
+        title: '',
+        description: '',
+        tutorial: '',
+        address: '',
+        abi: [],
+    });
+    const [vuln, setVuln] = useState<string>("");
+    const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const { id } = useParams();
     const problemId = Number(id);
     const problemNum = Number(process.env.REACT_APP_PROBLEM_NUM);
+    const handleClose = () => {
+        setShowSnackBar(false);
+    };
 
     useEffect(() => {
         if (problemId === 0) {
@@ -87,132 +134,70 @@ const Challenge: FC = () => {
             setVuln(text);
         });
     });
+
+    const solvedProblems = useSolvedProblems();
+    console.log(solvedProblems);
     
     // TODO: better style for code block
-    if (Number.isInteger(problemId) && problemId >= 0 && problemId <= problemNum) {
-        if (problemId === 0){
-            return (
-                <MainWrapper>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <HeaderWrapper>
-                                <HeaderTypography>
-                                    Hello Ethernaut
-                                </HeaderTypography>
-                                <SubtitleTypography>
-                                    This level walks you through the very basics of how to play the game.
-                                </SubtitleTypography>
-                            </HeaderWrapper>
+    return (
+        <>
+            {
+                (Number.isInteger(problemId) && problemId >= 0 && problemId <= problemNum) ? (
+                    <MainWrapper title="Challenge">
+                        <Snackbar
+                            open={showSnackBar}
+                            autoHideDuration={6000}
+                            onClose={handleClose}
+                        >
+                            <Alert
+                                onClose={handleClose}
+                                severity="error"
+                                sx={{ width: "100%" }}
+                            >
+                            {errorMessage}
+                            </Alert>
+                        </Snackbar>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <HeaderWrapper>
+                                    <HeaderTypography>
+                                        {info.title}
+                                    </HeaderTypography>
+                                    <SubtitleTypography>
+                                        {info.description}
+                                    </SubtitleTypography>
+                                </HeaderWrapper>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <PaperComponentWrapper>
+                                    <Container>
+                                        <SubHeaderTypography>
+                                            <Button variant="contained" onClick={clickConnect}>
+                                                Connect contract
+                                            </Button>
+                                        </SubHeaderTypography>
+                                        <SubSubHeaderTypography>
+                                            {info.tutorial}
+                                        </SubSubHeaderTypography>
+                                        <CopyBlockWrapper>
+                                            <CopyBlock
+                                                text={vuln}
+                                                theme={dracula}
+                                                language="javascript"
+                                                showLineNumbers
+                                            /> 
+                                        </CopyBlockWrapper>
+                                    </Container>
+                                </PaperComponentWrapper>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <PaperComponentWrapper>
-                                <Container>
-                                    <SubHeaderTypography>
-                                        1. Set up MetaMask
-                                    </SubHeaderTypography>
-                                    <BodyTypography>
-                                        If you don't have it already, install the <a href="https://metamask.io/">MetaMask browser extension</a> (in Chrome, Firefox, Brave or Opera on your desktop machine). Set up the extension's wallet and use the network selector to point to the 'Rinkeby test network' in the top left of the extension's interface.
-                                    </BodyTypography>
-                                    <SubHeaderTypography>
-                                        2. Open the browser's console
-                                    </SubHeaderTypography>
-                                    <BodyTypography>
-                                        Open your browser's console: <code>Tools &gt; Developer Tools</code>.
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        You should see a few messages from the game. One of them should state your player's address. This will be important during the game! You can always see your player address by entering the following command:
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <code>player</code>
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        Keep an eye out for warnings and errors, since they could provide important information during gameplay.
-                                    </BodyTypography>
-                                    <SubHeaderTypography>
-                                        3. Use the console helpers
-                                    </SubHeaderTypography>
-                                    <BodyTypography>
-                                        You can also see your current ether balance by typing:
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <code>getBalance(player)</code>
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        NOTE: Expand the promise to see the actual value, even if it reads "pending". If you're using Chrome v62, you can use await getBalance(player) for a cleaner console experience.
-            Great! To see what other utility functions you have in the console type:
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <code>help()</code>
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        These will be super handy during gameplay.
-                                    </BodyTypography>
-                                    <SubHeaderTypography>
-                                        4. The ethernaut contract
-                                    </SubHeaderTypography>
-                                    <BodyTypography>
-                                        Enter the following command in the console:
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <code>ethernaut</code>
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        This is the game's main smart contract. You don't need to interact with it directly through the console (as this app will do that for you) but you can if you want to. Playing around with this object now is a great way to learn how to interact with the other smart contracts of the game.
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        Go ahead and expand the ethernaut object to see what's inside.
-                                    </BodyTypography>
-                                </Container>
-                            </PaperComponentWrapper>
-                        </Grid>
-                    </Grid>
-                </MainWrapper>
-            );
-        } else if (problemId > 0) {
-            return (
-                <MainWrapper>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <HeaderWrapper>
-                                <HeaderTypography>
-                                    {info.title}
-                                </HeaderTypography>
-                                <SubtitleTypography>
-                                    {info.description}
-                                </SubtitleTypography>
-                            </HeaderWrapper>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <PaperComponentWrapper>
-                                <Container>
-                                    <SubHeaderTypography>
-                                        <Button variant="contained" onClick={clickConnect}>
-                                            Connect contract
-                                        </Button>
-                                    </SubHeaderTypography>
-                                    <SubSubHeaderTypography>
-                                        {info.tutorial}
-                                    </SubSubHeaderTypography>
-                                    <CopyBlockWrapper>
-                                        <CopyBlock
-                                            text={vuln}
-                                            theme={dracula}
-                                            language="javascript"
-                                            showLineNumbers
-                                        /> 
-                                    </CopyBlockWrapper>
-                                </Container>
-                            </PaperComponentWrapper>
-                        </Grid>
-                    </Grid>
-                </MainWrapper>
-            );
-        }
-    }else {
-        return (
-            <Error404 />
-        );
-    }
+                    </MainWrapper>
+                ) : (
+                    <Error404 />
+                )
+            }
+        </>
+    )
 }
 
 export default Challenge;
