@@ -59,13 +59,8 @@ const HeaderButtons: FC = () => {
                 anchorEl={ref.current}
                 onClose={handleClose}
                 open={isOpen}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                PaperProps={{
+                    variant: 'outlined'
                 }}
             >
                 <NotificationTextWrapper>

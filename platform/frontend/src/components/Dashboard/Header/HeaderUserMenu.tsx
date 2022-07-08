@@ -71,13 +71,9 @@ const HeaderUserMenu = () => {
                 anchorEl={ref.current}
                 onClose={handleClose}
                 open={isOpen}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                PaperProps = {{
+                    variant: 'outlined',
+                    elevation: 24,
                 }}
             >
                 <List sx={{ p: 1 }} component="nav">
