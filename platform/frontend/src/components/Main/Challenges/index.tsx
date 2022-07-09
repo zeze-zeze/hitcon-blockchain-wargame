@@ -26,7 +26,7 @@ import Error404 from 'components/Error/_404';
 import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
 import useSolvedProblems from 'hooks/useSolvedProblems';
-import { useWeb3React } from '@web3-react/core';
+import useNotification from 'hooks/useNotification';
 
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 
@@ -86,8 +86,9 @@ const Challenge: FC = () => {
     const [showBackDrop, setShowBackDrop] = useState<boolean>(false);
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
-    const { id } = useParams();
+    const { id } = useParams<string>();
     const { solvedProblems, setSolvedProblems } = useSolvedProblems();
+    const { addNotification } = useNotification();
     const problemId = Number(id);
     const problemNum = Number(process.env.REACT_APP_PROBLEM_NUM);
 
@@ -124,6 +125,14 @@ const Challenge: FC = () => {
                 .on('data', () => {
                     setErrorMessage(`Congratulation! You solved problem ${id}.`);
                     setShowSnackBar(1);
+                    const solvedProblemsDup = [...solvedProblems]; // duplicate array
+                    solvedProblemsDup[problemId] = true;
+                    setSolvedProblems(solvedProblemsDup);
+                    addNotification({
+                        title: `Horray! You solve Problem ${id}.`,
+                        content: 'You won NFT1.',
+                        date: new Date(),
+                    });
                 })
                 .on('error', (error: Error) => {
                     setErrorMessage(error.message);
@@ -139,7 +148,7 @@ const Challenge: FC = () => {
     const handleSubmit = async () => {
         try {
             setShowBackDrop(true);
-            const winResult = await window.contract.methods.win().send({ from: window.player });
+            await window.contract.methods.win().send({ from: window.player });
         } catch (error) {
             console.log(error);
             if (error instanceof Error) {

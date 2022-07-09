@@ -1,17 +1,17 @@
-import { useEffect, useState, useReducer } from 'react';
+import { useEffect, useState, useCallback, useReducer } from 'react';
 import { useWeb3React } from "@web3-react/core";
 
 type MessageType = {
     title: string,
     content: string,
+    date: Date,
 };
 
 const useNotification = () => {
-    const [showNotification, setShowNotification] = useState<boolean>(false);
     const { active } = useWeb3React();
     /* https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate */
-    const [_, updateNotification] = useReducer(x => x + 1, 0);
-    const getNotification = async (): Promise<Array<MessageType>> => {
+    const [probe, updateNotification] = useReducer(x => x + 1, 0);
+    const getNotification = useCallback((): Array<MessageType> => {
         const notificationString = localStorage.getItem("_notifications_");
         if (notificationString === null) {
             return [];
@@ -24,18 +24,22 @@ const useNotification = () => {
                 return [];
             }
         }
-    };
-    const addNotification = async (message: MessageType): Promise<void> => {
-        const notification = await getNotification();
+    }, [probe]);
+    const addNotification = (message: MessageType): void => {
+        const notification = getNotification();
         notification.push(message);
         localStorage.setItem("_notifications_", JSON.stringify(notification));
         /* rerender */
         updateNotification();
     };
-    useEffect(() => {
-        setShowNotification(false);
-    }, [showNotification, active]);
-    return { showNotification, setShowNotification, getNotification, addNotification };
+    const deleteNotification = (idx: number): void => {
+        const notification = getNotification();
+        notification.splice(idx, 1);
+        localStorage.setItem("_notifications_", JSON.stringify(notification));
+        /* rerender */
+        updateNotification();
+    };
+    return { getNotification, addNotification, deleteNotification };
 };
 
 export default useNotification;
