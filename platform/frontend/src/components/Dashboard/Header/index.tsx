@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { Box, Avatar, Grid, IconButton, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, Avatar, Grid, IconButton, Tooltip, lighten, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -24,7 +24,7 @@ const HeaderWrapper = styled(Box)(
         color: theme.header.textColor,
         padding: theme.spacing(3),
         backgroundColor: theme.colors.alpha.black[100],
-        boxShadow: theme.header.boxShadow,
+        boxShadow: lighten(theme.colors.primary.main, 0.7),
     })
 );
 

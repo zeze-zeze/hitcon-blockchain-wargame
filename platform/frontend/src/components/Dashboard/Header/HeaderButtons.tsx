@@ -10,9 +10,16 @@ const NotificationsBadge = styled(Badge)(
             minWidth: '16px',
             height: '16px',
             padding: 0,
-            backgroundColor: alpha(theme.palette.error.main, 0.2),
+            backgroundColor: alpha(theme.palette.error.main, 0.75),
             color: theme.palette.error.main,
         }
+    })
+);
+
+const NotificationsIconWrapper = styled(Box)(
+    ({ theme }) => ({
+        color: theme.colors.alpha.trueWhite[70],
+        padding: 0,
     })
 );
 
@@ -50,9 +57,11 @@ const HeaderButtons: FC = () => {
         <Box>
             <Tooltip arrow title="Notifications">
                 <IconButtonWrapper ref={ref} onClick={handleOpen}>
-                    <NotificationsBadge badgeContent={1}>
-                        <NotificationsActiveIcon />
-                    </NotificationsBadge>
+                    <NotificationsIconWrapper>
+                        <NotificationsBadge badgeContent={1}>
+                            <NotificationsActiveIcon />
+                        </NotificationsBadge>
+                    </NotificationsIconWrapper>
                 </IconButtonWrapper>
             </Tooltip>
             <Popover

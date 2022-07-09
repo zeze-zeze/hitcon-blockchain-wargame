@@ -872,6 +872,7 @@ const mainTheme = createTheme({
             styleOverrides: {
                 root: {
                     borderRadius: 6,
+                    color: colors.alpha.trueWhite[70],
 
                     '& .MuiTouchRipple-root': {
                         borderRadius: 6
@@ -1260,12 +1261,15 @@ const mainTheme = createTheme({
         MuiTooltip: {
             styleOverrides: {
                 tooltip: {
-                    backgroundColor: alpha(colors.alpha.black['100'], 0.95),
+                    backgroundColor: alpha(colors.alpha.trueWhite['100'], 0.95),
+                    color: alpha(colors.alpha.black['100'], 0.9),
+                    border: '1px solid ' + colors.alpha.black[30],
                     padding: '8px 16px',
+                    
                     fontSize: 13
                 },
                 arrow: {
-                    color: alpha(colors.alpha.black['100'], 0.95)
+                    color: alpha(colors.alpha.trueWhite['100'], 0.95)
                 }
             }
         },

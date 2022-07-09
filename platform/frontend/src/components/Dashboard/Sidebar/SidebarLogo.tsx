@@ -40,7 +40,7 @@ const LogoTextWrapper = styled(Box)(
     ({ theme }) => ({
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
-        color: theme.colors.alpha.trueWhite[50],
+        color: theme.colors.alpha.trueWhite[70],
     })
 );
 

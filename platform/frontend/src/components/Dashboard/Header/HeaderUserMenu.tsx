@@ -29,7 +29,7 @@ const UserBoxText = styled(Box)(
 const UserBoxLabel = styled(Typography)(
     ({ theme }) => ({
         fontWeight: theme.typography.fontWeightBold,
-        color: theme.palette.secondary.main,
+        color: theme.colors.alpha.trueWhite[70],
         display: 'block',
         overflow: 'hidden',
         maxWidth: '156px',
