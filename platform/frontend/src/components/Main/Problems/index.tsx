@@ -107,7 +107,8 @@ const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
 };
 
 const Problems: FC = () => {
-    const { solvedProblems } = useSolvedProblems();
+    const { getSolvedProblems } = useSolvedProblems();
+    const solvedProblems = getSolvedProblems();
     const problems = [
         {
             "title": "Fallback",

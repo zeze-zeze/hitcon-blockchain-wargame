@@ -1,19 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useWeb3React } from "@web3-react/core";
 
 const useSolvedProblems = () => {
-    const [solvedProblems, setSolvedProblems] = useState<Array<boolean>>([false, false, false, false, false, false]);
+    const [solved, setSolved] = useState<Array<boolean>>([false, true, true, false, false, false]);
     const { active } = useWeb3React();
-    useEffect(() => {
-        if (active) {
-            /* Procure all solved problems */
-            //const allNewSolvedEvents = await contract.getPastEvents('allSolved', {fromBlock: 0, toBlock: 'latest'});
-            setSolvedProblems([false, true, true, false, false, false]);
-        } else {
-            setSolvedProblems([false, false, false, false, false, false]);
-        }
-    }, [active]);
-    return { solvedProblems, setSolvedProblems };
+    const getSolvedProblems = useCallback(() => {
+        /* Procure all solved problems */
+        //const allNewSolvedEvents = await contract.getPastEvents('allSolved', {fromBlock: 0, toBlock: 'latest'});
+        return solved;
+    }, [solved]);
+
+    const setSolvedProblems = (idx: number) => {
+        const solvedDup = [...solved];
+        solvedDup[idx - 1] = true;
+        setSolved(solvedDup);
+    }
+    console.log(solved);
+    
+    return { getSolvedProblems, setSolvedProblems };
 };
 
 export default useSolvedProblems;
