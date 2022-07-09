@@ -7,7 +7,7 @@ interface CheckSolvedInterface {
     function chal2Solved(address _solver) external;
 }
 
-/// @title Challenge one
+/// @title Challenge two
 /// @author Albert
 contract Chal2 is Ownable, Vuln2 {
     /*************************

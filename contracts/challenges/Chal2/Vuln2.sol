@@ -2,7 +2,7 @@
 pragma solidity ^0.8.10;
 
 /// @title Vulnerability for challenge two
-/// @author Albert
+/// @author Albert (Reference: Ethernaut)
 contract Vuln2 {
     /*************************
      **    MAIN VARIABLE     **
@@ -30,9 +30,7 @@ contract Vuln2 {
     modifier keyGate(bytes8 _gateKey) {
         unchecked {
             require(
-                uint64(bytes8(keccak256(abi.encodePacked(msg.sender)))) ^
-                    uint64(_gateKey) ==
-                    uint64(0) - 1
+                uint64(uint160(msg.sender)) ^ uint64(_gateKey) == uint64(0) - 1
             );
         }
         _;
