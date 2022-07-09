@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import Joi, { ValidationError } from "joi";
-// import ErrorMessages from "../error/ErrorMessages.json";
 
 type RegisterResponse =
   | {
@@ -52,10 +51,7 @@ const registerCallback = async (req: Request, res: Response) => {
        * Just choose one error message (error.details[0]) to display
        */
       registerRes = { error: error.details[0].message };
-    } else {
-      // registerRes = { error: ErrorMessages.SERVER_ERROR };
     }
-    // res.send(registerRes);
   }
 };
 
