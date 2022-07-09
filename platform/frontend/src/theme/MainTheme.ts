@@ -301,7 +301,7 @@ const colors = {
             bodyBg: '#f2f5f9'
         },
         sidebar: {
-            background: themeColors.white,
+            background: themeColors.black,
             textColor: themeColors.secondary,
             dividerBg: '#f2f5f9',
             menuItemColor: '#242E6F',
