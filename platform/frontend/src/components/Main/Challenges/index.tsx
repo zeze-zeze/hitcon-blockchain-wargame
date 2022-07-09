@@ -87,8 +87,10 @@ const Challenge: FC = () => {
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const { id } = useParams<string>();
-    const { solvedProblems, setSolvedProblems } = useSolvedProblems();
+    const { getSolvedProblems, setSolvedProblems } = useSolvedProblems();
     const { addNotification } = useNotification();
+
+    const solvedProblems = getSolvedProblems();
     const problemId = Number(id);
     const problemNum = Number(process.env.REACT_APP_PROBLEM_NUM);
 
@@ -125,9 +127,7 @@ const Challenge: FC = () => {
                 .on('data', () => {
                     setErrorMessage(`Congratulation! You solved problem ${id}.`);
                     setShowSnackBar(1);
-                    const solvedProblemsDup = [...solvedProblems]; // duplicate array
-                    solvedProblemsDup[problemId] = true;
-                    setSolvedProblems(solvedProblemsDup);
+                    setSolvedProblems(problemId); // no need to minus one!
                     addNotification({
                         title: `Horray! You solve Problem ${id}.`,
                         content: 'You won NFT1.',

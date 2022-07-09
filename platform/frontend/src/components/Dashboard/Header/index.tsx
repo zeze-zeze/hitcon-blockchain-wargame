@@ -44,7 +44,9 @@ const Header: FC = () => {
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
     const { sidebarToggled, toggleSidebar } = useContext(SidebarToggledContext);
     const { active } = useWeb3React();
-    const { solvedProblems } = useSolvedProblems();
+    const { getSolvedProblems } = useSolvedProblems();
+
+    const solvedProblems = getSolvedProblems();
 
     const nftImgLinks = [
         "https://i.imgur.com/fSFl7io.png",

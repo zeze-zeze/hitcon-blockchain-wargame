@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Box, IconButton, List, ListItem, Typography } from '@mui/material';
-import { formatDistanceToNow } from 'date-fns';
+import { parseISO, formatDistanceToNow } from 'date-fns';
 import useNotification from 'hooks/useNotification';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -29,21 +29,25 @@ const Notification: FC = () => {
                                         <Typography sx={{ fontWeight: 'bold' }}>
                                             {title}
                                         </Typography>
-                                        <Typography variant="caption" sx={{ textTransform: 'none' }}>
+                                    </Box>
+                                    <Box>
+                                        <Typography
+                                            component="span"
+                                            variant="body2"
+                                            color="text.secondary"
+                                        >
+                                            {content}
+                                        </Typography>
+                                    </Box>
+                                    <Box>
+                                    <Typography variant="caption" sx={{ textTransform: 'none' }}>
                                         {
-                                            formatDistanceToNow(date, {
+                                            formatDistanceToNow(parseISO(date.toString()), {
                                                 addSuffix: true
                                             })
                                         }
                                         </Typography>
                                     </Box>
-                                    <Typography
-                                        component="span"
-                                        variant="body2"
-                                        color="text.secondary"
-                                    >
-                                        {content}
-                                    </Typography>
                                 </Box>
                                 <Box>
                                 <IconButton
