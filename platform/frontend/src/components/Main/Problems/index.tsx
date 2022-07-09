@@ -5,6 +5,8 @@ import { useTheme, styled } from '@mui/material/styles';
 import MainWrapper from 'components/Main';
 import EmojiFlagsTwoToneIcon from '@mui/icons-material/EmojiFlagsTwoTone';
 
+import useSolvedProblems from 'hooks/useSolvedProblems';
+
 type ProblemProps = {
     index: number,
     title: string,
@@ -19,7 +21,8 @@ const StatusBadge = styled(Box)(
         display: 'inline-block',
         lineHeight: 1,
         fontWeight: 'bold',
-        fontSize: theme.typography.pxToRem(11),
+        fontSize: theme.typography.pxToRem(8),
+        color: theme.colors.alpha.white[100],
     })
 );
 
@@ -87,14 +90,13 @@ const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
                     </Typography>
                     <StatusBadge sx={{
                         background: solved ? theme.palette.success.main : theme.palette.error.main,
-                        color: theme.colors.alpha.white[100],
                     }}>
-                        Solved
+                        { solved ? 'Solved' : 'Not solved' }
                     </StatusBadge>
                     <Button
                         variant="contained"
                         style={{ marginTop: theme.spacing(2) }}
-                        onClick={handleNavigateChallenge}
+                        onClick={ handleNavigateChallenge }
                     >
                         Start Challenge
                     </Button>
@@ -105,6 +107,7 @@ const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
 };
 
 const Problems: FC = () => {
+    const { solvedProblems } = useSolvedProblems();
     const problems = [
         {
             "title": "Fallback",
@@ -130,13 +133,13 @@ const Problems: FC = () => {
         <MainWrapper title="Problems">
             <Grid container justifyContent="center">
                 {
-                    problems.map(({ title }, index) => {
+                    problems.map(({ title }, idx) => {
                         return (
                             <Problem
-                                key={index}
-                                index={index + 1}
+                                key={idx}
+                                index={idx + 1}
                                 title={title}
-                                solved={true}
+                                solved={solvedProblems[idx]}
                             />
                         );
                     })

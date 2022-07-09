@@ -7,6 +7,7 @@ import HeaderButtons from './HeaderButtons';
 import HeaderUserMenu from './HeaderUserMenu';
 import SidebarToggledContext from 'contexts/SidebarToggledContext';
 import { useWeb3React } from '@web3-react/core';
+import useSolvedProblems from 'hooks/useSolvedProblems';
 import LoginButton from './LoginButton';
 
 const HeaderWrapper = styled(Box)(
@@ -43,32 +44,17 @@ const Header: FC = () => {
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
     const { sidebarToggled, toggleSidebar } = useContext(SidebarToggledContext);
     const { active } = useWeb3React();
+    const { solvedProblems } = useSolvedProblems();
 
-    const nftInfo = [
-        {
-            url: 'https://i.imgur.com/nHHO5Q8.jpg',
-            gain: true,
-        },
-        {
-            url: 'https://i.imgur.com/nHHO5Q8.jpg',
-            gain: true,
-        },
-        {
-            url: 'https://i.imgur.com/nHHO5Q8.jpg',
-            gain: false,
-        },
-        {
-            url: 'https://i.imgur.com/nHHO5Q8.jpg',
-            gain: false,
-        },
-        {
-            url: 'https://i.imgur.com/nHHO5Q8.jpg',
-            gain: false,
-        },
-        {
-            url: 'https://i.imgur.com/nHHO5Q8.jpg',
-            gain: false,
-        },
+    console.log(solvedProblems);
+
+    const nftImgLinks = [
+        "https://i.imgur.com/fSFl7io.png",
+        "https://i.imgur.com/OP9jv73.png",
+        "https://i.imgur.com/VRYrAZ5.png",
+        "https://i.imgur.com/IFRMdTA.png",
+        "https://i.imgur.com/lgGrqE6.png", 
+        "https://i.imgur.com/yvn5IdB.png"
     ];
 
     /* 
@@ -95,19 +81,29 @@ const Header: FC = () => {
                 </HeaderComponentsWrapper>
                 <HeaderComponentsWrapper>
                     <Grid container justifyContent="center" alignItems="center" spacing={7}>
-                        {
-                            nftInfo.map(({ url, gain }, id) => (
-                                <Grid item xs={1} key={id}>
+                    {
+                        solvedProblems.map((solved: boolean, idx: number) => (
+                            <Grid item xs={1} key={idx}>
+                                <Tooltip arrow title={`Problem ${idx + 1}`}>
                                     <Avatar
                                         variant="rounded"
-                                        src={url}
+                                        src={nftImgLinks[idx]}
                                         sx={{
-                                            opacity: gain ? '100%' : '40%',
+                                            borderWidth: '3px',
+                                            borderStyle: 'dashed',
+                                            borderColor: solved ? theme.colors.success.main : theme.colors.error.main,
+                                            padding: '1px'
+                                        }}
+                                        imgProps={{
+                                            style: {
+                                                opacity: solved ? '100%' : '40%',
+                                            }
                                         }}
                                     />
-                                </Grid>
-                            ))
-                        }
+                                </Tooltip>
+                            </Grid>
+                        ))
+                    }
                     </Grid>
                 </HeaderComponentsWrapper>
                 <HeaderComponentsWrapper>

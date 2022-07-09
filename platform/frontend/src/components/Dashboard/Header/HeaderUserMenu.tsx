@@ -73,7 +73,6 @@ const HeaderUserMenu = () => {
                 open={isOpen}
                 PaperProps = {{
                     variant: 'outlined',
-                    elevation: 24,
                 }}
             >
                 <List sx={{ p: 1 }} component="nav">

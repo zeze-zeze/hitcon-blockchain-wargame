@@ -8,11 +8,11 @@ const useSolvedProblems = () => {
         if (active) {
             /* Procure all solved problems */
             //const allNewSolvedEvents = await contract.getPastEvents('allSolved', {fromBlock: 0, toBlock: 'latest'});
-            setSolvedProblems([true, false, true, false, false, false]);
+            setSolvedProblems([false, true, true, false, false, false]);
         } else {
             setSolvedProblems([false, false, false, false, false, false]);
         }
-    }, []);
+    }, [active]);
     return { solvedProblems, setSolvedProblems };
 };
 
