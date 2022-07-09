@@ -1,8 +1,8 @@
-import { alpha, Badge, Box, Divider, IconButton, List, ListItem, Popover, Tooltip, Typography } from '@mui/material';
 import { FC, useRef, useState } from 'react';
+import { alpha, Badge, Box, Divider, IconButton, Popover, Tooltip, Typography } from '@mui/material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import { styled } from '@mui/material/styles';
-import { formatDistance, subDays } from 'date-fns';
+import { styled, useTheme } from '@mui/material/styles';
+import Notification from './Notification';
 
 const NotificationsBadge = styled(Badge)(
     ({ theme }) => ({
@@ -16,7 +16,7 @@ const NotificationsBadge = styled(Badge)(
     })
 );
 
-const NotificationsIconWrapper = styled(Box)(
+const NotificationsIconWrapper = styled(Box)( 
     ({ theme }) => ({
         color: theme.colors.alpha.trueWhite[70],
         padding: 0,
@@ -42,6 +42,7 @@ const NotificationTextWrapper = styled(Box)(
 
 const HeaderButtons: FC = () => {
 
+    const theme = useTheme();
     const ref = useRef<any>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -69,36 +70,15 @@ const HeaderButtons: FC = () => {
                 onClose={handleClose}
                 open={isOpen}
                 PaperProps={{
-                    variant: 'outlined'
+                    variant: 'outlined',
+                    elevation: 0
                 }}
             >
                 <NotificationTextWrapper>
                     <Typography variant="h5">Notifications</Typography>
                 </NotificationTextWrapper>
                 <Divider />
-                <List sx={{ p: 0 }}>
-                    <ListItem sx={{ p: 2, minWidth: 350, display: { xs: 'block', sm: 'flex' } }}>
-                        <Box flex="1">
-                            <Box display="flex" justifyContent="space-between">
-                                <Typography sx={{ fontWeight: 'bold' }}>
-                                    Horray! You solved Challenge 1.
-                                </Typography>
-                                <Typography variant="caption" sx={{ textTransform: 'none' }}>
-                                    {formatDistance(subDays(new Date(), 3), new Date(), {
-                                        addSuffix: true
-                                    })}
-                                </Typography>
-                            </Box>
-                            <Typography
-                                component="span"
-                                variant="body2"
-                                color="text.secondary"
-                            >
-                                You gained a gift <code>NFT1</code>
-                            </Typography>
-                        </Box>
-                    </ListItem>
-                </List>
+                <Notification />
             </Popover>
         </Box>
     );

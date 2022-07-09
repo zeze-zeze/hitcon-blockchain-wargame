@@ -1,6 +1,14 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button, List, ListItem, ListSubheader, SvgIcon, alpha, lighten } from '@mui/material';
+import {
+    Button,
+    List,
+    ListItem,
+    ListSubheader,
+    SvgIcon,
+    alpha,
+    lighten
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';

@@ -43,7 +43,7 @@ const UserBoxSignoutBox = styled(Box)(
     })
 );
 
-const HeaderUserMenu = () => {
+const HeaderUserMenu: FC = () => {
 
     const ref = useRef<any>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -73,6 +73,7 @@ const HeaderUserMenu = () => {
                 open={isOpen}
                 PaperProps = {{
                     variant: 'outlined',
+                    elevation: 0
                 }}
             >
                 <List sx={{ p: 1 }} component="nav">
