@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { Box, Avatar, Button, Grid, IconButton, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, Avatar, Grid, IconButton, Tooltip, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -23,7 +23,7 @@ const HeaderWrapper = styled(Box)(
         height: theme.header.height,
         color: theme.header.textColor,
         padding: theme.spacing(3),
-        backgroundColor: theme.header.background,
+        backgroundColor: theme.colors.alpha.black[100],
         boxShadow: theme.header.boxShadow,
     })
 );
@@ -45,8 +45,6 @@ const Header: FC = () => {
     const { sidebarToggled, toggleSidebar } = useContext(SidebarToggledContext);
     const { active } = useWeb3React();
     const { solvedProblems } = useSolvedProblems();
-
-    console.log(solvedProblems);
 
     const nftImgLinks = [
         "https://i.imgur.com/fSFl7io.png",

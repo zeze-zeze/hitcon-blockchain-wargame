@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button, List, ListItem, ListSubheader, SvgIcon } from '@mui/material';
+import { Button, List, ListItem, ListSubheader, SvgIcon, alpha } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';
@@ -17,14 +17,14 @@ const WaterDropIcon: FC = () => {
 
 const MenuEntryWrapper = styled(List)(
     ({ theme }) => ({
-        marginBottom: theme.spacing(1),
+        margin: theme.spacing(1),
         padding: 0,
         '& > .MuiList-root': {
             padding: theme.spacing(0, 2, 2, 2)
         },
         '.MuiListSubheader-root': {
-            color: theme.sidebar.menuItemHeadingColor,
-            padding: theme.spacing(1, 2),
+            color: theme.colors.alpha.trueWhite[50],
+            padding: theme.spacing(1.5, 2),
             textTransform: 'uppercase',
             fontWeight: 'bold',
             fontSize: theme.typography.pxToRem(12),
@@ -42,9 +42,11 @@ const MenuSubEntryWrapper = styled(List)(
                 padding: theme.spacing(0.5, 2),
                 '.MuiButton-root': {
                     display: 'flex',
-                    color: theme.sidebar.menuItemColor,
+                    color: theme.colors.alpha.trueWhite[70],
+                    backgroundColor: 'transparent',
                     width: '100%',
                     justifyContent: 'flex-start',
+                    padding: theme.spacing(1.2, 3),
                     '.MuiButton-startIcon, .MuiButton-endIcon': {
                         transition: theme.transitions.create(['color']),
                         '.MuiSvgIcon-root': {
@@ -53,15 +55,21 @@ const MenuSubEntryWrapper = styled(List)(
                         }
                     },
                     '.MuiButton-startIcon': {
-                        fontSize: theme.typography.pxToRem(26),
+                        fontSize: theme.typography.pxToRem(24),
                         marginRight: theme.spacing(2),
-                        color: theme.sidebar.menuItemIconColor,
+                        color: theme.colors.alpha.trueWhite[30],
+                    },
+                    '.MuiButton-endIcon': {
+                        color: theme.colors.alpha.trueWhite[50],
+                        marginLeft: 'auto',
+                        opacity: '0.8',
+                        fontSize: theme.typography.pxToRem(20),
                     },
                     '&.Mui-active, &:hover': {
-                        backgroundColor: theme.sidebar.menuItemBgActive,
-                        color: theme.sidebar.menuItemColorActive,
-                        '.MuiButton-startIcon': {
-                            color: theme.sidebar.menuItemIconColorActive,
+                        backgroundColor: alpha(theme.colors.alpha.trueWhite[100], 0.06),
+                        color: theme.colors.alpha.trueWhite[100],
+                        '.MuiButton-startIcon, .MuiButton-endIcon': {
+                            color: theme.colors.alpha.trueWhite[100],
                         }
                     },
                 },
