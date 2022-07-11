@@ -112,8 +112,8 @@ const Challenge: FC = () => {
         const contract = new web3.eth.Contract(info.abi, info.address);
         window.contract = contract;
         if (contract.events.newSolved) {
-            if (contract.events.hasSolved) {
-                contract.events.hasSolved()
+            if (contract.events.hadSolved) {
+                contract.events.hadSolved()
                 .on('data', () => {
                     setErrorMessage("ERROR! You have already solved the problem!");
                     setShowSnackBar(2);
