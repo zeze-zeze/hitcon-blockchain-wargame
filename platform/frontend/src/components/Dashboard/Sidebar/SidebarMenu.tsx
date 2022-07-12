@@ -97,7 +97,7 @@ const SidebarMenu: FC = () => {
             <MenuSubEntryWrapper>
                 { /* Add new menu entries here */ }
                 <ListItem>
-                    <Button component={NavLink} startIcon={<HomeIcon />} to="/" >
+                    <Button component={NavLink} startIcon={<HomeIcon />} to="/home" >
                         Home
                     </Button>
                 </ListItem>

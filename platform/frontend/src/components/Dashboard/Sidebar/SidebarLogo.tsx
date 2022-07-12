@@ -58,7 +58,7 @@ const SidebarLogo: FC = () => {
 
     return (
         <LogoWrapper>
-            <LogoContainerWrapper to="/">
+            <LogoContainerWrapper to="/home">
                 <LogoImageWrapper>
                     <Image src={LogoImage} alt="logo" disableSpinner disableTransition />
                 </LogoImageWrapper>

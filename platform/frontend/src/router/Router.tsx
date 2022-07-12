@@ -31,7 +31,8 @@ const SuspenseWrapper = (Component: FC) => {
 };
 
 const Home: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Home')));
-const Login: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Login')));
+const Landing: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Landing')));
+const Connect: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Connect')));
 const Tutorial: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Tutorial')));
 const Problems: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Problems'))); 
 const Faucet: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Faucet'))); 
@@ -44,7 +45,12 @@ const router = [
     {
         path: '',
         exact: true,
-        element: <Home />,
+        element: <Landing />,
+    },
+    {
+        path: 'home',
+        exact: true,
+        element: <Home />  
     },
     {
         path: 'tutorial',
@@ -52,9 +58,9 @@ const router = [
         element: <Tutorial />,
     },
     {
-        path: 'login',
+        path: 'connect',
         exact: true,
-        element: <Login />,
+        element: <Connect />,
     },
     {
         path: 'problems',
