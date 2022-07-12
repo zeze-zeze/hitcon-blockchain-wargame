@@ -8,7 +8,6 @@ type MessageType = {
 };
 
 const useNotification = () => {
-    const { active } = useWeb3React();
     /* https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate */
     const [probe, updateNotification] = useReducer(x => x + 1, 0);
     const getNotification = useCallback((): Array<MessageType> => {
@@ -18,7 +17,7 @@ const useNotification = () => {
         } else {
             try {
                 const notification = JSON.parse(notificationString);
-                return notification;
+                return notification.slice().reverse();
             } catch (error) {
                 console.log("Cannot get notification: data corrupted");
                 return [];

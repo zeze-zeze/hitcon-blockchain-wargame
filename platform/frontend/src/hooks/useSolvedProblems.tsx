@@ -15,7 +15,6 @@ const useSolvedProblems = () => {
         solvedDup[idx - 1] = true;
         setSolved(solvedDup);
     }
-    console.log(solved);
     
     return { getSolvedProblems, setSolvedProblems };
 };
