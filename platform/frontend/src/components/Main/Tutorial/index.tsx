@@ -9,8 +9,6 @@ import {
     BodyTypography,
     PaperComponentWrapper
 } from 'components/Main';
-import { useWeb3React } from "@web3-react/core";
-import useEagerConnect from "components/Connector/EagerConnection";
 
 const Tutorial: FC = () => {
     return (

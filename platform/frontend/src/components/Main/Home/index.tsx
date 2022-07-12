@@ -9,8 +9,6 @@ import MainWrapper, {
     SubtitleTypography,
     PaperCenteredComponentWrapper,
 } from 'components/Main';
-import ConnectButton from 'components/Connector';
-import useEagerConnect from 'components/Connector/EagerConnection';
 
 type FixedSubHeaderTypographyProps = {
     children: ReactChild,
@@ -54,10 +52,10 @@ const Home: FC = () => {
                 <Grid item xs={12}>
                     <HeaderWrapper>
                         <HeaderTypography>
-                            The Ethernaut
+                            Hitcon Blockchain Wargame
                         </HeaderTypography>
                         <SubtitleTypography>
-                            The Ethernaut is a Web3/Solidity based wargame inspired on overthewire.org, played in the Ethereum Virtual Machine. Each level is a smart contract that needs to be 'hacked'.
+                            Hitcon Blockchain Wargame is a Web3/Solidity Game. Each level is a smart contract that needs to be 'hacked'
                         </SubtitleTypography>
                     </HeaderWrapper>
                 </Grid>

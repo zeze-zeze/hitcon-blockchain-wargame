@@ -252,7 +252,7 @@ const themeColors = {
     secondary: '#6E759F',
     success: '#57CA22',
     warning: '#FFA319',
-    error: '#FF1943',
+    error: '#F61E37',
     info: '#33C2FF',
     black: '#223354',
     white: '#ffffff',
@@ -801,8 +801,9 @@ const mainTheme = createTheme({
                     paddingRight: 16,
 
                     '.MuiSvgIcon-root': {
-                        transition: 'all .2s'
-                    }
+                        transition: 'all .4s'
+                    },
+                    borderRadius: '8px',
                 },
                 endIcon: {
                     marginRight: -8

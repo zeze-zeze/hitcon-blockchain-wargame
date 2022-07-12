@@ -1,5 +1,6 @@
 import { FC, useContext } from 'react';
-import { Box, Avatar, Grid, IconButton, Tooltip, lighten, useMediaQuery } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import { Box, Button, Avatar, Grid, IconButton, Tooltip, lighten, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -8,7 +9,6 @@ import HeaderUserMenu from './HeaderUserMenu';
 import SidebarToggledContext from 'contexts/SidebarToggledContext';
 import { useWeb3React } from '@web3-react/core';
 import useSolvedProblems from 'hooks/useSolvedProblems';
-import LoginButton from './LoginButton';
 
 const HeaderWrapper = styled(Box)(
     ({ theme }) => ({
@@ -112,7 +112,17 @@ const Header: FC = () => {
                         active ? (
                             <HeaderUserMenu />
                         ) : (
-                            <LoginButton />
+                            <Button
+                                component={NavLink}
+                                color="primary"
+                                variant="contained"
+                                to="/connect"
+                                sx={{
+                                    'margin': theme.spacing(0, 3)
+                                }}
+                            >
+                                Connect Wallet
+                            </Button>
                         )
                     }
                 </HeaderComponentsWrapper>
