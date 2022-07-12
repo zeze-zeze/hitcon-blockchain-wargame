@@ -4,15 +4,7 @@ import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import { styled } from '@mui/material/styles';
 import { CopyBlock, dracula } from "react-code-blocks";
-import {
-    Alert,
-    Backdrop,
-    Button,
-    CircularProgress,
-    Container,
-    Grid,
-    Snackbar,
-} from '@mui/material';
+import { Button, Container, Grid } from '@mui/material';
 import {
     HeaderWrapper,
     HeaderTypography,
@@ -27,6 +19,8 @@ import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
 import useSolvedProblems from 'hooks/useSolvedProblems';
 import useNotification from 'hooks/useNotification';
+import WaitEffect from 'components/WaitEffect';
+import { useWeb3React } from '@web3-react/core';
 
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 
@@ -85,8 +79,9 @@ const Challenge: FC = () => {
     const [showSnackBar, setShowSnackBar] = useState<number>(0);
     const [showBackDrop, setShowBackDrop] = useState<boolean>(false);
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
-    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
     const { id } = useParams<string>();
+    const { active, account } = useWeb3React();
     const { getSolvedProblems, setSolvedProblems } = useSolvedProblems();
     const { addNotification } = useNotification();
 
@@ -99,46 +94,51 @@ const Challenge: FC = () => {
     };
 
     const clickConnect = async () => {
-        if (window?.ethereum?.isMetaMask) {
-            const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            const account = Web3.utils.toChecksumAddress(accounts[0]);
-            window.player = account;
+        if (!active || account === undefined || account === null) {
+            setMessage("Please login first");
+            setShowSnackBar(2);
+            return;
         }
-
+        window.player = account;
         const web3 = new Web3(Web3.givenProvider);
         window.web3 = web3;
         const contract = new web3.eth.Contract(info.abi, info.address);
         window.contract = contract;
+        if (contract.events.hadSolved) {
+            contract.events.hadSolved({
+                filter: {
+                    _solver: window.player
+                }
+            })
+            .on('data', () => {
+                setMessage("ERROR! You have already solved the problem!");
+                setShowSnackBar(2);
+            })
+            .on('error', (error: Error) => {
+                setMessage(error.message);
+                setShowSnackBar(2);
+            });
+        }
         if (contract.events.newSolved) {
-            if (contract.events.hadSolved) {
-                contract.events.hadSolved()
-                .on('data', () => {
-                    setErrorMessage("ERROR! You have already solved the problem!");
-                    setShowSnackBar(2);
-                })
-                .on('error', (error: Error) => {
-                    setErrorMessage(error.message);
-                    setShowSnackBar(2);
+            contract.events.newSolved({
+                filter: {
+                    _solver: window.player
+                }
+            })
+            .on('data', () => {
+                setMessage(`Congratulation! You solved problem ${id}.`);
+                setShowSnackBar(1);
+                setSolvedProblems(problemId); // no need to minus one!
+                addNotification({
+                    title: `Horray! You solve Problem ${id}.`,
+                    content: 'You won NFT1.',
+                    date: new Date(),
                 });
-            } else if (contract.events.newSolved) {
-                contract.events.newSolved()
-                .on('data', () => {
-                    setErrorMessage(`Congratulation! You solved problem ${id}.`);
-                    setShowSnackBar(1);
-                    setSolvedProblems(problemId); // no need to minus one!
-                    addNotification({
-                        title: `Horray! You solve Problem ${id}.`,
-                        content: 'You won NFT1.',
-                        date: new Date(),
-                    });
-                })
-                .on('error', (error: Error) => {
-                    setErrorMessage(error.message);
-                    setShowSnackBar(2);
-                });
-            }
+            })
+            .on('error', (error: Error) => {
+                setMessage(error.message);
+                setShowSnackBar(2);
+            });
         }
         window.help();
         setConnectButtonText("Connected!");
@@ -152,7 +152,7 @@ const Challenge: FC = () => {
         } catch (error) {
             console.log(error);
             if (error instanceof Error) {
-                setErrorMessage("Transaction failed!! Make sure that you REALLY solved the challenge");
+                setMessage("Transaction failed!! Make sure that you REALLY solved the challenge");
                 setShowSnackBar(2);
             }
         }
@@ -169,30 +169,23 @@ const Challenge: FC = () => {
         });
     }, [chalExample, infoExample, setVuln, chal]);
     
+    useEffect(() => {
+        if (account !== undefined && account !== null) {
+            window.player = account;
+        }
+    }, [account]);
     return (
         <>
             {
                 (Number.isInteger(problemId) && problemId >= 1 && problemId <= problemNum) ? (
                     <MainWrapper title="Challenge">
-                        <Backdrop
-                            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                            open={showBackDrop}
-                        >
-                            <CircularProgress color="inherit" />
-                        </Backdrop>
-                        <Snackbar
-                            open={showSnackBar != 0}
-                            autoHideDuration={6000}
-                            onClose={handleClose}
-                        >
-                            <Alert
-                                onClose={handleClose}
-                                severity={showSnackBar === 1 ? "success" : "error"}
-                                sx={{ width: "100%" }}
-                            >
-                            {errorMessage}
-                            </Alert>
-                        </Snackbar>
+                        <WaitEffect
+                            showBackDrop={showBackDrop}
+                            showSnackBar={showSnackBar}
+                            setShowSnackBar={setShowSnackBar}
+                            success={message}
+                            error={message}
+                        />
                         <Grid container>
                             <Grid item xs={12}>
                                 <HeaderWrapper>
