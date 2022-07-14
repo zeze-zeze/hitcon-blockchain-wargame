@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Grid, Box, Container, Card, Button, Paper, CardContent, Typography } from '@mui/material';
+import { Box, Container, Grid, Link } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MainWrapper from 'components/Main';
 import { useWeb3React } from "@web3-react/core";
@@ -40,7 +40,7 @@ const Faucet: FC = () => {
                         </SubtitleTypography>
                     </HeaderWrapper>
                 </Grid>
-                <Grid container justifyContent="center" xs={12}>
+                <Grid container justifyContent="center">
                     <PaperCenteredComponentWrapper sx={{ 'width': '75%' }}>
                         <FaucetContentWrapper>
                             <SubHeaderTypography>
@@ -58,9 +58,35 @@ const Faucet: FC = () => {
                                 <kbd>0.1 ETH</kbd>
                             </BodyTypography>
                             { /*Testing sitekey*/ }
-                            <BodyTypography>
+                            <Box
+                                sx={{
+                                    padding: theme.spacing(2)
+                                }}
+                            >
                                 <FaucetButton />
-                            </BodyTypography>
+                            </Box>
+                            <SubHeaderTypography>
+                                Need more ETH?
+                            </SubHeaderTypography>
+                            <Grid
+                                container
+                                flexDirection="column"
+                                justifyContent="center"
+                                alignItems="center"
+                                sx={{
+                                    padding: theme.spacing(2)
+                                }}
+                            >
+                                <Link href="https://rinkebyfaucet.com/ " underline="hover">
+                                    Rinkeby FAUCET
+                                </Link>
+                                <Link href="https://faucets.chain.link/rinkeby" underline="hover">
+                                    Chainlink Faucet
+                                </Link>
+                                <Link href="https://faucet.rinkeby.io/" underline="hover">
+                                    Rinkeby Authenticated Faucet
+                                </Link>
+                            </Grid>
                         </FaucetContentWrapper>
                     </PaperCenteredComponentWrapper>
                 </Grid>
