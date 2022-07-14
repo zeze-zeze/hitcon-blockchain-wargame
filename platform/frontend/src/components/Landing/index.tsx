@@ -95,7 +95,7 @@ const Landing: FC = () => {
                                             margin: theme.spacing(0, 3),
                                         }}
                                     >
-                                        Login via HITCON
+                                        Login via Onepage
                                     </Button>
                                 </Grid>
                                 <Grid item xs={6} mx="auto">
