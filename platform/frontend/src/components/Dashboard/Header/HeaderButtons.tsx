@@ -1,9 +1,9 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef, useState, useContext } from 'react';
 import { alpha, Badge, Box, Divider, IconButton, Popover, Tooltip, Typography } from '@mui/material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { styled, useTheme } from '@mui/material/styles';
 import Notification from './Notification';
-import useNotification from 'hooks/useNotification';
+import NotificationContext from "contexts/NotificationContext";
 
 const NotificationsBadge = styled(Badge)(
     ({ theme }) => ({
@@ -17,7 +17,7 @@ const NotificationsBadge = styled(Badge)(
     })
 );
 
-const NotificationsIconWrapper = styled(Box)( 
+const NotificationsIconWrapper = styled(Box)(
     ({ theme }) => ({
         color: theme.colors.alpha.trueWhite[70],
         padding: 0,
@@ -44,23 +44,16 @@ const NotificationTextWrapper = styled(Box)(
 const HeaderButtons: FC = () => {
 
     const theme = useTheme();
-    const ref = useRef<any>(null);
-    const { getNotification } = useNotification();
-    const notification = getNotification();
+    const buttonRef = useRef<any>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-
-    const handleOpen = () => {
-        setIsOpen(true);
-    };
-
-    const handleClose = () => {
-        setIsOpen(false);
-    };
+    const { notification } = useContext(NotificationContext);
 
     return (
         <Box>
             <Tooltip arrow title="Notifications">
-                <IconButtonWrapper ref={ref} onClick={handleOpen}>
+                <IconButtonWrapper ref={buttonRef} onClick={() => {
+                    setIsOpen(true);
+                }}>
                     <NotificationsIconWrapper>
                         <NotificationsBadge
                             invisible={notification.length === 0}
@@ -72,8 +65,10 @@ const HeaderButtons: FC = () => {
                 </IconButtonWrapper>
             </Tooltip>
             <Popover
-                anchorEl={ref.current}
-                onClose={handleClose}
+                anchorEl={buttonRef.current}
+                onClose={() => {
+                    setIsOpen(false);
+                }}
                 open={isOpen}
                 PaperProps={{
                     variant: 'outlined',
