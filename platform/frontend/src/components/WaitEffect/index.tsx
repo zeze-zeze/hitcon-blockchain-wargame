@@ -27,7 +27,7 @@ const WaitEffect: FC<WaitEffectProps> = ({
     return (
         <>
             <Backdrop
-                sx={{ color: "#fff" }}
+                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={showBackDrop}
             >
                 <CircularProgress color="inherit" />

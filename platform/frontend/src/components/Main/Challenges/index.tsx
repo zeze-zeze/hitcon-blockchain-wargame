@@ -21,6 +21,7 @@ import useSolvedProblems from 'hooks/useSolvedProblems';
 import useNotification from 'hooks/useNotification';
 import WaitEffect from 'components/WaitEffect';
 import { useWeb3React } from '@web3-react/core';
+import useInactiveListener from 'hooks/useInactiveListener';
 
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 
@@ -74,6 +75,8 @@ const Challenge: FC = () => {
         address: '',
         abi: [],
     });
+
+    const [contract, setContract] = useState<Contract>();
     const [vuln, setVuln] = useState<string>('');
     const [connectButtonText, setConnectButtonText] = useState<string>("Connect contract");
     const [showSnackBar, setShowSnackBar] = useState<number>(0);
@@ -84,10 +87,7 @@ const Challenge: FC = () => {
     const { active, account } = useWeb3React();
     const { getSolvedProblems, setSolvedProblems } = useSolvedProblems();
     const { addNotification } = useNotification();
-
-    const solvedProblems = getSolvedProblems();
-    const problemId = Number(id);
-    const problemNum = Number(process.env.REACT_APP_PROBLEM_NUM);
+    const [problemId, setProblemId] = useState<number>(0);
 
     const handleClose = () => {
         setShowSnackBar(0);
@@ -104,42 +104,7 @@ const Challenge: FC = () => {
         window.web3 = web3;
         const contract = new web3.eth.Contract(info.abi, info.address);
         window.contract = contract;
-        if (contract.events.hadSolved) {
-            contract.events.hadSolved({
-                filter: {
-                    _solver: window.player
-                }
-            })
-            .on('data', () => {
-                setMessage("ERROR! You have already solved the problem!");
-                setShowSnackBar(2);
-            })
-            .on('error', (error: Error) => {
-                setMessage(error.message);
-                setShowSnackBar(2);
-            });
-        }
-        if (contract.events.newSolved) {
-            contract.events.newSolved({
-                filter: {
-                    _solver: window.player
-                }
-            })
-            .on('data', () => {
-                setMessage(`Congratulation! You solved problem ${id}.`);
-                setShowSnackBar(1);
-                setSolvedProblems(problemId); // no need to minus one!
-                addNotification({
-                    title: `Horray! You solve Problem ${id}.`,
-                    content: 'You won NFT1.',
-                    date: new Date(),
-                });
-            })
-            .on('error', (error: Error) => {
-                setMessage(error.message);
-                setShowSnackBar(2);
-            });
-        }
+        setContract(contract);
         window.help();
         setConnectButtonText("Connected!");
         setSubmitDisabled(false);
@@ -174,10 +139,56 @@ const Challenge: FC = () => {
             window.player = account;
         }
     }, [account]);
+
+    useEffect(() => {
+        if (contract) {
+            if (contract.events.hadSolved) {
+                contract.events.hadSolved({
+                    filter: {
+                        _solver: window.player
+                    }
+                })
+                .on('data', () => {
+                    setMessage("ERROR! You have already solved the problem!");
+                    setShowSnackBar(2);
+                })
+                .on('error', (error: Error) => {
+                    setMessage(error.message);
+                    setShowSnackBar(2);
+                });
+            }
+            if (contract.events.newSolved) {
+                contract.events.newSolved({
+                    filter: {
+                        _solver: window.player
+                    }
+                })
+                .on('data', () => {
+                    setMessage(`Congratulation! You solved problem ${id}.`);
+                    console.log('here');
+                    setShowSnackBar(1);
+                    addNotification({
+                        title: `Horray! You solve Problem ${id}.`,
+                        content: 'You won NFT1.',
+                        date: new Date(),
+                    });
+                })
+                .on('error', (error: Error) => {
+                    setMessage(error.message);
+                    setShowSnackBar(2);
+                });
+            }
+        }
+    }, [contract]);
+
+    useEffect(() => {
+        setProblemId(Number(id));
+    }, []);
+
     return (
         <>
             {
-                (Number.isInteger(problemId) && problemId >= 1 && problemId <= problemNum) ? (
+                (Number.isInteger(problemId) && problemId >= 1 && problemId <= Number(process.env.REACT_APP_PROBLEM_NUM)) ? (
                     <MainWrapper title="Challenge">
                         <WaitEffect
                             showBackDrop={showBackDrop}

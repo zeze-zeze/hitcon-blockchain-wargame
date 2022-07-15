@@ -3,6 +3,7 @@ import { alpha, Badge, Box, Divider, IconButton, Popover, Tooltip, Typography } 
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { styled, useTheme } from '@mui/material/styles';
 import Notification from './Notification';
+import useNotification from 'hooks/useNotification';
 
 const NotificationsBadge = styled(Badge)(
     ({ theme }) => ({
@@ -44,6 +45,8 @@ const HeaderButtons: FC = () => {
 
     const theme = useTheme();
     const ref = useRef<any>(null);
+    const { getNotification } = useNotification();
+    const notification = getNotification();
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const handleOpen = () => {
@@ -59,7 +62,10 @@ const HeaderButtons: FC = () => {
             <Tooltip arrow title="Notifications">
                 <IconButtonWrapper ref={ref} onClick={handleOpen}>
                     <NotificationsIconWrapper>
-                        <NotificationsBadge badgeContent={1}>
+                        <NotificationsBadge
+                            invisible={notification.length === 0}
+                            badgeContent={notification.length}
+                        >
                             <NotificationsActiveIcon />
                         </NotificationsBadge>
                     </NotificationsIconWrapper>
