@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useCallback, useContext } from 'react';
 import { useParams } from "react-router-dom";
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
@@ -18,10 +18,9 @@ import Error404 from 'components/Error/_404';
 import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
 import useSolvedProblems from 'hooks/useSolvedProblems';
-import useNotification from 'hooks/useNotification';
 import WaitEffect from 'components/WaitEffect';
 import { useWeb3React } from '@web3-react/core';
-import useInactiveListener from 'hooks/useInactiveListener';
+import NotificationContext from "contexts/NotificationContext";
 
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 
@@ -41,6 +40,12 @@ type InfoType = {
     tutorial: string;
     address: string;
     abi: Array<any>;
+};
+
+type MessageType = {
+    title: string,
+    content: string,
+    date: number,
 };
 
 const CopyBlockWrapper = styled(Container)(
@@ -66,7 +71,7 @@ const Challenge: FC = () => {
             'web3: web3 object\n',
             'contract: current level contract instance (if connected)');
     }
-    
+
     const [chal, setChal] = useState<string>("");
     const [info, setInfo] = useState<InfoType>({
         title: '',
@@ -75,7 +80,6 @@ const Challenge: FC = () => {
         address: '',
         abi: [],
     });
-
     const [contract, setContract] = useState<Contract>();
     const [vuln, setVuln] = useState<string>('');
     const [connectButtonText, setConnectButtonText] = useState<string>("Connect contract");
@@ -85,21 +89,15 @@ const Challenge: FC = () => {
     const [message, setMessage] = useState<string>('');
     const { id } = useParams<string>();
     const { active, account } = useWeb3React();
+    const { addNotification } = useContext(NotificationContext);
     const { getSolvedProblems, setSolvedProblems } = useSolvedProblems();
-    const { addNotification } = useNotification();
-    const [problemId, setProblemId] = useState<number>(0);
 
-    const handleClose = () => {
-        setShowSnackBar(0);
-    };
-
-    const clickConnect = async () => {
-        if (!active || account === undefined || account === null) {
+    const clickConnect = useCallback(async () => {
+        if (!active || !account) {
             setMessage("Please login first");
             setShowSnackBar(2);
             return;
         }
-        window.player = account;
         const web3 = new Web3(Web3.givenProvider);
         window.web3 = web3;
         const contract = new web3.eth.Contract(info.abi, info.address);
@@ -108,34 +106,38 @@ const Challenge: FC = () => {
         window.help();
         setConnectButtonText("Connected!");
         setSubmitDisabled(false);
-    }
+    }, [active, account, info, contract]);
 
-    const handleSubmit = async () => {
+    const handleSubmit = useCallback(async () => {
+        if (!active || !account || !contract) {
+            setMessage("Please login first");
+            setShowSnackBar(2);
+            return;
+        }
         try {
             setShowBackDrop(true);
-            await window.contract.methods.win().send({ from: window.player });
+            await contract.methods.win().send({ from: account });
         } catch (error) {
-            console.log(error);
             if (error instanceof Error) {
                 setMessage("Transaction failed!! Make sure that you REALLY solved the challenge");
                 setShowSnackBar(2);
             }
         }
         setShowBackDrop(false);
-    };
+    }, [active, account, contract]);
 
     useEffect(() => {
         setChal(chalExample);
         setInfo(infoExample);
         fetch(chal)
-        .then(r=>r.text())
-        .then(text=>{
-            setVuln(text);
-        });
-    }, [chalExample, infoExample, setVuln, chal]);
-    
+            .then(r => r.text())
+            .then(text => {
+                setVuln(text);
+            });
+    }, [chalExample, infoExample, chal]);
+
     useEffect(() => {
-        if (account !== undefined && account !== null) {
+        if (account) {
             window.player = account;
         }
     }, [account]);
@@ -148,14 +150,14 @@ const Challenge: FC = () => {
                         _solver: window.player
                     }
                 })
-                .on('data', () => {
-                    setMessage("ERROR! You have already solved the problem!");
-                    setShowSnackBar(2);
-                })
-                .on('error', (error: Error) => {
-                    setMessage(error.message);
-                    setShowSnackBar(2);
-                });
+                    .on('data', () => {
+                        setMessage("ERROR! You have already solved the problem!");
+                        setShowSnackBar(2);
+                    })
+                    .on('error', (error: Error) => {
+                        setMessage(error.message);
+                        setShowSnackBar(2);
+                    });
             }
             if (contract.events.newSolved) {
                 contract.events.newSolved({
@@ -163,32 +165,42 @@ const Challenge: FC = () => {
                         _solver: window.player
                     }
                 })
-                .on('data', () => {
-                    setMessage(`Congratulation! You solved problem ${id}.`);
-                    console.log('here');
-                    setShowSnackBar(1);
-                    addNotification({
-                        title: `Horray! You solve Problem ${id}.`,
-                        content: 'You won NFT1.',
-                        date: new Date(),
+                    .on('data', () => {
+                        setMessage(`Congratulation! You solved problem ${id}.`);
+                        setShowSnackBar(1);
+                        addNotification({
+                            title: `Horray! You solve Problem ${id}.`,
+                            content: 'You won NFT1.',
+                            date: Date.now(),
+                        });
+                    })
+                    .on('error', (error: Error) => {
+                        setMessage(error.message);
+                        setShowSnackBar(2);
                     });
-                })
-                .on('error', (error: Error) => {
-                    setMessage(error.message);
-                    setShowSnackBar(2);
-                });
             }
         }
+        return () => {
+            /* remove event handler when unmount */
+            if (contract) {
+                if (contract.events.hadSolved) {
+                    contract.events.hadSolved().off();
+                }
+                if (contract.events.newSolved) {
+                    contract.events.newSolved().off();
+                }
+            }
+        };
     }, [contract]);
-
-    useEffect(() => {
-        setProblemId(Number(id));
-    }, []);
 
     return (
         <>
             {
-                (Number.isInteger(problemId) && problemId >= 1 && problemId <= Number(process.env.REACT_APP_PROBLEM_NUM)) ? (
+                (
+                    Number.isInteger(Number(id))
+                    && Number(id) >= 1
+                    && Number(id) <= Number(process.env.REACT_APP_PROBLEM_NUM)
+                ) ? (
                     <MainWrapper title="Challenge">
                         <WaitEffect
                             showBackDrop={showBackDrop}
@@ -228,7 +240,7 @@ const Challenge: FC = () => {
                                                 theme={dracula}
                                                 language="javascript"
                                                 showLineNumbers
-                                            /> 
+                                            />
                                         </CopyBlockWrapper>
                                         <SubSubHeaderTypography>
                                             Submit Solution
