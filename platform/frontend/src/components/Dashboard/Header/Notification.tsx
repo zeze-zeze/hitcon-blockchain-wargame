@@ -7,16 +7,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const Notification: FC = () => {
 
     const { getNotification, deleteNotification } = useNotification();
-    const notifications = getNotification();
-    const notificationsLength = notifications.length;
+    const notification = getNotification();
 
     return (
         <List sx={{ p: 0 }}>
         {
-            notificationsLength !== 0 ? (
+            (notification.length) ? (
                 <>
                     {
-                        notifications.map(({ title, content, date }, idx) => (
+                        notification.slice().reverse().map(({ title, content, date }, idx) => (
                             <ListItem key={idx} sx={{ p: 2, minWidth: 350, display: { xs: 'block', sm: 'flex' } }}>
                                 <Box flex="1">
                                     <Box

@@ -17,7 +17,7 @@ const useNotification = () => {
         } else {
             try {
                 const notification = JSON.parse(notificationString);
-                return notification.slice().reverse();
+                return notification;
             } catch (error) {
                 console.log("Cannot get notification: data corrupted");
                 return [];
