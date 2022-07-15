@@ -10,7 +10,6 @@ import { injected } from './InjectedConnector';
 import { setupNetwork } from './walletNetwork';
 import WaitEffect from 'components/WaitEffect';
 import { useNavigate } from 'react-router';
-import useInactiveListener from 'hooks/useInactiveListener';
 
 const ConnectButton: FC = () => {
 
