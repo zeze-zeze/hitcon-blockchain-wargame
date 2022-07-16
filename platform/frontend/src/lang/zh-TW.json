@@ -1,0 +1,11 @@
+{
+    "landing": {
+        "title": "HITCON 區塊鏈挑戰",
+        "subtitle": "歡迎來到 HITCON 區塊鏈挑戰",
+        "lang": "語言",
+        "buttons": {
+            "loginViaOnepage": "從 Onepage 登入",
+            "playAnonymously": "直接開始挑戰"
+        }
+    }
+}

@@ -41,14 +41,14 @@ const Error404 = () => {
             <ErrorWrapper>
                 <Container maxWidth="md">
                     <Box textAlign="center">
-                        <Typography variant="h2" sx={{ my: 4 }}>
+                        <Typography variant="h2" sx={{ marginY: 4 }}>
                             Oops! Page not found!
                         </Typography>
                         <Typography
                             variant="h4"
                             color="text.secondary"
                             fontWeight="normal"
-                            sx={{ mb: 4 }}
+                            sx={{ marginBotton: 4 }}
                         >
                             The page you were looking for does not exist.
                         </Typography>
