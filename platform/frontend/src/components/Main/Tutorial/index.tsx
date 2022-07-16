@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Grid, Container } from '@mui/material';
 import MainWrapper from 'components/Main';
 import {
@@ -9,18 +9,20 @@ import {
     BodyTypography,
     PaperComponentWrapper
 } from 'components/Main';
+import LanguageContext from 'contexts/LanguageContext';
 
 const Tutorial: FC = () => {
+    const { multiLang } = useContext(LanguageContext);
     return (
         <MainWrapper title="Tutorial">
             <Grid container>
                 <Grid item xs={12}>
                     <HeaderWrapper>
                         <HeaderTypography>
-                            Hello Ethernaut
+                            {multiLang?.tutorial.title}
                         </HeaderTypography>
                         <SubtitleTypography>
-                            This level walks you through the very basics of how to play the game.
+                        {multiLang?.tutorial.subtitle}
                         </SubtitleTypography>
                     </HeaderWrapper>
                 </Grid>

@@ -79,12 +79,32 @@
         "cards": [
             {
                 "title": "區塊鏈新手嗎？",
-                "buttonText": "開始教學"
+                "buttonText": "前往教學"
             },
             {
                 "title": "區塊鏈老手嗎？",
                 "buttonText": "直接開始"
             }
         ]
+    },
+    "tutorial": {
+        "title": "教學",
+        "subtitle": "此教學將帶領大家學會 Metamask，Solidity 等乙太坊基礎知識"
+    },
+    "faucet": {
+        "title": "水龍頭",
+        "subtitle": "取得一些 Rinkeby 測試鏈乙太幣",
+        "content": {
+            "address": "以太幣地址",
+            "amount": "金額",
+            "buttonText": "取得乙太幣",
+            "needMore": "需要更多測試鏈乙太幣嗎？"
+        }
+    },
+    "success": {
+        "requestETH": "成功取得乙太幣"
+    },
+    "error": {
+        "requestETH": "取得乙太幣失敗"
     }
 }
