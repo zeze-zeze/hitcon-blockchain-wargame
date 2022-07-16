@@ -101,6 +101,32 @@
             "needMore": "Need more Rinkeby ETH?"
         }
     },
+    "problems": {
+        "challenges": [
+            {
+                "title": "Problem 1"
+            },
+            {
+                "title": "Problem 2"
+            },
+            {
+                "title": "Problem 3"
+            },
+            {
+                "title": "Problem 4"
+            },
+            {
+                "title": "Problem 5"
+            },
+            {
+                "title": "Problem 6"
+            }
+        ],
+        "challenge": "Challenge",
+        "solved": "Solved",
+        "notSolved": "Not Solved",
+        "buttonText": "Start Challenge"
+    },
     "success": {
         "requestETH": "Request ETH Failed"
     },

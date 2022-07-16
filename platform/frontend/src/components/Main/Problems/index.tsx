@@ -1,40 +1,45 @@
-import { FC } from 'react';
+import { FC, useContext, useRef } from 'react';
 import { Grid } from '@mui/material';
 import MainWrapper from 'components/Main';
 
 import Problem from './Problem';
 import useSolvedProblems from 'hooks/useSolvedProblems';
+import LanguageContext from 'contexts/LanguageContext';
 
+type ChallengeType = {
+    title: string;
+};
 
 const Problems: FC = () => {
     const { getSolvedProblems } = useSolvedProblems();
     const solvedProblems = getSolvedProblems();
-    const problems = [
+    const { multiLang } = useContext(LanguageContext);
+    const challengesRef = useRef<Array<ChallengeType>>(multiLang ? multiLang.problems.challenges : [
         {
-            "title": "Fallback",
+            "title": "Problem 1"
         },
         {
-            "title": "Fallout",
+            "title": "Problem 2"
         },
         {
-            "title": "Coin Flip",
+            "title": "Problem 3"
         },
         {
-            "title": "Telephone",
+            "title": "Problem 4"
         },
         {
-            "title": "Token",
+            "title": "Problem 5"
         },
         {
-            "title": "Delegation",
-        },
-    ];
+            "title": "Problem 6"
+        }
+    ]);
 
     return (
         <MainWrapper title="Problems">
             <Grid container justifyContent="center">
                 {
-                    problems.map(({ title }, idx) => {
+                    challengesRef.current.map(({ title }, idx) => {
                         return (
                             <Problem
                                 key={idx}
