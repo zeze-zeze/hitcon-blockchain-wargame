@@ -92,8 +92,9 @@ const Landing: FC = () => {
                                     value={lang}
                                     label="Lang"
                                     onChange={(event: SelectChangeEvent) => {
-                                        setLang(event.target.value);
-
+                                        const appointedLang: string = event.target.value;
+                                        setLang(appointedLang);
+                                        localStorage.setItem("_lang_", appointedLang);
                                     }}
                                 >
                                     <MenuItem value="en-US">English</MenuItem>
@@ -110,7 +111,7 @@ const Landing: FC = () => {
                                         }}
                                         sx={{ margin: theme.spacing(3) }}
                                     >
-                                        {multiLang?.landing.buttons.loginViaOnepage}
+                                        {multiLang?.landing.buttons[0].text}
                                     </Button>
                                 </Grid>
                                 <Grid item xs={6} mx="auto">
@@ -123,7 +124,7 @@ const Landing: FC = () => {
                                         }}
                                         sx={{ margin: theme.spacing(3) }}
                                     >
-                                        {multiLang?.landing.buttons.playAnonymously}
+                                        {multiLang?.landing.buttons[1].text}
                                     </Button>
                                 </Grid>
                             </LandingButtonsWrapper>

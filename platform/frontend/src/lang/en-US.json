@@ -3,9 +3,82 @@
         "title": "HITCON Blockchain Wargame",
         "subtitle": "Welcome to the hitcon wargame.",
         "lang": "Language",
-        "buttons": {
-            "loginViaOnepage": "Login via Onepage",
-            "playAnonymously": "Play Anonymously"
+        "buttons": [
+            {
+                "text": "Login via Onepage"
+            },
+            {
+                "text": "Play Anonymously"
+            }
+        ]
+    },
+    "dashboard": {
+        "sidebar": {
+            "iconTitle": "HITCON Wargame",
+            "subheader": "Dashboard",
+            "entries": {
+                "home": "Home",
+                "tutorial": "Tutorial",
+                "faucet": "Faucet",
+                "problems": "Problems"
+            }
+        },
+        "header": {
+            "tooltip": {
+                "toggleMenu": "Toggle Menu",
+                "problems": [
+                    "Problem 1",
+                    "Problem 2",
+                    "Problem 3",
+                    "Problem 4",
+                    "Problem 5",
+                    "Problem 6"
+                ],
+                "notification": "Notification"
+            },
+            "notification": {
+                "title": "Notification",
+                "problems": [
+                    {
+                        "title": "Horray! You solve Problem 1.",
+                        "subtitle": "You won NFT1."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 2.",
+                        "subtitle": "You won NFT2."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 3.",
+                        "subtitle": "You won NFT3."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 4.",
+                        "subtitle": "You won NFT4."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 5.",
+                        "subtitle": "You won NFT5."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 6.",
+                        "subtitle": "You won NFT6."
+                    }
+                ]
+            }
         }
+    },
+    "home": {
+        "title": "Hitcon Blockchain Wargame",
+        "subtitle": "Hitcon Blockchain Wargame is a Blockchain CTF Game. Each level contains a vulnerable smart contract that needs to be 'hacked'.",
+        "cards": [
+            {
+                "title": "New to blockchain?",
+                "buttonText": "Start Tutorial"
+            },
+            {
+                "title": "Already familiar with blockchain?",
+                "buttonText": "Start Playing"
+            }
+        ]
     }
 }
