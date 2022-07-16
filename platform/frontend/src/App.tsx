@@ -8,13 +8,13 @@ import { Web3ReactProvider } from "@web3-react/core";
 //import Web3 from "web3/dist/web3.min.js";
 import Web3 from 'web3';
 
+import WaitEffectContext from "contexts/WaitEffectContext";
 import SidebarToggledContext from "contexts/SidebarToggledContext";
 import NotificationContext from "contexts/NotificationContext";
 import LanguageContext from "contexts/LanguageContext";
 
 type MessageType = {
-    title: string,
-    content: string,
+    idx: number,
     date: number,
 };
 
@@ -45,6 +45,10 @@ const App: FC = () => {
     const [sidebarToggled, setSidebarToggled] = useState<boolean>(lgUp);
     const [notification, setNotification] = useState<Array<MessageType>>();
     const toggleSidebar = useCallback(() => setSidebarToggled(!sidebarToggled), [sidebarToggled]);
+    const [showBackDrop, setShowBackDrop] = useState<boolean>(false);
+    const [showSnackBar, setShowSnackBar] = useState<number>(0);
+    const [successMessage, setSuccessMessage] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     useEffect(() => {
         const fetchJSON = async (appointedLang: string) => {
@@ -96,19 +100,39 @@ const App: FC = () => {
     return (
         <ThemeProvider>
             <LanguageContext.Provider
-                value={{ lang, setLang, multiLang }}
+                value={{
+                    lang, multiLang, changeLang: (newLang: string) => {
+                        setLang(newLang);
+                        localStorage.setItem("_lang_", newLang);
+                    }
+                }}
             >
-                <SidebarToggledContext.Provider
-                    value={{ sidebarToggled, toggleSidebar }}
+                <NotificationContext.Provider
+                    value={{ notification: notification ?? [], addNotification, deleteNotification }}
                 >
-                    <NotificationContext.Provider
-                        value={{ notification: notification ?? [], addNotification, deleteNotification }}
+                    <SidebarToggledContext.Provider
+                        value={{ sidebarToggled, toggleSidebar }}
                     >
                         <CssBaseline />
-                        <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>
-                    </NotificationContext.Provider>
-                    
-                </SidebarToggledContext.Provider>
+
+                        <WaitEffectContext.Provider
+                            value={{
+                                showBackDrop,
+                                showSnackBar,
+                                successMessage,
+                                errorMessage,
+                                setShowBackDrop,
+                                setShowSnackBar,
+                                setSuccessMessage,
+                                setErrorMessage,
+                            }}
+                        >
+
+                            <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>
+                        </WaitEffectContext.Provider>
+
+                    </SidebarToggledContext.Provider>
+                </NotificationContext.Provider>
             </LanguageContext.Provider>
         </ThemeProvider>
     );

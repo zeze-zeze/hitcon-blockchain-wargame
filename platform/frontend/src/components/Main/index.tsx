@@ -121,7 +121,8 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
      * Retrieve problems that the current user solved
      */
 
-    useEagerConnect();
+    const tried = useEagerConnect();
+    //console.log(tried, active);
 
     return (
         <HelmetProvider>
