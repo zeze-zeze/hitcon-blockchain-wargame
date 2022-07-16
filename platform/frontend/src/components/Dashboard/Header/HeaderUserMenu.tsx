@@ -1,4 +1,4 @@
-import { FC, ElementType, useRef, useState, useEffect, useContext } from 'react';
+import { FC, ElementType, useRef, useState, useEffect, useContext, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Avatar, Box, Button, Divider, List, ListItem, ListItemText, Popover, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -6,7 +6,6 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useWeb3React } from "@web3-react/core";
-import useShortWallet from 'hooks/useShortWallet';
 import LanguageContext from 'contexts/LanguageContext';
 
 const UserBoxButton = styled(Button)(
@@ -50,7 +49,20 @@ const HeaderUserMenu: FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const { deactivate } = useWeb3React();
     const { multiLang } = useContext(LanguageContext);
-    const walletAddress = useShortWallet();
+    const { active, account } = useWeb3React();
+    const walletAddress = useMemo(() => {
+        if (active && typeof account === 'string') {
+            return `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
+        } else {
+            return 'Anonymous';
+        }
+    }, [active, account]);
+
+    useEffect(() => {
+        if (active && account) {
+            localStorage.setItem("_hitcon_wargame_", "Injected"); // for useEagerConnect
+        }
+    }, [active, account]);
 
     return (
         <>

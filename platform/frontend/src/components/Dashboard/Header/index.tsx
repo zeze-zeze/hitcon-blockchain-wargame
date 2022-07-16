@@ -115,21 +115,6 @@ const Header: FC = () => {
                         active ? (
                             <HeaderUserMenu />
                         ) : (
-                            /*
-                            <Button
-                                component={NavLink}
-                                color="primary"
-                                variant="contained"
-                                onClick={() => {
-                                    console.log('OK');
-                                }}
-                                sx={{
-                                    "margin": theme.spacing(0, 3)
-                                }}
-                            >
-                                {multiLang?.dashboard.header.userMenu.connectWallet}
-                            </Button>
-                            */
                            <ConnectButton />
                         )
                     }

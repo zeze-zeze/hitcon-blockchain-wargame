@@ -1,4 +1,4 @@
-import { useState, FC, useEffect, useContext } from 'react';
+import { useState, FC, useEffect, useContext, useCallback } from 'react';
 import { Button, Snackbar } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
@@ -14,19 +14,11 @@ import WaitEffectContext from 'contexts/WaitEffectContext';
 
 const ConnectButton: FC = () => {
 
-    const { active, activate, connector, deactivate } = useWeb3React();
+    const { activate, deactivate } = useWeb3React();
     const theme = useTheme();
-    const navigate = useNavigate();
-
     const { setShowBackDrop, setShowSnackBar, setErrorMessage } = useContext(WaitEffectContext);
 
-    useEffect(() => {
-        if (active) {
-            localStorage.setItem("_hitcon_wargame_", "Injected");
-        }
-    }, [active]);
-
-    const handleConnectWallet = async () => {
+    const handleConnectWallet = useCallback(async () => {
         setShowBackDrop(true);
         await activate(injected, async (error: Error) => {
             if (error instanceof UnsupportedChainIdError) {
@@ -51,7 +43,7 @@ const ConnectButton: FC = () => {
             deactivate();
         });
         setShowBackDrop(false);
-    };
+    }, []);
 
     return (
         <>
