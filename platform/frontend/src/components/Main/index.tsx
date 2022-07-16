@@ -1,4 +1,4 @@
-import { FC, ReactNode, useContext } from 'react';
+import { FC, ReactNode, useContext, useEffect } from 'react';
 import { Typography, Box, Paper, Container, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
@@ -8,6 +8,9 @@ import { MainComponentWrapper } from 'App';
 import Dashboard from 'components/Dashboard';
 import SidebarToggledContext from 'contexts/SidebarToggledContext';
 import useEagerConnect from 'hooks/useEagerConnect';
+import { useWeb3React } from '@web3-react/core';
+import { useNavigate } from 'react-router';
+import WaitEffect from 'components/WaitEffect';
 
 type WrapperProps = {
     children: ReactNode,
@@ -101,6 +104,7 @@ const PaperCenteredComponentWrapper = styled(Paper)(
 
 const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
     const theme = useTheme();
+    const navigate = useNavigate();
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
     const { sidebarToggled } = useContext(SidebarToggledContext);
 
@@ -111,6 +115,7 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
      */
     const calculatedLeft = sidebarToggled && lgUp ? theme.sidebar.width : 0;
     const calculatedWidth = sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%';
+    const { active } = useWeb3React();
     
     /*
      * Retrieve problems that the current user solved
@@ -127,7 +132,8 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
             <MainComponentWrapper sx={{ left: calculatedLeft, width: calculatedWidth }}>
                 <Scrollbars autoHide>
                     <Container>
-                    {children}
+                        <WaitEffect />
+                        {children}
                     </Container>
                 </Scrollbars>
             </MainComponentWrapper>

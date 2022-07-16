@@ -38,32 +38,38 @@
             },
             "notification": {
                 "title": "Notification",
-                "problems": [
+                "empty": "Empty",
+                "messages": [
                     {
                         "title": "Horray! You solve Problem 1.",
-                        "subtitle": "You won NFT1."
+                        "content": "You won NFT1."
                     },
                     {
                         "title": "Horray! You solve Problem 2.",
-                        "subtitle": "You won NFT2."
+                        "content": "You won NFT2."
                     },
                     {
                         "title": "Horray! You solve Problem 3.",
-                        "subtitle": "You won NFT3."
+                        "content": "You won NFT3."
                     },
                     {
                         "title": "Horray! You solve Problem 4.",
-                        "subtitle": "You won NFT4."
+                        "content": "You won NFT4."
                     },
                     {
                         "title": "Horray! You solve Problem 5.",
-                        "subtitle": "You won NFT5."
+                        "content": "You won NFT5."
                     },
                     {
                         "title": "Horray! You solve Problem 6.",
-                        "subtitle": "You won NFT6."
+                        "content": "You won NFT6."
                     }
                 ]
+            },
+            "userMenu": {
+                "connectWallet": "Connect Wallet",
+                "disconnectWallet": "Disconnect Wallet",
+                "userSetting": "User Setting"
             }
         }
     },
