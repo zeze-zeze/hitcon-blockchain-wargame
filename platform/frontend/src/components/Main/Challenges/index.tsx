@@ -17,6 +17,16 @@ import MainWrapper from 'components/Main';
 import Error404 from 'components/Error/_404';
 import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
+import chal1 from './chal1.sol';
+import info1 from './info1.json';
+import chal2 from './chal2.sol';
+import info2 from './info2.json';
+import chal3 from './chal3.sol';
+import info3 from './info3.json';
+import chal4 from './chal4.sol';
+import info4 from './info4.json';
+import chal5 from './chal5.sol';
+import info5 from './info5.json';
 import useSolvedProblems from 'hooks/useSolvedProblems';
 import WaitEffect from 'components/WaitEffect';
 import { useWeb3React } from '@web3-react/core';
@@ -127,14 +137,31 @@ const Challenge: FC = () => {
     }, [active, account, contract]);
 
     useEffect(() => {
-        setChal(chalExample);
-        setInfo(infoExample);
+        if (id === '1') {
+            setChal(chal1);
+            setInfo(info1);
+        } else if (id === '2') {
+            setChal(chal2);
+            setInfo(info2);
+        } else if (id === '3') {
+            setChal(chal3);
+            setInfo(info3);
+        } else if (id === '4') {
+            setChal(chal4);
+            setInfo(info4);
+        } else if (id === '5') {
+            setChal(chal5);
+            setInfo(info5);
+        } else {
+            setChal(chalExample);
+            setInfo(infoExample);
+        }
         fetch(chal)
             .then(r => r.text())
             .then(text => {
                 setVuln(text);
             });
-    }, [chalExample, infoExample, chal]);
+    }, [chalExample, infoExample, chal, vuln]);
 
     useEffect(() => {
         if (account) {
