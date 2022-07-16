@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useCallback } from "react";
+import { FC, useState, useEffect, useCallback, useMemo } from "react";
 import { Box, CssBaseline, useMediaQuery } from "@mui/material";
 import { useRoutes } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
@@ -10,6 +10,7 @@ import Web3 from 'web3';
 
 import SidebarToggledContext from "contexts/SidebarToggledContext";
 import NotificationContext from "contexts/NotificationContext";
+import LanguageContext from "contexts/LanguageContext";
 
 type MessageType = {
     title: string,
@@ -39,10 +40,32 @@ const App: FC = () => {
 
     const theme = useTheme();
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
+    const [lang, setLang] = useState<string>("en-US");
+    const [multiLang, setMultiLang] = useState<any>(null);
     const [sidebarToggled, setSidebarToggled] = useState<boolean>(lgUp);
     const [notification, setNotification] = useState<Array<MessageType>>();
     const toggleSidebar = useCallback(() => setSidebarToggled(!sidebarToggled), [sidebarToggled]);
 
+    useEffect(() => {
+        const fetchJSON = async (appointedLang: string) => {
+            if (appointedLang !== "en-US" && appointedLang !== "zh-TW") {
+                appointedLang = "en-US"; // set English as the default language
+            }
+            const appointedMultiLang = await import(`lang/${appointedLang}.json`);
+            setMultiLang(appointedMultiLang);
+        }
+        if (lang) {
+            fetchJSON(lang);
+        } else {
+            let oldLang = localStorage.getItem("_lang_");
+            if (!oldLang) {
+                oldLang = "en-US"; // set English as the default language
+            }
+            fetchJSON(oldLang);
+        }
+    }, [lang]);
+
+    /* notification */
     const addNotification = useCallback((newMessage: MessageType): void => {
         if (notification) {
             setNotification([...notification, newMessage]);
@@ -80,17 +103,21 @@ const App: FC = () => {
 
     return (
         <ThemeProvider>
-            <SidebarToggledContext.Provider
-                value={{ sidebarToggled, toggleSidebar }}
+            <LanguageContext.Provider
+                value={{ lang, setLang, multiLang }}
             >
-                <NotificationContext.Provider
-                    value={{ notification: notification ?? [], addNotification, deleteNotification }}
+                <SidebarToggledContext.Provider
+                    value={{ sidebarToggled, toggleSidebar }}
                 >
-                    <CssBaseline />
-                    <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>
-                </NotificationContext.Provider>
-                
-            </SidebarToggledContext.Provider>
+                    <NotificationContext.Provider
+                        value={{ notification: notification ?? [], addNotification, deleteNotification }}
+                    >
+                        <CssBaseline />
+                        <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>
+                    </NotificationContext.Provider>
+                    
+                </SidebarToggledContext.Provider>
+            </LanguageContext.Provider>
         </ThemeProvider>
     );
 };

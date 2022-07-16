@@ -1,0 +1,11 @@
+{
+    "landing": {
+        "title": "HITCON Blockchain Wargame",
+        "subtitle": "Welcome to the hitcon wargame.",
+        "lang": "Language",
+        "buttons": {
+            "loginViaOnepage": "Login via Onepage",
+            "playAnonymously": "Play Anonymously"
+        }
+    }
+}
