@@ -23,10 +23,10 @@ const useEagerConnect = () => {
     }, []); // intentionally only running on mount (make sure it's only mounted once :))
 
     useEffect(() => {
-        if (!tried && active) {
+        if (!tried) {
             setTried(true)
         }
-    }, [tried, active]);
+    }, [tried]);
 
     return tried;
 };

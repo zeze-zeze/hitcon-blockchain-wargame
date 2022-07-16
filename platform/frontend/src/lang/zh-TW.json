@@ -38,34 +38,39 @@
             },
             "notification": {
                 "title": "通知",
-                "problems": [
+                "empty": "暫無",
+                "messages": [
                     {
                         "title": "太好了！你完成了挑戰一。",
-                        "subtitle": "你獲得了 NFT1."
+                        "content": "你獲得了 NFT1."
                     },
                     {
                         "title": "太好了！你完成了挑戰二。",
-                        "subtitle": "你獲得了 NFT2."
+                        "content": "你獲得了 NFT2."
                     },
                     {
                         "title": "太好了！你完成了挑戰三。",
-                        "subtitle": "你獲得了 NFT3."
+                        "content": "你獲得了 NFT3."
                     },
                     {
                         "title": "太好了！你完成了挑戰四。",
-                        "subtitle": "你獲得了 NFT4."
+                        "content": "你獲得了 NFT4."
                     },
                     {
                         "title": "太好了！你完成了挑戰五。",
-                        "subtitle": "你獲得了 NFT5."
+                        "content": "你獲得了 NFT5."
                     },
                     {
                         "title": "太好了！你完成了挑戰六。",
-                        "subtitle": "你獲得了 NFT6."
+                        "content": "你獲得了 NFT6."
                     }
                 ]
             },
-            "walletText": "連結錢包"
+            "userMenu": {
+                "connectWallet": "連結錢包",
+                "disconnectWallet": "登出錢包",
+                "userSetting": "使用者設定"
+            }
         }
     },
     "home": {

@@ -1,29 +1,14 @@
-import { FC, Dispatch, SetStateAction, useState } from "react";
+import { FC, Dispatch, SetStateAction, useState, useContext } from "react";
 import {
     Backdrop,
     CircularProgress,
     Snackbar,
     Alert,
 } from "@mui/material";
+import WaitEffectContext from "contexts/WaitEffectContext";
 
-type WaitEffectProps = {
-    showBackDrop: boolean;
-    showSnackBar: number;
-    setShowSnackBar: Dispatch<SetStateAction<number>>;
-    success?: string;
-    error?: string;
-};
-
-const WaitEffect: FC<WaitEffectProps> = ({
-    showBackDrop,
-    showSnackBar,
-    setShowSnackBar,
-    success,
-    error
-}) => {
-    const handleClose = () => {
-        setShowSnackBar(0);
-    };
+const WaitEffect: FC = () => {
+    const { showSnackBar, showBackDrop, setShowSnackBar, successMessage, errorMessage } = useContext(WaitEffectContext);
     return (
         <>
             <Backdrop
@@ -35,14 +20,18 @@ const WaitEffect: FC<WaitEffectProps> = ({
             <Snackbar
                 open={showSnackBar != 0}
                 autoHideDuration={6000}
-                onClose={handleClose}
+                onClose={() => {
+                    setShowSnackBar(0);
+                }}
             >
                 <Alert
-                    onClose={handleClose}
+                    onClose={() => {
+                        setShowSnackBar(0);
+                    }}
                     severity={showSnackBar === 1 ? "success" : "error"}
                     sx={{ width: "100%" }}
                 >
-                    {showSnackBar === 1 ? (success ?? 'Success') : (error ?? 'Failed')}
+                    {showSnackBar === 1 ? (successMessage ?? 'Success') : (errorMessage ?? 'Failed')}
                 </Alert>
             </Snackbar>
         </>

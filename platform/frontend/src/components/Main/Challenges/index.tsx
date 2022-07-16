@@ -31,6 +31,7 @@ import useSolvedProblems from 'hooks/useSolvedProblems';
 import WaitEffect from 'components/WaitEffect';
 import { useWeb3React } from '@web3-react/core';
 import NotificationContext from "contexts/NotificationContext";
+import WaitEffectContext from 'contexts/WaitEffectContext';
 
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 
@@ -53,8 +54,7 @@ type InfoType = {
 };
 
 type MessageType = {
-    title: string,
-    content: string,
+    idx: number,
     date: number,
 };
 
@@ -93,18 +93,16 @@ const Challenge: FC = () => {
     const [contract, setContract] = useState<Contract>();
     const [vuln, setVuln] = useState<string>('');
     const [connectButtonText, setConnectButtonText] = useState<string>("Connect contract");
-    const [showSnackBar, setShowSnackBar] = useState<number>(0);
-    const [showBackDrop, setShowBackDrop] = useState<boolean>(false);
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
-    const [message, setMessage] = useState<string>('');
     const { id } = useParams<string>();
     const { active, account } = useWeb3React();
     const { addNotification } = useContext(NotificationContext);
+    const { setShowSnackBar, setShowBackDrop, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
     const { getSolvedProblems, setSolvedProblems } = useSolvedProblems();
 
     const clickConnect = useCallback(async () => {
         if (!active || !account) {
-            setMessage("Please login first");
+            setErrorMessage("Please login first");
             setShowSnackBar(2);
             return;
         }
@@ -120,7 +118,7 @@ const Challenge: FC = () => {
 
     const handleSubmit = useCallback(async () => {
         if (!active || !account || !contract) {
-            setMessage("Please login first");
+            setErrorMessage("Please login first");
             setShowSnackBar(2);
             return;
         }
@@ -129,7 +127,7 @@ const Challenge: FC = () => {
             await contract.methods.win().send({ from: account });
         } catch (error) {
             if (error instanceof Error) {
-                setMessage("Transaction failed!! Make sure that you REALLY solved the challenge");
+                setErrorMessage("Transaction failed!! Make sure that you REALLY solved the challenge");
                 setShowSnackBar(2);
             }
         }
@@ -178,11 +176,11 @@ const Challenge: FC = () => {
                     }
                 })
                     .on('data', () => {
-                        setMessage("ERROR! You have already solved the problem!");
+                        setErrorMessage("ERROR! You have already solved the problem!");
                         setShowSnackBar(2);
                     })
                     .on('error', (error: Error) => {
-                        setMessage(error.message);
+                        setErrorMessage(error.message);
                         setShowSnackBar(2);
                     });
             }
@@ -193,16 +191,15 @@ const Challenge: FC = () => {
                     }
                 })
                     .on('data', () => {
-                        setMessage(`Congratulation! You solved problem ${id}.`);
+                        setSuccessMessage(`Congratulation! You solved problem ${id}.`);
                         setShowSnackBar(1);
                         addNotification({
-                            title: `Horray! You solve Problem ${id}.`,
-                            content: 'You won NFT1.',
+                            idx: Number(id) - 1,
                             date: Date.now(),
                         });
                     })
                     .on('error', (error: Error) => {
-                        setMessage(error.message);
+                        setErrorMessage(error.message);
                         setShowSnackBar(2);
                     });
             }
@@ -229,13 +226,6 @@ const Challenge: FC = () => {
                     && Number(id) <= Number(process.env.REACT_APP_PROBLEM_NUM)
                 ) ? (
                     <MainWrapper title="Challenge">
-                        <WaitEffect
-                            showBackDrop={showBackDrop}
-                            showSnackBar={showSnackBar}
-                            setShowSnackBar={setShowSnackBar}
-                            success={message}
-                            error={message}
-                        />
                         <Grid container>
                             <Grid item xs={12}>
                                 <HeaderWrapper>

@@ -1,25 +1,27 @@
-import { FC, useContext } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Box, Button, Avatar, Grid, IconButton, Tooltip, lighten, useMediaQuery } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import HeaderButtons from './HeaderButtons';
-import HeaderUserMenu from './HeaderUserMenu';
-import SidebarToggledContext from 'contexts/SidebarToggledContext';
-import { useWeb3React } from '@web3-react/core';
-import useSolvedProblems from 'hooks/useSolvedProblems';
+import { FC, useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { Box, Button, Avatar, Grid, IconButton, Tooltip, lighten, useMediaQuery } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import HeaderButtons from "./HeaderButtons";
+import HeaderUserMenu from "./HeaderUserMenu";
+import SidebarToggledContext from "contexts/SidebarToggledContext";
+import { useWeb3React } from "@web3-react/core";
+import useSolvedProblems from "hooks/useSolvedProblems";
+import LanguageContext from "contexts/LanguageContext";
+import ConnectButton from "components/Connect/ConnectButton";
 
 const HeaderWrapper = styled(Box)(
     ({ theme }) => ({
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'fixed',
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        position: "fixed",
         top: 0,
         left: 0,
         right: 0,
-        width: 'auto',
+        width: "auto",
         height: theme.header.height,
         color: theme.header.textColor,
         padding: theme.spacing(3),
@@ -30,10 +32,10 @@ const HeaderWrapper = styled(Box)(
 
 const HeaderComponentsWrapper = styled(Box)(
     ({ theme }) => ({
-        display: 'flex',
-        flexWrap: 'nowrap',
-        justifyContent: 'space-around',
-        alignItems: 'center',
+        display: "flex",
+        flexWrap: "nowrap",
+        justifyContent: "space-around",
+        alignItems: "center",
     })
 );
 
@@ -47,6 +49,7 @@ const Header: FC = () => {
     const { getSolvedProblems } = useSolvedProblems();
 
     const solvedProblems = getSolvedProblems();
+    const { multiLang } = useContext(LanguageContext);
 
     const nftImgLinks = [
         "https://i.imgur.com/fSFl7io.png",
@@ -69,11 +72,11 @@ const Header: FC = () => {
             /* 
              * If the current window size is big enough & left sidebar is toggled,
              * the header should not span across the menu.
-             * Otherwise, the header's width should be equivalent to the screen's width
+             * Otherwise, the header"s width should be equivalent to the screen"s width
              */
             <HeaderWrapper sx={{ left: lgUp && sidebarToggled ? theme.sidebar.width: 0 }}>
                 <HeaderComponentsWrapper>
-                    <Tooltip arrow title="Toggle Menu">
+                    <Tooltip arrow title={multiLang?.dashboard.header.tooltip.toggleMenu}>
                         <IconButton color="primary" onClick={toggleSidebar}>
                             {sidebarToggled ? <MenuOpenIcon /> : <MenuIcon />}
                         </IconButton>
@@ -84,19 +87,19 @@ const Header: FC = () => {
                     {
                         solvedProblems.map((solved: boolean, idx: number) => (
                             <Grid item xs={1} key={idx}>
-                                <Tooltip arrow title={`Problem ${idx + 1}`}>
+                                <Tooltip arrow title={multiLang?.dashboard.header.tooltip.problems[idx]}>
                                     <Avatar
                                         variant="rounded"
                                         src={nftImgLinks[idx]}
                                         sx={{
-                                            borderWidth: '3px',
-                                            borderStyle: 'dashed',
+                                            borderWidth: "3px",
+                                            borderStyle: "dashed",
                                             borderColor: solved ? theme.colors.success.main : theme.colors.error.main,
-                                            padding: '1px'
+                                            padding: "1px"
                                         }}
                                         imgProps={{
                                             style: {
-                                                opacity: solved ? '100%' : '40%',
+                                                opacity: solved ? "100%" : "40%",
                                             }
                                         }}
                                     />
@@ -112,17 +115,22 @@ const Header: FC = () => {
                         active ? (
                             <HeaderUserMenu />
                         ) : (
+                            /*
                             <Button
                                 component={NavLink}
                                 color="primary"
                                 variant="contained"
-                                to="/connect"
+                                onClick={() => {
+                                    console.log('OK');
+                                }}
                                 sx={{
-                                    'margin': theme.spacing(0, 3)
+                                    "margin": theme.spacing(0, 3)
                                 }}
                             >
-                                Connect Wallet
+                                {multiLang?.dashboard.header.userMenu.connectWallet}
                             </Button>
+                            */
+                           <ConnectButton />
                         )
                     }
                 </HeaderComponentsWrapper>

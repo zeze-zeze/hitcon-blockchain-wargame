@@ -59,7 +59,7 @@ const LandingButtonsWrapper = styled(Box)(
 );
 
 const Landing: FC = () => {
-    const { lang, setLang, multiLang } = useContext(LanguageContext);
+    const { lang, changeLang, multiLang } = useContext(LanguageContext);
     const theme = useTheme();
     const mdUp = useMediaQuery(theme.breakpoints.up('md'));
     const navigate = useNavigate();
@@ -93,8 +93,7 @@ const Landing: FC = () => {
                                     label="Lang"
                                     onChange={(event: SelectChangeEvent) => {
                                         const appointedLang: string = event.target.value;
-                                        setLang(appointedLang);
-                                        localStorage.setItem("_lang_", appointedLang);
+                                        changeLang(appointedLang);
                                     }}
                                 >
                                     <MenuItem value="en-US">English</MenuItem>
