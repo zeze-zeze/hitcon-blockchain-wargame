@@ -3,9 +3,83 @@
         "title": "HITCON 區塊鏈挑戰",
         "subtitle": "歡迎來到 HITCON 區塊鏈挑戰",
         "lang": "語言",
-        "buttons": {
-            "loginViaOnepage": "從 Onepage 登入",
-            "playAnonymously": "直接開始挑戰"
+        "buttons": [
+            {
+                "text": "由 Onepage 登入"
+            },
+            {
+                "text": "直接開始挑戰"
+            }
+        ]
+    },
+    "dashboard": {
+        "sidebar": {
+            "iconTitle": "HITCON 區塊鏈挑戰",
+            "subheader": "目錄",
+            "entries": {
+                "home": "首頁",
+                "tutorial": "教學",
+                "faucet": "水龍頭",
+                "problems": "挑戰"
+            }
+        },
+        "header": {
+            "tooltip": {
+                "toggleMenu": "切換目錄",
+                "problems": [
+                    "挑戰一",
+                    "挑戰二",
+                    "挑戰三",
+                    "挑戰四",
+                    "挑戰五",
+                    "挑戰六"
+                ],
+                "notification": "通知"
+            },
+            "notification": {
+                "title": "通知",
+                "problems": [
+                    {
+                        "title": "太好了！你完成了挑戰一。",
+                        "subtitle": "你獲得了 NFT1."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰二。",
+                        "subtitle": "你獲得了 NFT2."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰三。",
+                        "subtitle": "你獲得了 NFT3."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰四。",
+                        "subtitle": "你獲得了 NFT4."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰五。",
+                        "subtitle": "你獲得了 NFT5."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰六。",
+                        "subtitle": "你獲得了 NFT6."
+                    }
+                ]
+            },
+            "walletText": "連結錢包"
         }
+    },
+    "home": {
+        "title": "HITCON 區塊鏈挑戰",
+        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF 遊戲。每個關卡都藏有一些漏洞等著你來「駭」。",
+        "cards": [
+            {
+                "title": "區塊鏈新手嗎？",
+                "buttonText": "開始教學"
+            },
+            {
+                "title": "區塊鏈老手嗎？",
+                "buttonText": "直接開始"
+            }
+        ]
     }
 }

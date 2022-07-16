@@ -40,7 +40,7 @@ const App: FC = () => {
 
     const theme = useTheme();
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
-    const [lang, setLang] = useState<string>("en-US");
+    const [lang, setLang] = useState<string>(localStorage.getItem("_lang_") ?? "en-US");
     const [multiLang, setMultiLang] = useState<any>(null);
     const [sidebarToggled, setSidebarToggled] = useState<boolean>(lgUp);
     const [notification, setNotification] = useState<Array<MessageType>>();
@@ -54,15 +54,7 @@ const App: FC = () => {
             const appointedMultiLang = await import(`lang/${appointedLang}.json`);
             setMultiLang(appointedMultiLang);
         }
-        if (lang) {
-            fetchJSON(lang);
-        } else {
-            let oldLang = localStorage.getItem("_lang_");
-            if (!oldLang) {
-                oldLang = "en-US"; // set English as the default language
-            }
-            fetchJSON(oldLang);
-        }
+        fetchJSON(lang);
     }, [lang]);
 
     /* notification */

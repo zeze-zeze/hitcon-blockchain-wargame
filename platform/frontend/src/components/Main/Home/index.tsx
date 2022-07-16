@@ -1,17 +1,17 @@
-import { FC, ReactChild } from 'react';
+import { FC, ReactNode, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Grid, Typography, Paper, Container, Button, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MainWrapper, { 
     HeaderWrapper,
     HeaderTypography,
-    SubHeaderTypography,
     SubtitleTypography,
     PaperCenteredComponentWrapper,
 } from 'components/Main';
+import LanguageContext from "contexts/LanguageContext";
 
 type FixedSubHeaderTypographyProps = {
-    children: ReactChild,
+    children: ReactNode,
 };
 
 const FixedSubHeaderContainer = styled(Container)(
@@ -45,6 +45,7 @@ const Home: FC = () => {
 
     const theme = useTheme();
     const smUp = useMediaQuery(theme.breakpoints.up("sm"));
+    const { multiLang } = useContext(LanguageContext);
 
     return (
         <MainWrapper title="Home">
@@ -52,10 +53,10 @@ const Home: FC = () => {
                 <Grid item xs={12}>
                     <HeaderWrapper>
                         <HeaderTypography>
-                            Hitcon Blockchain Wargame
+                            {multiLang?.home.title}
                         </HeaderTypography>
                         <SubtitleTypography>
-                            Hitcon Blockchain Wargame is a Web3/Solidity Game. Each level is a smart contract that needs to be 'hacked'
+                            {multiLang?.home.subtitle}
                         </SubtitleTypography>
                     </HeaderWrapper>
                 </Grid>
@@ -68,7 +69,7 @@ const Home: FC = () => {
                         }}>
                             <FixedSubHeaderContainer>
                                 <FixedSubHeaderTypography>
-                                    New to blockchain?
+                                    {multiLang?.home.cards[0].title}
                                 </FixedSubHeaderTypography>
                             </FixedSubHeaderContainer>
                             <FixedButtonContainer>
@@ -80,7 +81,7 @@ const Home: FC = () => {
                                     color="success"
                                     sx={{ 'textAlign': 'center' }}
                                 >
-                                    Start Tutorial
+                                    {multiLang?.home.cards[0].buttonText}
                                 </Button>
                             </FixedButtonContainer>
                         </PaperCenteredComponentWrapper>
@@ -93,7 +94,7 @@ const Home: FC = () => {
                         }}>
                             <FixedSubHeaderContainer>
                                 <FixedSubHeaderTypography>
-                                    Already familiar with blockchain?
+                                    {multiLang?.home.cards[1].title}
                                 </FixedSubHeaderTypography>
                             </FixedSubHeaderContainer>
                             <FixedButtonContainer>
@@ -105,7 +106,7 @@ const Home: FC = () => {
                                     color="primary"
                                     sx={{ 'textAlign': 'center' }}
                                 >
-                                    Start Playing
+                                    {multiLang?.home.cards[1].buttonText}
                                 </Button>
                             </FixedButtonContainer>
                         </PaperCenteredComponentWrapper>
