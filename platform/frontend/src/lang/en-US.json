@@ -74,7 +74,7 @@
         }
     },
     "home": {
-        "title": "Hitcon Blockchain Wargame",
+        "title": "HITCON Blockchain Wargame",
         "subtitle": "Hitcon Blockchain Wargame is a Blockchain CTF Game. Each level contains a vulnerable smart contract that needs to be 'hacked'.",
         "cards": [
             {
@@ -86,5 +86,25 @@
                 "buttonText": "Start Playing"
             }
         ]
+    },
+    "tutorial": {
+        "title": "Tutorial",
+        "subtitle": "This tutorial walks you through the very basics of some Ethereum concepts, including Metamask, Solidity, and more!"
+    },
+    "faucet": {
+        "title": "Faucet",
+        "subtitle": "Get some Rinkeby ETH!",
+        "content": {
+            "address": "Wallet Address",
+            "amount": "Request Amount",
+            "buttonText": "Request ETH",
+            "needMore": "Need more Rinkeby ETH?"
+        }
+    },
+    "success": {
+        "requestETH": "Request ETH Failed"
+    },
+    "error": {
+        "requestETH": "Request ETH Failed"
     }
-}
+}   
