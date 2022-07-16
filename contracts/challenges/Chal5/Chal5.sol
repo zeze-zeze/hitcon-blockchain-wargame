@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Vuln5.sol";
 
 interface CheckSolvedInterface {
-  function chal1Solved (address _solver) external;
+  function chal5Solved (address _solver) external;
 }
 
 /// @title Challenge one
