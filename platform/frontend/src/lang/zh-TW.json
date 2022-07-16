@@ -101,6 +101,32 @@
             "needMore": "需要更多測試鏈乙太幣嗎？"
         }
     },
+    "problems": {
+        "challenges": [
+            {
+                "title": "挑戰一"
+            },
+            {
+                "title": "挑戰二"
+            },
+            {
+                "title": "挑戰三"
+            },
+            {
+                "title": "挑戰四"
+            },
+            {
+                "title": "挑戰五"
+            },
+            {
+                "title": "挑戰六"
+            }
+        ],
+        "challenge": "挑戰",
+        "solved": "已完成",
+        "notSolved": "未完成",
+        "buttonText": "開始挑戰"
+    },
     "success": {
         "requestETH": "成功取得乙太幣"
     },
