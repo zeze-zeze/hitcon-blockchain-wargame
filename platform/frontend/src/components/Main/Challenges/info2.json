@@ -1,0 +1,7 @@
+{
+    "title": "Challenge 2 - hitcon gate",
+    "description": "Learn some mechanisms of solidity.",
+    "tutorial": "1. How do we make tx.origin and msg.sender different? 2. How do we know about gas fee? 3. How do we calculate xor?",
+    "address": "",
+    "abi": []   
+}
