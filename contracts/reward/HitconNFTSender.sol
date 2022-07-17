@@ -18,7 +18,7 @@ contract HitconNFTSender is ERC1155Supply, Ownable, ReentrancyGuard {
         onlyOwner
     {
         _mint(_solver, 1, 1, "");
-        emit hadSent(tx.origin);
+        emit hadSent(_solver);
     }
 
     function setURI(string memory _newuri) public onlyOwner {
