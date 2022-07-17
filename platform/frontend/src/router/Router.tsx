@@ -32,12 +32,10 @@ const SuspenseWrapper = (Component: FC) => {
 
 const Home: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Home')));
 const Landing: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Landing')));
-const Connect: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Connect')));
 const Tutorial: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Tutorial')));
 const Problems: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Problems'))); 
 const Faucet: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Faucet'))); 
 const Challenge: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Challenges'))); 
-const Template: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Template')));
 const Error404: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Error/_404')));
 
 /* React router setting */
@@ -58,11 +56,6 @@ const router = [
         element: <Tutorial />,
     },
     {
-        path: 'connect',
-        exact: true,
-        element: <Connect />,
-    },
-    {
         path: 'problems',
         children: [
             {
@@ -79,12 +72,6 @@ const router = [
         path: 'faucet',
         exact: true,
         element: <Faucet />,
-    },
-    /* Add new path here */
-    {
-        path: 'template',
-        exact: true,
-        element: <Template />,
     },
     {
         path: '*',

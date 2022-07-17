@@ -11,12 +11,14 @@ import { setupNetwork } from './walletNetwork';
 import WaitEffect from 'components/WaitEffect';
 import { useNavigate } from 'react-router';
 import WaitEffectContext from 'contexts/WaitEffectContext';
+import LanguageContext from 'contexts/LanguageContext';
 
 const ConnectButton: FC = () => {
 
     const { activate, deactivate } = useWeb3React();
     const theme = useTheme();
     const { setShowBackDrop, setShowSnackBar, setErrorMessage } = useContext(WaitEffectContext);
+    const { multiLang } = useContext(LanguageContext);
 
     const handleConnectWallet = useCallback(async () => {
         setShowBackDrop(true);
@@ -54,7 +56,7 @@ const ConnectButton: FC = () => {
                     margin: theme.spacing(2),
                 }}
             >
-                Connect Wallet
+                { multiLang?.dashboard.header.userMenu.connectWallet }
             </Button>
         </>
     );

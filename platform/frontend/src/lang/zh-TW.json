@@ -26,14 +26,6 @@
         "header": {
             "tooltip": {
                 "toggleMenu": "切換目錄",
-                "problems": [
-                    "挑戰一",
-                    "挑戰二",
-                    "挑戰三",
-                    "挑戰四",
-                    "挑戰五",
-                    "挑戰六"
-                ],
                 "notification": "通知"
             },
             "notification": {
@@ -104,33 +96,56 @@
     "problems": {
         "challenges": [
             {
-                "title": "挑戰一"
+                "title": "挑戰一",
+                "description": "挑戰一敘述",
+                "tutorial": "挑戰一題點"
             },
             {
-                "title": "挑戰二"
+                "title": "挑戰二",
+                "description": "挑戰二敘述",
+                "tutorial": "挑戰二題點"
             },
             {
-                "title": "挑戰三"
+                "title": "挑戰三",
+                "description": "挑戰三敘述",
+                "tutorial": "挑戰三題點"
             },
             {
-                "title": "挑戰四"
+                "title": "挑戰四",
+                "description": "挑戰四敘述",
+                "tutorial": "挑戰四題點"
             },
             {
-                "title": "挑戰五"
+                "title": "挑戰五",
+                "description": "挑戰五敘述",
+                "tutorial": "挑戰五題點"
             },
             {
-                "title": "挑戰六"
+                "title": "挑戰六",
+                "description": "挑戰六敘述",
+                "tutorial": "挑戰六題點"
             }
         ],
         "challenge": "挑戰",
         "solved": "已完成",
         "notSolved": "未完成",
-        "buttonText": "開始挑戰"
+        "buttonText": "開始挑戰",
+        "contract": {
+            "connect": "連結合約",
+            "connected": "合約已連結！",
+            "submitText": "提交",
+            "submitButtonText": "我解完這題了"
+        }
     },
     "success": {
-        "requestETH": "成功取得乙太幣"
+        "requestETH": "成功取得乙太幣",
+        "challengeSolved": "太好了！您成功解了這個題目"
     },
     "error": {
-        "requestETH": "取得乙太幣失敗"
+        "requestETH": "錯誤：取得乙太幣失敗。",
+        "connectFirst": "錯誤：請先連結您的錢包。",
+        "alreadySolved": "錯誤：您重複解了這個題目。",
+        "notSolved": "錯誤：您並沒有解掉這個題目。",
+        "transactionFailed": "錯誤：交易失敗。"
     }
 }

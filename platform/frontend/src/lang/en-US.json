@@ -26,14 +26,6 @@
         "header": {
             "tooltip": {
                 "toggleMenu": "Toggle Menu",
-                "problems": [
-                    "Problem 1",
-                    "Problem 2",
-                    "Problem 3",
-                    "Problem 4",
-                    "Problem 5",
-                    "Problem 6"
-                ],
                 "notification": "Notification"
             },
             "notification": {
@@ -104,33 +96,56 @@
     "problems": {
         "challenges": [
             {
-                "title": "Problem 1"
+                "title": "Problem 1",
+                "description": "Problem 1 description",
+                "tutorial": "Problem 1 tutorial"
             },
             {
-                "title": "Problem 2"
+                "title": "Problem 2",
+                "description": "Problem 2 description" ,
+                "tutorial": "Problem 2 tutorial"
             },
             {
-                "title": "Problem 3"
+                "title": "Problem 3",
+                "description": "Problem 3 description",
+                "tutorial": "Problem 3 tutorial" 
             },
             {
-                "title": "Problem 4"
+                "title": "Problem 4",
+                "description": "Problem 4 description",
+                "tutorial": "Problem 4 tutorial"
             },
             {
-                "title": "Problem 5"
+                "title": "Problem 5",
+                "description": "Problem 5 description",
+                "tutorial": "Problem 5 tutorial" 
             },
             {
-                "title": "Problem 6"
+                "title": "Problem 6",
+                "description": "Problem 6 description",
+                "tutorial": "Problem 6 tutorial" 
             }
         ],
         "challenge": "Challenge",
         "solved": "Solved",
         "notSolved": "Not Solved",
-        "buttonText": "Start Challenge"
+        "buttonText": "Start Challenge",
+        "contract": {
+            "connect": "Connect Contract",
+            "connected": "Contract Connected!",
+            "submitText": "Submit",
+            "submitButtonText": "I've Finished the level!"
+        }
     },
     "success": {
-        "requestETH": "Request ETH Failed"
+        "requestETH": "Request ETH success.",
+        "challengeSolved": "Congratulation! You solved the challenge"
     },
     "error": {
-        "requestETH": "Request ETH Failed"
+        "requestETH": "Error: Request ETH Failed.",
+        "connectFirst": "Error: Please connect your wallet first.",
+        "alreadySolved": "Error: You have alread solved the challenge.",
+        "notSolved": "Error: Unfortunately, you did not solved the challenge.",
+        "transactionFailed": "Error: Transaction Failed."
     }
 }   

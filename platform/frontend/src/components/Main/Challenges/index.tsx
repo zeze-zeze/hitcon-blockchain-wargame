@@ -1,10 +1,10 @@
-import { FC, useState, useEffect, useCallback, useContext } from 'react';
+import { FC, useRef, useState, useEffect, useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
-import Web3 from 'web3';
-import { Contract } from 'web3-eth-contract';
-import { styled } from '@mui/material/styles';
+import Web3 from "web3";
+import { Contract } from "web3-eth-contract";
+import { styled } from "@mui/material/styles";
 import { CopyBlock, dracula } from "react-code-blocks";
-import { Button, Container, Grid } from '@mui/material';
+import { Button, Container, Grid } from "@mui/material";
 import {
     HeaderWrapper,
     HeaderTypography,
@@ -31,7 +31,8 @@ import useSolvedProblems from 'hooks/useSolvedProblems';
 import WaitEffect from 'components/WaitEffect';
 import { useWeb3React } from '@web3-react/core';
 import NotificationContext from "contexts/NotificationContext";
-import WaitEffectContext from 'contexts/WaitEffectContext';
+import WaitEffectContext from "contexts/WaitEffectContext";
+import LanguageContext from "contexts/LanguageContext";
 
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 
@@ -60,13 +61,13 @@ type MessageType = {
 
 const CopyBlockWrapper = styled(Container)(
     () => ({
-        '&.MuiContainer-root': {
-            fontFamily: 'monospace',
-            fontSize: '16px',
+        "&.MuiContainer-root": {
+            fontFamily: "monospace",
+            fontSize: "16px",
             span: {
                 code: {
-                    backgroundColor: 'transparent',
-                    color: 'white',
+                    backgroundColor: "transparent",
+                    color: "white",
                 }
             }
         }
@@ -77,32 +78,35 @@ const Challenge: FC = () => {
 
     // TODO: Add more function and have a better style.
     window.help = () => {
-        console.log(' player: current player address\n',
-            'web3: web3 object\n',
-            'contract: current level contract instance (if connected)');
+        console.log(" player: current player address\n",
+            "web3: web3 object\n",
+            "contract: current level contract instance (if connected)");
     }
 
     const [chal, setChal] = useState<string>("");
     const [info, setInfo] = useState<InfoType>({
-        title: '',
-        description: '',
-        tutorial: '',
-        address: '',
+        title: "",
+        description: "",
+        tutorial: "",
+        address: "",
         abi: [],
     });
+    const { multiLang } = useContext(LanguageContext);
     const [contract, setContract] = useState<Contract>();
-    const [vuln, setVuln] = useState<string>('');
-    const [connectButtonText, setConnectButtonText] = useState<string>("Connect contract");
+    const [vuln, setVuln] = useState<string>("");
+    const [connectButtonText, setConnectButtonText] = useState<string>(multiLang?.problems.contract.connect);
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
     const { id } = useParams<string>();
+    const problemId = useRef<number>(Number(id));
     const { active, account } = useWeb3React();
     const { addNotification } = useContext(NotificationContext);
     const { setShowSnackBar, setShowBackDrop, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
     const { getSolvedProblems, setSolvedProblems } = useSolvedProblems();
 
     const clickConnect = useCallback(async () => {
+        setShowBackDrop(true);
         if (!active || !account) {
-            setErrorMessage("Please login first");
+            setErrorMessage(multiLang?.error.connectFirst);
             setShowSnackBar(2);
             return;
         }
@@ -112,13 +116,14 @@ const Challenge: FC = () => {
         window.contract = contract;
         setContract(contract);
         window.help();
-        setConnectButtonText("Connected!");
+        setConnectButtonText(multiLang?.problems.contract.connected);
         setSubmitDisabled(false);
+        setShowBackDrop(false);
     }, [active, account, info, contract]);
 
     const handleSubmit = useCallback(async () => {
         if (!active || !account || !contract) {
-            setErrorMessage("Please login first");
+            setErrorMessage(multiLang?.error.connectFirst);
             setShowSnackBar(2);
             return;
         }
@@ -127,7 +132,7 @@ const Challenge: FC = () => {
             await contract.methods.win().send({ from: account });
         } catch (error) {
             if (error instanceof Error) {
-                setErrorMessage("Transaction failed!! Make sure that you REALLY solved the challenge");
+                setErrorMessage(multiLang?.error.notSolved);
                 setShowSnackBar(2);
             }
         }
@@ -175,11 +180,11 @@ const Challenge: FC = () => {
                         _solver: window.player
                     }
                 })
-                    .on('data', () => {
-                        setErrorMessage("ERROR! You have already solved the problem!");
+                    .on("data", () => {
+                        setErrorMessage(multiLang?.error.alreadySolved);
                         setShowSnackBar(2);
                     })
-                    .on('error', (error: Error) => {
+                    .on("error", (error: Error) => {
                         setErrorMessage(error.message);
                         setShowSnackBar(2);
                     });
@@ -190,15 +195,15 @@ const Challenge: FC = () => {
                         _solver: window.player
                     }
                 })
-                    .on('data', () => {
-                        setSuccessMessage(`Congratulation! You solved problem ${id}.`);
+                    .on("data", () => {
+                        setSuccessMessage(multiLang?.success.challengeSolved);
                         setShowSnackBar(1);
                         addNotification({
-                            idx: Number(id) - 1,
+                            idx: problemId.current - 1,
                             date: Date.now(),
                         });
                     })
-                    .on('error', (error: Error) => {
+                    .on("error", (error: Error) => {
                         setErrorMessage(error.message);
                         setShowSnackBar(2);
                     });
@@ -221,19 +226,19 @@ const Challenge: FC = () => {
         <>
             {
                 (
-                    Number.isInteger(Number(id))
-                    && Number(id) >= 1
-                    && Number(id) <= Number(process.env.REACT_APP_PROBLEM_NUM)
+                    Number.isInteger(problemId.current)
+                    && problemId.current >= 1
+                    && problemId.current <= Number(process.env.REACT_APP_PROBLEM_NUM)
                 ) ? (
                     <MainWrapper title="Challenge">
                         <Grid container>
                             <Grid item xs={12}>
                                 <HeaderWrapper>
                                     <HeaderTypography>
-                                        {info.title}
+                                        {multiLang?.problems.challenges[problemId.current - 1].title}
                                     </HeaderTypography>
                                     <SubtitleTypography>
-                                        {info.description}
+                                        {multiLang?.problems.challenges[problemId.current - 1].description}
                                     </SubtitleTypography>
                                 </HeaderWrapper>
                             </Grid>
@@ -249,7 +254,7 @@ const Challenge: FC = () => {
                                             </Button>
                                         </SubHeaderTypography>
                                         <SubSubHeaderTypography>
-                                            {info.tutorial}
+                                            {multiLang?.problems.challenges[problemId.current - 1].tutorial}
                                         </SubSubHeaderTypography>
                                         <CopyBlockWrapper>
                                             <CopyBlock
@@ -260,7 +265,7 @@ const Challenge: FC = () => {
                                             />
                                         </CopyBlockWrapper>
                                         <SubSubHeaderTypography>
-                                            Submit Solution
+                                        {multiLang?.problems.contract.submitText}
                                         </SubSubHeaderTypography>
                                         <SubHeaderTypography>
                                             <Button
@@ -269,7 +274,7 @@ const Challenge: FC = () => {
                                                 disabled={submitDisabled}
                                                 onClick={handleSubmit}
                                             >
-                                                Win
+                                                {multiLang?.problems.contract.submitButtonText}
                                             </Button>
                                         </SubHeaderTypography>
                                     </Container>
