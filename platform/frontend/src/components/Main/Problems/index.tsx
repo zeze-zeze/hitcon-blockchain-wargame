@@ -8,32 +8,15 @@ import LanguageContext from 'contexts/LanguageContext';
 
 type ChallengeType = {
     title: string;
+    description: string;
+    tutorial: string;
 };
 
 const Problems: FC = () => {
     const { getSolvedProblems } = useSolvedProblems();
     const solvedProblems = getSolvedProblems();
     const { multiLang } = useContext(LanguageContext);
-    const challengesRef = useRef<Array<ChallengeType>>(multiLang ? multiLang.problems.challenges : [
-        {
-            "title": "Problem 1"
-        },
-        {
-            "title": "Problem 2"
-        },
-        {
-            "title": "Problem 3"
-        },
-        {
-            "title": "Problem 4"
-        },
-        {
-            "title": "Problem 5"
-        },
-        {
-            "title": "Problem 6"
-        }
-    ]);
+    const challengesRef = useRef<Array<ChallengeType>>(multiLang?.problems.challenges);
 
     return (
         <MainWrapper title="Problems">

@@ -87,7 +87,7 @@ const Header: FC = () => {
                     {
                         solvedProblems.map((solved: boolean, idx: number) => (
                             <Grid item xs={1} key={idx}>
-                                <Tooltip arrow title={multiLang?.dashboard.header.tooltip.problems[idx]}>
+                                <Tooltip arrow title={multiLang?.problems.challenges[idx].title}>
                                     <Avatar
                                         variant="rounded"
                                         src={nftImgLinks[idx]}
