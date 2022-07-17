@@ -1,19 +1,25 @@
 import { FC, useEffect, useState } from "react";
-import { Avatar, Grid } from "@mui/material";
+import { Avatar, Grid, Snackbar, Alert } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { useWeb3React } from "@web3-react/core";
+import SuspenseComponent from "../../Suspense";
 import Web3 from "web3/dist/web3.min.js";
+import axios from "axios";
 import info from "./info.json";
 
 const web3 = new Web3(Web3.givenProvider);
 
 const HeaderNFTList: FC = () => {
-  const { account } = useWeb3React();
+  const { account, active } = useWeb3React();
   const [chal1State, setChal1State] = useState(false);
   const [chal2State, setChal2State] = useState(false);
   const [chal3State, setChal3State] = useState(false);
   const [chal4State, setChal4State] = useState(false);
   const [chal5State, setChal5State] = useState(false);
   const [chal6State, setChal6State] = useState(false);
+
+  const [showLoading, setShowLoading] = useState(false);
+  const [showSnackBar, setShowSnackBar] = useState(0);
 
   const chal1Contract = new web3.eth.Contract(
     info["p1"]["abi"],
@@ -39,6 +45,27 @@ const HeaderNFTList: FC = () => {
     info["p5"]["abi"],
     info["p5"]["addr"]
   );
+
+  const requestNFT = async () => {
+    setShowLoading(true);
+    await axios
+      .post(process.env.REACT_APP_BASE_API_URL + "/api/hitcon-nft-sender", {
+        address: account,
+      })
+      .then((response) => {
+        // console.log(response);
+        setShowSnackBar(1);
+      })
+      .catch((error) => {
+        // console.log(error);
+        setShowSnackBar(2);
+      });
+    setShowLoading(false);
+  };
+
+  const handleClose = () => {
+    setShowSnackBar(0);
+  };
 
   useEffect(() => {
     if (account !== undefined) {
@@ -164,7 +191,20 @@ const HeaderNFTList: FC = () => {
 
   return (
     <>
-      <Grid container justifyContent="center" alignItems="center" spacing={7}>
+      <Snackbar
+        open={showSnackBar != 0}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={showSnackBar === 1 ? "success" : "error"}
+          sx={{ width: "100%" }}
+        >
+          {showSnackBar === 1 ? "Request NFT Success" : "ERROR! Request failed"}
+        </Alert>
+      </Snackbar>
+      <Grid container justifyContent="center" alignItems="center" spacing={8}>
         {nftInfo.map(({ url, gain }, id) => (
           <Grid item xs={1} key={id}>
             <Avatar
@@ -176,9 +216,30 @@ const HeaderNFTList: FC = () => {
             />
           </Grid>
         ))}
+
+        {chal1State &&
+          chal2State &&
+          chal3State &&
+          chal4State &&
+          chal5State &&
+          chal6State && (
+            <>
+              <Grid item lg={3} key={7}>
+                <LoadingButton
+                  variant="contained"
+                  onClick={requestNFT}
+                  loading={showLoading}
+                  loadingIndicator="Requesting..."
+                >
+                  Request NFT
+                </LoadingButton>
+              </Grid>
+            </>
+          )}
       </Grid>
     </>
   );
+  return <></>;
 };
 
 export default HeaderNFTList;
