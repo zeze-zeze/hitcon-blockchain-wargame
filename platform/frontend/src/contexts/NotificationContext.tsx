@@ -1,8 +1,7 @@
 import { createContext } from 'react';
 
 type MessageType = {
-    title: string,
-    content: string,
+    idx: number,
     date: number,
 };
 
@@ -13,7 +12,6 @@ type NotificationContextType = {
     addNotification: (newMessage: MessageType) => void,
     deleteNotification: (idx: number) => void,
 };
-
 
 const SidebarToggledContext = createContext<NotificationContextType>({} as NotificationContextType);
 

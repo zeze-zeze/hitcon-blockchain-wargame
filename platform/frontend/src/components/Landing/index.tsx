@@ -1,16 +1,22 @@
-import { FC } from 'react';
+import { FC, useState, useCallback, useContext } from 'react';
 import {
     Box,
     Button,
     Card,
     Container,
+    FormControl,
     Grid,
+    InputLabel,
+    MenuItem,
+    Select,
     Typography,
     useMediaQuery
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { styled, useTheme } from '@mui/material/styles';
+import LanguageContext from 'contexts/LanguageContext';
 
 const LandingWrapper = styled(Container)(
     ({ theme }) => ({
@@ -53,18 +59,11 @@ const LandingButtonsWrapper = styled(Box)(
 );
 
 const Landing: FC = () => {
+    const { lang, changeLang, multiLang } = useContext(LanguageContext);
     const theme = useTheme();
     const mdUp = useMediaQuery(theme.breakpoints.up('md'));
     const navigate = useNavigate();
-
-    const loginOAuth = () => {
-        window.location.href = 'https://hitcon.org/2022/';
-    };
-
-    const loginAnonym = () => {
-        navigate('/home');
-    };
-
+    
     return (
         <HelmetProvider>
             <Helmet>
@@ -75,7 +74,7 @@ const Landing: FC = () => {
                     <Grid spacing={10} container>
                         <Grid item md={10} lg={8} mx="auto">
                             <LandingHeaderTypography variant="h1">
-                                Hitcon Wargame
+                                {multiLang?.landing.title}
                             </LandingHeaderTypography>
                             <LandingSubLandingHeaderTypography
                                 sx={{ lineHeight: 1.5, pb: 4 }}
@@ -83,19 +82,35 @@ const Landing: FC = () => {
                                 color="text.secondary"
                                 fontWeight="normal"
                             >
-                                Welcome to the hitcon wargame.
+                                {multiLang?.landing.subtitle}
                             </LandingSubLandingHeaderTypography>
+                            <FormControl fullWidth>
+                                <InputLabel id="lang-label">{multiLang?.landing.lang}</InputLabel>
+                                <Select
+                                    labelId="lang-label"
+                                    id="lang-select"
+                                    value={lang}
+                                    label="Lang"
+                                    onChange={(event: SelectChangeEvent) => {
+                                        const appointedLang: string = event.target.value;
+                                        changeLang(appointedLang);
+                                    }}
+                                >
+                                    <MenuItem value="en-US">English</MenuItem>
+                                    <MenuItem value="zh-TW">繁體中文</MenuItem>
+                                </Select>
+                            </FormControl>
                             <LandingButtonsWrapper>
                                 <Grid item xs={6} mx="auto">
                                     <Button
                                         variant="contained"
                                         size="large"
-                                        onClick={loginOAuth}
-                                        sx={{
-                                            margin: theme.spacing(0, 3),
+                                        onClick={() => {
+                                            window.location.href = 'https://hitcon.org/2022/';
                                         }}
+                                        sx={{ margin: theme.spacing(3) }}
                                     >
-                                        Login via Onepage
+                                        {multiLang?.landing.buttons[0].text}
                                     </Button>
                                 </Grid>
                                 <Grid item xs={6} mx="auto">
@@ -103,12 +118,12 @@ const Landing: FC = () => {
                                         color="error"
                                         variant="contained"
                                         size="large"
-                                        onClick={loginAnonym}
-                                        sx={{
-                                            margin: theme.spacing(0, 3),
+                                        onClick={() => {
+                                            navigate('/home');
                                         }}
+                                        sx={{ margin: theme.spacing(3) }}
                                     >
-                                        Play Anonymously
+                                        {multiLang?.landing.buttons[1].text}
                                     </Button>
                                 </Grid>
                             </LandingButtonsWrapper>

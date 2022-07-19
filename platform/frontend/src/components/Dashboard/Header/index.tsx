@@ -36,10 +36,10 @@ const HeaderWrapper: FC = styled(Box)(({ theme }) => ({
 
 const HeaderComponentsWrapper = styled(Box)(
     ({ theme }) => ({
-        display: 'flex',
-        flexWrap: 'nowrap',
-        justifyContent: 'space-around',
-        alignItems: 'center',
+        display: "flex",
+        flexWrap: "nowrap",
+        justifyContent: "space-around",
+        alignItems: "center",
     })
 );
 
@@ -63,6 +63,7 @@ const Header: FC = () => {
     const { getSolvedProblems } = useSolvedProblems();
 
     const solvedProblems = getSolvedProblems();
+    const { multiLang } = useContext(LanguageContext);
 
     const nftImgLinks = [
         "https://i.imgur.com/fSFl7io.png",
@@ -85,11 +86,11 @@ const Header: FC = () => {
             /* 
              * If the current window size is big enough & left sidebar is toggled,
              * the header should not span across the menu.
-             * Otherwise, the header's width should be equivalent to the screen's width
+             * Otherwise, the header"s width should be equivalent to the screen"s width
              */
             <HeaderWrapper sx={{ left: lgUp && sidebarToggled ? theme.sidebar.width: 0 }}>
                 <HeaderComponentsWrapper>
-                    <Tooltip arrow title="Toggle Menu">
+                    <Tooltip arrow title={multiLang?.dashboard.header.tooltip.toggleMenu}>
                         <IconButton color="primary" onClick={toggleSidebar}>
                             {sidebarToggled ? <MenuOpenIcon /> : <MenuIcon />}
                         </IconButton>
@@ -97,6 +98,31 @@ const Header: FC = () => {
                 </HeaderComponentsWrapper>
                 <HeaderComponentsWrapper>
                     <HeaderNFTList />
+                    <Grid container justifyContent="center" alignItems="center" spacing={7}>
+                    {
+                        solvedProblems.map((solved: boolean, idx: number) => (
+                            <Grid item xs={1} key={idx}>
+                                <Tooltip arrow title={multiLang?.problems.challenges[idx].title}>
+                                    <Avatar
+                                        variant="rounded"
+                                        src={nftImgLinks[idx]}
+                                        sx={{
+                                            borderWidth: "3px",
+                                            borderStyle: "dashed",
+                                            borderColor: solved ? theme.colors.success.main : theme.colors.error.main,
+                                            padding: "1px"
+                                        }}
+                                        imgProps={{
+                                            style: {
+                                                opacity: solved ? "100%" : "40%",
+                                            }
+                                        }}
+                                    />
+                                </Tooltip>
+                            </Grid>
+                        ))
+                    }
+                    </Grid>
                 </HeaderComponentsWrapper>
                 <HeaderComponentsWrapper>
                     <HeaderButtons />
@@ -104,17 +130,7 @@ const Header: FC = () => {
                         active ? (
                             <HeaderUserMenu />
                         ) : (
-                            <Button
-                                component={NavLink}
-                                color="primary"
-                                variant="contained"
-                                to="/connect"
-                                sx={{
-                                    'margin': theme.spacing(0, 3)
-                                }}
-                            >
-                                Connect Wallet
-                            </Button>
+                           <ConnectButton />
                         )
                     }
                 </HeaderComponentsWrapper>

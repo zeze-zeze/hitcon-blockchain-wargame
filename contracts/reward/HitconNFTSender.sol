@@ -1,8 +1,27 @@
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.6/contracts/token/ERC1155/ERC1155.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.6/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract CheckSolved is Ownable, ERC1155 {
+contract HitconNFTSender is ERC1155Supply, Ownable, ReentrancyGuard {
 
+    constructor(string memory _uri) public ERC1155(_uri) {}
+    
+    event hadSent(address indexed _solver);
+
+    function allSolved(address _solver)
+        external
+        nonReentrant
+        onlyOwner
+    {
+        _mint(_solver, 1, 1, "");
+        emit hadSent(_solver);
+    }
+
+    function setURI(string memory _newuri) public onlyOwner {
+        super._setURI(_newuri);
+    }
 }

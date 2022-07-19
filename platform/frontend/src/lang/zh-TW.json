@@ -1,0 +1,151 @@
+{
+    "landing": {
+        "title": "HITCON 區塊鏈挑戰",
+        "subtitle": "歡迎來到 HITCON 區塊鏈挑戰",
+        "lang": "語言",
+        "buttons": [
+            {
+                "text": "由 Onepage 登入"
+            },
+            {
+                "text": "直接開始挑戰"
+            }
+        ]
+    },
+    "dashboard": {
+        "sidebar": {
+            "iconTitle": "HITCON 區塊鏈挑戰",
+            "subheader": "目錄",
+            "entries": {
+                "home": "首頁",
+                "tutorial": "教學",
+                "faucet": "水龍頭",
+                "problems": "挑戰"
+            }
+        },
+        "header": {
+            "tooltip": {
+                "toggleMenu": "切換目錄",
+                "notification": "通知"
+            },
+            "notification": {
+                "title": "通知",
+                "empty": "暫無",
+                "messages": [
+                    {
+                        "title": "太好了！你完成了挑戰一。",
+                        "content": "你獲得了 NFT1."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰二。",
+                        "content": "你獲得了 NFT2."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰三。",
+                        "content": "你獲得了 NFT3."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰四。",
+                        "content": "你獲得了 NFT4."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰五。",
+                        "content": "你獲得了 NFT5."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰六。",
+                        "content": "你獲得了 NFT6."
+                    }
+                ]
+            },
+            "userMenu": {
+                "connectWallet": "連結錢包",
+                "disconnectWallet": "登出錢包",
+                "userSetting": "使用者設定"
+            }
+        }
+    },
+    "home": {
+        "title": "HITCON 區塊鏈挑戰",
+        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF 遊戲。每個關卡都藏有一些漏洞等著你來「駭」。",
+        "cards": [
+            {
+                "title": "區塊鏈新手嗎？",
+                "buttonText": "前往教學"
+            },
+            {
+                "title": "區塊鏈老手嗎？",
+                "buttonText": "直接開始"
+            }
+        ]
+    },
+    "tutorial": {
+        "title": "教學",
+        "subtitle": "此教學將帶領大家學會 Metamask，Solidity 等乙太坊基礎知識"
+    },
+    "faucet": {
+        "title": "水龍頭",
+        "subtitle": "取得一些 Rinkeby 測試鏈乙太幣",
+        "content": {
+            "address": "以太幣地址",
+            "amount": "金額",
+            "buttonText": "取得乙太幣",
+            "needMore": "需要更多測試鏈乙太幣嗎？"
+        }
+    },
+    "problems": {
+        "challenges": [
+            {
+                "title": "挑戰一",
+                "description": "挑戰一敘述",
+                "tutorial": "挑戰一題點"
+            },
+            {
+                "title": "挑戰二",
+                "description": "挑戰二敘述",
+                "tutorial": "挑戰二題點"
+            },
+            {
+                "title": "挑戰三",
+                "description": "挑戰三敘述",
+                "tutorial": "挑戰三題點"
+            },
+            {
+                "title": "挑戰四",
+                "description": "挑戰四敘述",
+                "tutorial": "挑戰四題點"
+            },
+            {
+                "title": "挑戰五",
+                "description": "挑戰五敘述",
+                "tutorial": "挑戰五題點"
+            },
+            {
+                "title": "挑戰六",
+                "description": "挑戰六敘述",
+                "tutorial": "挑戰六題點"
+            }
+        ],
+        "challenge": "挑戰",
+        "solved": "已完成",
+        "notSolved": "未完成",
+        "buttonText": "開始挑戰",
+        "contract": {
+            "connect": "連結合約",
+            "connected": "合約已連結！",
+            "submitText": "提交",
+            "submitButtonText": "我解完這題了"
+        }
+    },
+    "success": {
+        "requestETH": "成功取得乙太幣",
+        "challengeSolved": "太好了！您成功解了這個題目"
+    },
+    "error": {
+        "requestETH": "錯誤：取得乙太幣失敗。",
+        "connectFirst": "錯誤：請先連結您的錢包。",
+        "alreadySolved": "錯誤：您重複解了這個題目。",
+        "notSolved": "錯誤：您並沒有解掉這個題目。",
+        "transactionFailed": "錯誤：交易失敗。"
+    }
+}

@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Box, Card, Button, CardContent, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTheme, styled } from '@mui/material/styles';
 import EmojiFlagsTwoToneIcon from '@mui/icons-material/EmojiFlagsTwoTone';
+import LanguageContext from 'contexts/LanguageContext';
 
 type ProblemProps = {
     index: number,
@@ -65,9 +66,7 @@ const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
 
     const theme = useTheme();
     const navigate = useNavigate();
-    const handleNavigateChallenge = () => {
-        navigate(`/problems/${index}`);
-    };
+    const { multiLang } = useContext(LanguageContext);
 
     return (
         <ProblemCard>
@@ -76,7 +75,7 @@ const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
                     <Box sx={{ marginRight: theme.spacing(0.5) }}>
                         <EmojiFlagsTwoToneIcon />
                     </Box>
-                    Problem {index}
+                    { multiLang?.problems.challenge } {index}
                     <Box sx={{ marginLeft: theme.spacing(0.5) }}>
                         <EmojiFlagsTwoToneIcon />
                     </Box>
@@ -88,14 +87,16 @@ const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
                     <StatusBadge sx={{
                         background: solved ? theme.palette.success.main : theme.palette.error.main,
                     }}>
-                        { solved ? 'Solved' : 'Not solved' }
+                        {solved ? multiLang?.problems.solved : multiLang?.problems.notSolved }
                     </StatusBadge>
                     <Button
                         variant="contained"
                         style={{ marginTop: theme.spacing(2) }}
-                        onClick={ handleNavigateChallenge }
+                        onClick={() => {
+                            navigate(`/problems/${index}`);
+                        }}
                     >
-                        Start Challenge
+                        { multiLang?.problems.buttonText }
                     </Button>
                 </ProblemContent>
             </ProblemWrapper>

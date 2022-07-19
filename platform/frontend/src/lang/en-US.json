@@ -1,0 +1,151 @@
+{
+    "landing": {
+        "title": "HITCON Blockchain Wargame",
+        "subtitle": "Welcome to the hitcon wargame.",
+        "lang": "Language",
+        "buttons": [
+            {
+                "text": "Login via Onepage"
+            },
+            {
+                "text": "Play Anonymously"
+            }
+        ]
+    },
+    "dashboard": {
+        "sidebar": {
+            "iconTitle": "HITCON Wargame",
+            "subheader": "Dashboard",
+            "entries": {
+                "home": "Home",
+                "tutorial": "Tutorial",
+                "faucet": "Faucet",
+                "problems": "Problems"
+            }
+        },
+        "header": {
+            "tooltip": {
+                "toggleMenu": "Toggle Menu",
+                "notification": "Notification"
+            },
+            "notification": {
+                "title": "Notification",
+                "empty": "Empty",
+                "messages": [
+                    {
+                        "title": "Horray! You solve Problem 1.",
+                        "content": "You won NFT1."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 2.",
+                        "content": "You won NFT2."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 3.",
+                        "content": "You won NFT3."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 4.",
+                        "content": "You won NFT4."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 5.",
+                        "content": "You won NFT5."
+                    },
+                    {
+                        "title": "Horray! You solve Problem 6.",
+                        "content": "You won NFT6."
+                    }
+                ]
+            },
+            "userMenu": {
+                "connectWallet": "Connect Wallet",
+                "disconnectWallet": "Disconnect Wallet",
+                "userSetting": "User Setting"
+            }
+        }
+    },
+    "home": {
+        "title": "HITCON Blockchain Wargame",
+        "subtitle": "Hitcon Blockchain Wargame is a Blockchain CTF Game. Each level contains a vulnerable smart contract that needs to be 'hacked'.",
+        "cards": [
+            {
+                "title": "New to blockchain?",
+                "buttonText": "Start Tutorial"
+            },
+            {
+                "title": "Already familiar with blockchain?",
+                "buttonText": "Start Playing"
+            }
+        ]
+    },
+    "tutorial": {
+        "title": "Tutorial",
+        "subtitle": "This tutorial walks you through the very basics of some Ethereum concepts, including Metamask, Solidity, and more!"
+    },
+    "faucet": {
+        "title": "Faucet",
+        "subtitle": "Get some Rinkeby ETH!",
+        "content": {
+            "address": "Wallet Address",
+            "amount": "Request Amount",
+            "buttonText": "Request ETH",
+            "needMore": "Need more Rinkeby ETH?"
+        }
+    },
+    "problems": {
+        "challenges": [
+            {
+                "title": "Problem 1",
+                "description": "Problem 1 description",
+                "tutorial": "Problem 1 tutorial"
+            },
+            {
+                "title": "Problem 2",
+                "description": "Problem 2 description" ,
+                "tutorial": "Problem 2 tutorial"
+            },
+            {
+                "title": "Problem 3",
+                "description": "Problem 3 description",
+                "tutorial": "Problem 3 tutorial" 
+            },
+            {
+                "title": "Problem 4",
+                "description": "Problem 4 description",
+                "tutorial": "Problem 4 tutorial"
+            },
+            {
+                "title": "Problem 5",
+                "description": "Problem 5 description",
+                "tutorial": "Problem 5 tutorial" 
+            },
+            {
+                "title": "Problem 6",
+                "description": "Problem 6 description",
+                "tutorial": "Problem 6 tutorial" 
+            }
+        ],
+        "challenge": "Challenge",
+        "solved": "Solved",
+        "notSolved": "Not Solved",
+        "buttonText": "Start Challenge",
+        "contract": {
+            "connect": "Connect Contract",
+            "connected": "Contract Connected!",
+            "submitText": "Submit",
+            "submitButtonText": "I've Finished the level!"
+        }
+    },
+    "success": {
+        "requestETH": "Request ETH success.",
+        "challengeSolved": "Congratulation! You solved the challenge"
+    },
+    "error": {
+        "requestETH": "Error: Request ETH Failed.",
+        "connectFirst": "Error: Please connect your wallet first.",
+        "alreadySolved": "Error: You have alread solved the challenge.",
+        "notSolved": "Error: Unfortunately, you did not solved the challenge.",
+        "transactionFailed": "Error: Transaction Failed."
+    }
+}   

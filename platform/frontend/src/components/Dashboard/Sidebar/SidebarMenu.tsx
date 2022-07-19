@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
     Button,
@@ -14,6 +14,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';
 import FlagIcon from '@mui/icons-material/Flag';
 import CodeIcon from '@mui/icons-material/Code';
+import LanguageContext from 'contexts/LanguageContext';
 
 const WaterDropIcon: FC = () => {
     return (
@@ -87,38 +88,36 @@ const MenuSubEntryWrapper = styled(List)(
 );
 
 const SidebarMenu: FC = () => {
+    
+    const { multiLang } = useContext(LanguageContext);
+
     return (
         <>
             <MenuEntryWrapper subheader={
                 <ListSubheader disableSticky>
-                    Dashboard
+                    {multiLang?.dashboard.sidebar.subheader}
                 </ListSubheader>
             }/>
             <MenuSubEntryWrapper>
                 { /* Add new menu entries here */ }
                 <ListItem>
                     <Button component={NavLink} startIcon={<HomeIcon />} to="/home" >
-                        Home
+                        {multiLang?.dashboard.sidebar.entries.home}
                     </Button>
                 </ListItem>
                 <ListItem>
                     <Button component={NavLink} startIcon={<SchoolIcon />} to="/tutorial" >
-                        Tutorial
+                        {multiLang?.dashboard.sidebar.entries.tutorial}
                     </Button>
                 </ListItem>
                 <ListItem>
                     <Button component={NavLink} startIcon={<WaterDropIcon />} to="/faucet" >
-                        Faucet
+                        {multiLang?.dashboard.sidebar.entries.faucet}
                     </Button>
                 </ListItem>
                 <ListItem>
                     <Button component={NavLink} startIcon={<FlagIcon />} to="/problems" >
-                        Problems
-                    </Button>
-                </ListItem>
-                <ListItem>
-                    <Button component={NavLink} startIcon={<CodeIcon />} to="/template" >
-                        Template
+                        {multiLang?.dashboard.sidebar.entries.problems}
                     </Button>
                 </ListItem>
             </MenuSubEntryWrapper>

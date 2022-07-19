@@ -1,10 +1,11 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
 import Image from 'material-ui-image';
 import LogoImage from 'assets/logo.svg';
+import LanguageContext from 'contexts/LanguageContext';
 
 const LogoWrapper = styled(Box)(
     ({ theme }) => ({
@@ -56,6 +57,8 @@ const LogoText = styled(Box)(
 
 const SidebarLogo: FC = () => {
 
+    const { multiLang } = useContext(LanguageContext);
+
     return (
         <LogoWrapper>
             <LogoContainerWrapper to="/home">
@@ -63,7 +66,9 @@ const SidebarLogo: FC = () => {
                     <Image src={LogoImage} alt="logo" disableSpinner disableTransition />
                 </LogoImageWrapper>
                 <LogoTextWrapper>
-                    <LogoText>HITCON Wargame</LogoText>
+                    <LogoText>
+                        {multiLang?.dashboard.sidebar.iconTitle}
+                    </LogoText>
                 </LogoTextWrapper>
             </LogoContainerWrapper>
         </LogoWrapper>
