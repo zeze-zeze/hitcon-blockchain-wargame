@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { FC, ElementType, useRef, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Avatar, Box, Button, Divider, List, ListItem, ListItemText, Popover, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -8,7 +8,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useWeb3React } from "@web3-react/core";
 import useShortWallet from 'hooks/useShortWallet';
 
-const UserBoxButton: FC = styled(Button)(
+const UserBoxButton = styled(Button)(
     ({ theme }) => ({
         display: 'flex',
         justifyContent: 'center',
@@ -18,7 +18,7 @@ const UserBoxButton: FC = styled(Button)(
     })
 );
 
-const UserBoxText: FC = styled(Box)(
+const UserBoxText = styled(Box)(
     ({ theme }) => ({
         paddingLeft: theme.spacing(1),
         justifyContent: 'center',
@@ -26,10 +26,10 @@ const UserBoxText: FC = styled(Box)(
     })
 );
 
-const UserBoxLabel: FC = styled(Typography)(
+const UserBoxLabel = styled(Typography)(
     ({ theme }) => ({
         fontWeight: theme.typography.fontWeightBold,
-        color: theme.palette.secondary.main,
+        color: theme.colors.alpha.trueWhite[70],
         display: 'block',
         overflow: 'hidden',
         maxWidth: '156px',
@@ -37,7 +37,7 @@ const UserBoxLabel: FC = styled(Typography)(
     })
 );
 
-const UserBoxSignoutBox: FC = styled(Box)(
+const UserBoxSignoutBox = styled(Box)(
     ({ theme }) => ({
         padding: theme.spacing(1),
     })
@@ -71,13 +71,9 @@ const HeaderUserMenu: FC = () => {
                 anchorEl={ref.current}
                 onClose={handleClose}
                 open={isOpen}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                PaperProps = {{
+                    variant: 'outlined',
+                    elevation: 0
                 }}
             >
                 <List sx={{ p: 1 }} component="nav">

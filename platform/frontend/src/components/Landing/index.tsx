@@ -1,28 +1,16 @@
-import { Avatar, Box, Button, Card, Container, Grid, Typography, useMediaQuery } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { FC } from 'react';
+import {
+    Box,
+    Button,
+    Card,
+    Container,
+    Grid,
+    Typography,
+    useMediaQuery
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { styled, useTheme } from '@mui/material/styles';
-import { useWeb3React } from "@web3-react/core";
-import ConnectButton from 'components/Connector';
-
-const LoginWrapper: FC = styled(Box)(
-    ({ theme }) => ({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: theme.spacing(4),
-    })
-);
-
-const LoginAvatar: FC = styled(Avatar)(
-    ({ theme }) => ({
-        backgroundColor: theme.colors.error.light,
-        width: '128px',
-        height: '128px',
-        margin: 'auto',
-    })
-);
 
 const LandingWrapper = styled(Container)(
     ({ theme }) => ({
@@ -38,13 +26,13 @@ const LandingCard = styled(Card)(
         padding: theme.spacing(10),
         borderRadius: '64px',
     })
-)
+);
 
 const LandingHeaderTypography = styled(Typography)(
     ({ theme }) => ({
         fontSize: theme.typography.pxToRem(50),
         textAlign: 'center',
-        padding: theme.spacing(5, 0),
+        paddingBottom: theme.spacing(5),
     })
 );
 
@@ -60,12 +48,22 @@ const LandingButtonsWrapper = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
         justifyContent: 'space-evenly',
+        width: '100%',
     })
 );
 
-const Landing = () => {
+const Landing: FC = () => {
     const theme = useTheme();
     const mdUp = useMediaQuery(theme.breakpoints.up('md'));
+    const navigate = useNavigate();
+
+    const loginOAuth = () => {
+        window.location.href = 'https://hitcon.org/2022/';
+    };
+
+    const loginAnonym = () => {
+        navigate('/home');
+    };
 
     return (
         <HelmetProvider>
@@ -76,11 +74,8 @@ const Landing = () => {
                 <LandingCard>
                     <Grid spacing={10} container>
                         <Grid item md={10} lg={8} mx="auto">
-                            <LoginAvatar>
-                                <LockOutlinedIcon sx={{ fontSize: '72px' }} />
-                            </LoginAvatar>
-                            <LandingHeaderTypography component="h1" variant="h1">
-                                Login
+                            <LandingHeaderTypography variant="h1">
+                                Hitcon Wargame
                             </LandingHeaderTypography>
                             <LandingSubLandingHeaderTypography
                                 sx={{ lineHeight: 1.5, pb: 4 }}
@@ -91,7 +86,31 @@ const Landing = () => {
                                 Welcome to the hitcon wargame.
                             </LandingSubLandingHeaderTypography>
                             <LandingButtonsWrapper>
-                                <ConnectButton />
+                                <Grid item xs={6} mx="auto">
+                                    <Button
+                                        variant="contained"
+                                        size="large"
+                                        onClick={loginOAuth}
+                                        sx={{
+                                            margin: theme.spacing(0, 3),
+                                        }}
+                                    >
+                                        Login via Onepage
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={6} mx="auto">
+                                    <Button
+                                        color="error"
+                                        variant="contained"
+                                        size="large"
+                                        onClick={loginAnonym}
+                                        sx={{
+                                            margin: theme.spacing(0, 3),
+                                        }}
+                                    >
+                                        Play Anonymously
+                                    </Button>
+                                </Grid>
                             </LandingButtonsWrapper>
                         </Grid>
                     </Grid>

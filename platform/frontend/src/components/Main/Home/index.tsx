@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactChild } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Grid, Typography, Paper, Container, Button, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
@@ -9,10 +9,12 @@ import MainWrapper, {
     SubtitleTypography,
     PaperCenteredComponentWrapper,
 } from 'components/Main';
-import ConnectButton from 'components/Connector';
-import useEagerConnect from 'components/Connector/EagerConnection';
 
-const FixedSubHeaderContainer: FC = styled(Container)(
+type FixedSubHeaderTypographyProps = {
+    children: ReactChild,
+};
+
+const FixedSubHeaderContainer = styled(Container)(
     ({ theme }) => ({
         height: '60%',
         display: 'flex',
@@ -21,7 +23,7 @@ const FixedSubHeaderContainer: FC = styled(Container)(
     })
 );
 
-const FixedButtonContainer: FC = styled(Container)(
+const FixedButtonContainer = styled(Container)(
     ({ theme }) => ({
         height: '40%',
         display: 'flex',
@@ -30,7 +32,7 @@ const FixedButtonContainer: FC = styled(Container)(
     })
 );
 
-const FixedSubHeaderTypography: FC = ({ children }) => {
+const FixedSubHeaderTypography: FC<FixedSubHeaderTypographyProps> = ({ children }) => {
     const theme = useTheme();
     return (
         <Typography align="center" variant="h2" component="h2">
@@ -50,10 +52,10 @@ const Home: FC = () => {
                 <Grid item xs={12}>
                     <HeaderWrapper>
                         <HeaderTypography>
-                            The Ethernaut
+                            Hitcon Blockchain Wargame
                         </HeaderTypography>
                         <SubtitleTypography>
-                            The Ethernaut is a Web3/Solidity based wargame inspired on overthewire.org, played in the Ethereum Virtual Machine. Each level is a smart contract that needs to be 'hacked'.
+                            Hitcon Blockchain Wargame is a Web3/Solidity Game. Each level is a smart contract that needs to be 'hacked'
                         </SubtitleTypography>
                     </HeaderWrapper>
                 </Grid>

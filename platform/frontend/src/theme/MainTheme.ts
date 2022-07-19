@@ -6,239 +6,253 @@ import '@mui/lab/themeAugmentation';
  */
 
 declare module '@mui/material/styles' {
-    interface Theme {
-        colors: {
-            gradients: {
-                blue1: string;
-                blue2: string;
-                blue3: string;
-                orange1: string;
-                orange2: string;
-                purple1: string;
-                pink1: string;
-                pink2: string;
-                green1: string;
-                black1: string;
-            };
-            shadows: {
-                success: string;
-                error: string;
-                primary: string;
-                warning: string;
-            };
-            alpha: {
-                white: {
-                    5: string;
-                    10: string;
-                    30: string;
-                    50: string;
-                    70: string;
-                    100: string;
-                };
-                trueWhite: {
-                    5: string;
-                    10: string;
-                    30: string;
-                    50: string;
-                    70: string;
-                    100: string;
-                };
-                black: {
-                    5: string;
-                    10: string;
-                    30: string;
-                    50: string;
-                    70: string;
-                    100: string;
-                };
-            };
-            secondary: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            primary: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            success: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            warning: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            error: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            info: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
+  interface Theme {
+    colors: {
+      gradients: {
+        blue1: string;
+        blue2: string;
+        blue3: string;
+        blue4: string;
+        blue5: string;
+        orange1: string;
+        orange2: string;
+        orange3: string;
+        purple1: string;
+        purple3: string;
+        pink1: string;
+        pink2: string;
+        green1: string;
+        green2: string;
+        black1: string;
+        black2: string;
+      };
+      shadows: {
+        success: string;
+        error: string;
+        primary: string;
+        warning: string;
+        info: string;
+      };
+      alpha: {
+        white: {
+          5: string;
+          10: string;
+          30: string;
+          50: string;
+          70: string;
+          100: string;
         };
-        general: {
-            reactFrameworkColor: React.CSSProperties['color'];
-            borderRadiusSm: string;
-            borderRadius: string;
-            borderRadiusLg: string;
-            borderRadiusXl: string;
+        trueWhite: {
+          5: string;
+          10: string;
+          30: string;
+          50: string;
+          70: string;
+          100: string;
         };
-        sidebar: {
-            background: React.CSSProperties['color'];
-            boxShadow: React.CSSProperties['color'];
-            width: string;
-            textColor: React.CSSProperties['color'];
-            dividerBg: React.CSSProperties['color'];
-            menuItemColor: React.CSSProperties['color'];
-            menuItemColorActive: React.CSSProperties['color'];
-            menuItemBg: React.CSSProperties['color'];
-            menuItemBgActive: React.CSSProperties['color'];
-            menuItemIconColor: React.CSSProperties['color'];
-            menuItemIconColorActive: React.CSSProperties['color'];
-            menuItemHeadingColor: React.CSSProperties['color'];
+        black: {
+          5: string;
+          10: string;
+          30: string;
+          50: string;
+          70: string;
+          100: string;
         };
-        header: {
-            height: string;
-            background: React.CSSProperties['color'];
-            boxShadow: React.CSSProperties['color'];
-            textColor: React.CSSProperties['color'];
-        };
-    }
+      };
+      secondary: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      primary: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      success: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      warning: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      error: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      info: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+    };
+    general: {
+      reactFrameworkColor: React.CSSProperties['color'];
+      borderRadiusSm: string;
+      borderRadius: string;
+      borderRadiusLg: string;
+      borderRadiusXl: string;
+    };
+    sidebar: {
+      background: React.CSSProperties['color'];
+      boxShadow: React.CSSProperties['color'];
+      width: string;
+      textColor: React.CSSProperties['color'];
+      dividerBg: React.CSSProperties['color'];
+      menuItemColor: React.CSSProperties['color'];
+      menuItemColorActive: React.CSSProperties['color'];
+      menuItemBg: React.CSSProperties['color'];
+      menuItemBgActive: React.CSSProperties['color'];
+      menuItemIconColor: React.CSSProperties['color'];
+      menuItemIconColorActive: React.CSSProperties['color'];
+      menuItemHeadingColor: React.CSSProperties['color'];
+    };
+    header: {
+      height: string;
+      background: React.CSSProperties['color'];
+      boxShadow: React.CSSProperties['color'];
+      textColor: React.CSSProperties['color'];
+    };
+  }
 
-    interface ThemeOptions {
-        colors: {
-            gradients: {
-                blue1: string;
-                blue2: string;
-                blue3: string;
-                orange1: string;
-                orange2: string;
-                purple1: string;
-                pink1: string;
-                pink2: string;
-                green1: string;
-                black1: string;
-            };
-            shadows: {
-                success: string;
-                error: string;
-                primary: string;
-                warning: string;
-            };
-            alpha: {
-                white: {
-                    5: string;
-                    10: string;
-                    30: string;
-                    50: string;
-                    70: string;
-                    100: string;
-                };
-                trueWhite: {
-                    5: string;
-                    10: string;
-                    30: string;
-                    50: string;
-                    70: string;
-                    100: string;
-                };
-                black: {
-                    5: string;
-                    10: string;
-                    30: string;
-                    50: string;
-                    70: string;
-                    100: string;
-                };
-            };
-            secondary: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            primary: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            success: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            warning: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            error: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
-            info: {
-                lighter: string;
-                light: string;
-                main: string;
-                dark: string;
-            };
+  interface ThemeOptions {
+    colors: {
+      gradients: {
+        blue1: string;
+        blue2: string;
+        blue3: string;
+        blue4: string;
+        blue5: string;
+        orange1: string;
+        orange2: string;
+        orange3: string;
+        purple1: string;
+        purple3: string;
+        pink1: string;
+        pink2: string;
+        green1: string;
+        green2: string;
+        black1: string;
+        black2: string;
+      };
+      shadows: {
+        success: string;
+        error: string;
+        primary: string;
+        warning: string;
+        info: string;
+      };
+      alpha: {
+        white: {
+          5: string;
+          10: string;
+          30: string;
+          50: string;
+          70: string;
+          100: string;
         };
+        trueWhite: {
+          5: string;
+          10: string;
+          30: string;
+          50: string;
+          70: string;
+          100: string;
+        };
+        black: {
+          5: string;
+          10: string;
+          30: string;
+          50: string;
+          70: string;
+          100: string;
+        };
+      };
+      secondary: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      primary: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      success: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      warning: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      error: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+      info: {
+        lighter: string;
+        light: string;
+        main: string;
+        dark: string;
+      };
+    };
 
-        general: {
-            reactFrameworkColor: React.CSSProperties['color'];
-            borderRadiusSm: string;
-            borderRadius: string;
-            borderRadiusLg: string;
-            borderRadiusXl: string;
-        };
-        sidebar: {
-            background: React.CSSProperties['color'];
-            boxShadow: React.CSSProperties['color'];
-            width: string;
-            textColor: React.CSSProperties['color'];
-            dividerBg: React.CSSProperties['color'];
-            menuItemColor: React.CSSProperties['color'];
-            menuItemColorActive: React.CSSProperties['color'];
-            menuItemBg: React.CSSProperties['color'];
-            menuItemBgActive: React.CSSProperties['color'];
-            menuItemIconColor: React.CSSProperties['color'];
-            menuItemIconColorActive: React.CSSProperties['color'];
-            menuItemHeadingColor: React.CSSProperties['color'];
-        };
-        header: {
-            height: string;
-            background: React.CSSProperties['color'];
-            boxShadow: React.CSSProperties['color'];
-            textColor: React.CSSProperties['color'];
-        };
-    }
+    general: {
+      reactFrameworkColor: React.CSSProperties['color'];
+      borderRadiusSm: string;
+      borderRadius: string;
+      borderRadiusLg: string;
+      borderRadiusXl: string;
+    };
+    sidebar: {
+      background: React.CSSProperties['color'];
+      boxShadow: React.CSSProperties['color'];
+      width: string;
+      textColor: React.CSSProperties['color'];
+      dividerBg: React.CSSProperties['color'];
+      menuItemColor: React.CSSProperties['color'];
+      menuItemColorActive: React.CSSProperties['color'];
+      menuItemBg: React.CSSProperties['color'];
+      menuItemBgActive: React.CSSProperties['color'];
+      menuItemIconColor: React.CSSProperties['color'];
+      menuItemIconColorActive: React.CSSProperties['color'];
+      menuItemHeadingColor: React.CSSProperties['color'];
+    };
+    header: {
+      height: string;
+      background: React.CSSProperties['color'];
+      boxShadow: React.CSSProperties['color'];
+      textColor: React.CSSProperties['color'];
+    };
+  }
 }
 
 /* Blueprint: https://github.com/bloomui/tokyo-free-white-react-admin-dashboard */
 const themeColors = {
     primary: '#5569ff',
     secondary: '#6E759F',
-    success: '#44D600',
+    success: '#57CA22',
     warning: '#FFA319',
-    error: '#FF1943',
+    error: '#F61E37',
     info: '#33C2FF',
     black: '#223354',
     white: '#ffffff',
@@ -250,13 +264,19 @@ const colors = {
         blue1: 'linear-gradient(135deg, #6B73FF 0%, #000DFF 100%)',
         blue2: 'linear-gradient(135deg, #ABDCFF 0%, #0396FF 100%)',
         blue3: 'linear-gradient(127.55deg, #141E30 3.73%, #243B55 92.26%)',
+        blue4: 'linear-gradient(-20deg, #2b5876 0%, #4e4376 100%)',
+        blue5: 'linear-gradient(135deg, #97ABFF 10%, #123597 100%)',
         orange1: 'linear-gradient(135deg, #FCCF31 0%, #F55555 100%)',
         orange2: 'linear-gradient(135deg, #FFD3A5 0%, #FD6585 100%)',
+        orange3: 'linear-gradient(120deg, #f6d365 0%, #fda085 100%)',
         purple1: 'linear-gradient(135deg, #43CBFF 0%, #9708CC 100%)',
+        purple3: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         pink1: 'linear-gradient(135deg, #F6CEEC 0%, #D939CD 100%)',
         pink2: 'linear-gradient(135deg, #F761A1 0%, #8C1BAB 100%)',
         green1: 'linear-gradient(135deg, #FFF720 0%, #3CD500 100%)',
-        black1: 'linear-gradient(100.66deg, #434343 6.56%, #000000 93.57%)'
+        green2: 'linear-gradient(to bottom, #00b09b, #96c93d)',
+        black1: 'linear-gradient(100.66deg, #434343 6.56%, #000000 93.57%)',
+        black2: 'linear-gradient(60deg, #29323c 0%, #485563 100%)'
     },
     shadows: {
         success:
@@ -281,12 +301,12 @@ const colors = {
             bodyBg: '#f2f5f9'
         },
         sidebar: {
-            background: themeColors.white,
+            background: themeColors.black,
             textColor: themeColors.secondary,
             dividerBg: '#f2f5f9',
             menuItemColor: '#242E6F',
             menuItemColorActive: themeColors.primary,
-            menuItemBg: 'transparent',
+            menuItemBg: themeColors.white,
             menuItemBgActive: '#f2f5f9',
             menuItemIconColor: lighten(themeColors.secondary, 0.3),
             menuItemIconColorActive: themeColors.primary,
@@ -363,18 +383,25 @@ const mainTheme = createTheme({
             blue1: colors.gradients.blue1,
             blue2: colors.gradients.blue2,
             blue3: colors.gradients.blue3,
+            blue4: colors.gradients.blue4,
+            blue5: colors.gradients.blue5,
             orange1: colors.gradients.orange1,
             orange2: colors.gradients.orange2,
+            orange3: colors.gradients.orange3,
             purple1: colors.gradients.purple1,
+            purple3: colors.gradients.purple3,
             pink1: colors.gradients.pink1,
             pink2: colors.gradients.pink2,
             green1: colors.gradients.green1,
-            black1: colors.gradients.black1
+            green2: colors.gradients.green2,
+            black1: colors.gradients.black1,
+            black2: colors.gradients.black2
         },
         shadows: {
             success: colors.shadows.success,
             error: colors.shadows.error,
             primary: colors.shadows.primary,
+            info: colors.shadows.info,
             warning: colors.shadows.warning
         },
         alpha: {
@@ -461,7 +488,7 @@ const mainTheme = createTheme({
         menuItemHeadingColor: colors.layout.sidebar.menuItemHeadingColor,
         boxShadow:
             '2px 0 3px rgba(159, 162, 191, 0.18), 1px 0 1px rgba(159, 162, 191, 0.32)',
-        width: '280px'
+        width: '290px'
     },
     header: {
         height: '88px',
@@ -564,9 +591,11 @@ const mainTheme = createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: alpha(darken(themeColors.primaryAlt, 0.4), 0.2),
+                    backdropFilter: 'blur(2px)',
 
                     '&.MuiBackdrop-invisible': {
                         backgroundColor: 'transparent',
+                        backdropFilter: 'blur(2px)'
                     }
                 }
             }
@@ -586,20 +615,6 @@ const mainTheme = createTheme({
                 'html, body, #root': {
                     width: '100%',
                     height: '100%'
-                },
-                '#nprogress .bar': {
-                    background: colors.primary.main
-                },
-                '#nprogress .spinner-icon': {
-                    borderTopColor: colors.primary.main,
-                    borderLeftColor: colors.primary.main
-                },
-                '#nprogress .peg': {
-                    boxShadow:
-                        '0 0 10px ' +
-                        colors.primary.main +
-                        ', 0 0 5px' +
-                        colors.primary.main
                 },
                 ':root': {
                     '--swiper-theme-color': colors.primary.main
@@ -786,8 +801,9 @@ const mainTheme = createTheme({
                     paddingRight: 16,
 
                     '.MuiSvgIcon-root': {
-                        transition: 'all .2s'
-                    }
+                        transition: 'all .4s'
+                    },
+                    borderRadius: '8px',
                 },
                 endIcon: {
                     marginRight: -8
@@ -804,6 +820,25 @@ const mainTheme = createTheme({
                         backgroundColor: colors.alpha.black[5],
                         color: colors.alpha.black[100]
                     }
+                },
+                sizeSmall: {
+                    padding: '6px 16px',
+                    lineHeight: 1.5
+                },
+                sizeMedium: {
+                    padding: '8px 20px'
+                },
+                sizeLarge: {
+                    padding: '11px 24px'
+                },
+                textSizeSmall: {
+                    padding: '7px 12px'
+                },
+                textSizeMedium: {
+                    padding: '9px 16px'
+                },
+                textSizeLarge: {
+                    padding: '12px 16px'
                 }
             }
         },
@@ -838,6 +873,7 @@ const mainTheme = createTheme({
             styleOverrides: {
                 root: {
                     borderRadius: 6,
+                    color: colors.alpha.trueWhite[70],
 
                     '& .MuiTouchRipple-root': {
                         borderRadius: 6
@@ -855,7 +891,15 @@ const mainTheme = createTheme({
                 }
             }
         },
-
+        MuiListItemButton: {
+            styleOverrides: {
+                root: {
+                    '& .MuiTouchRipple-root': {
+                        opacity: 0.3
+                    }
+                }
+            }
+        },
         MuiDivider: {
             styleOverrides: {
                 root: {
@@ -909,6 +953,11 @@ const mainTheme = createTheme({
                 }
             }
         },
+        MuiLink: {
+            defaultProps: {
+                underline: 'hover'
+            }
+        },
         MuiLinearProgress: {
             styleOverrides: {
                 root: {
@@ -948,7 +997,13 @@ const mainTheme = createTheme({
                         }
                     },
                     '& .MuiListItem-root.MuiButtonBase-root.Mui-selected': {
-                        backgroundColor: colors.alpha.black[10]
+                        backgroundColor: alpha(colors.primary.lighter, 0.4)
+                    },
+                    '& .MuiMenuItem-root.MuiButtonBase-root:active': {
+                        backgroundColor: alpha(colors.primary.lighter, 0.4)
+                    },
+                    '& .MuiMenuItem-root.MuiButtonBase-root .MuiTouchRipple-root': {
+                        opacity: 0.2
                     }
                 },
                 padding: {
@@ -1026,8 +1081,24 @@ const mainTheme = createTheme({
 
                         '&:hover, &:active, &.active, &.Mui-selected': {
                             color: colors.alpha.black[100],
-                            background: lighten(colors.primary.lighter, 0.5)
+                            background: alpha(colors.primary.lighter, 0.4)
                         }
+                    }
+                }
+            }
+        },
+        MuiMenuItem: {
+            styleOverrides: {
+                root: {
+                    background: 'transparent',
+                    transition: 'all .2s',
+
+                    '&:hover, &:active, &.active, &.Mui-selected': {
+                        color: colors.alpha.black[100],
+                        background: alpha(colors.primary.lighter, 0.4)
+                    },
+                    '&.Mui-selected:hover': {
+                        background: alpha(colors.primary.lighter, 0.4)
                     }
                 }
             }
@@ -1107,7 +1178,7 @@ const mainTheme = createTheme({
                     transition: 'background-color .2s',
 
                     '&.MuiTableRow-hover:hover': {
-                        backgroundColor: lighten(colors.alpha.black[5], 0.5)
+                        backgroundColor: colors.alpha.black[5]
                     }
                 }
             }
@@ -1191,12 +1262,15 @@ const mainTheme = createTheme({
         MuiTooltip: {
             styleOverrides: {
                 tooltip: {
-                    backgroundColor: alpha(colors.alpha.black['100'], 0.95),
+                    backgroundColor: alpha(colors.alpha.trueWhite['100'], 0.95),
+                    color: alpha(colors.alpha.black['100'], 0.9),
+                    border: '1px solid ' + colors.alpha.black[30],
                     padding: '8px 16px',
+                    
                     fontSize: 13
                 },
                 arrow: {
-                    color: alpha(colors.alpha.black['100'], 0.95)
+                    color: alpha(colors.alpha.trueWhite['100'], 0.95)
                 }
             }
         },

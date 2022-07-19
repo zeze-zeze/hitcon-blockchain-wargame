@@ -11,8 +11,8 @@ import { FC, useState } from "react";
 
 const ConnectButton: FC = () => {
   const { account, active } = useWeb3React();
-  const [showBackDrop, setShowBackDrop] = useState(false);
-  const [showSnackBar, setShowSnackBar] = useState(0);
+  const [showBackDrop, setShowBackDrop] = useState<boolean>(false);
+  const [showSnackBar, setShowSnackBar] = useState<number>(0);
 
   const requestETH = async () => {
     setShowBackDrop(true);
@@ -38,7 +38,7 @@ const ConnectButton: FC = () => {
   return (
     <>
       <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: "#fff" }}
         open={showBackDrop}
       >
         <CircularProgress color="inherit" />

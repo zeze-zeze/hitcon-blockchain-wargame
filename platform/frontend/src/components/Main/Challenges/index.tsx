@@ -1,27 +1,65 @@
-import { FC } from 'react';
-import { useParams} from "react-router-dom";
-import { Button, Grid, Container, Typography, createTheme, ThemeProvider } from '@mui/material';
+import { FC, useState, useEffect, useCallback, useContext } from 'react';
+import { useParams } from "react-router-dom";
+import Web3 from 'web3';
+import { Contract } from 'web3-eth-contract';
+import { styled } from '@mui/material/styles';
+import { CopyBlock, dracula } from "react-code-blocks";
+import { Button, Container, Grid } from '@mui/material';
 import {
     HeaderWrapper,
     HeaderTypography,
     SubtitleTypography,
     SubHeaderTypography,
     SubSubHeaderTypography,
-    BodyTypography,
     PaperComponentWrapper
-} from '..';
-import MainWrapper from '..';
-import Error404 from '../../Error/_404.tsx';
-import Web3 from 'web3';
-import { styled } from '@mui/material/styles';
-import { useState } from "react";
-import { CopyBlock, dracula } from "react-code-blocks";
+} from 'components/Main';
+import MainWrapper from 'components/Main';
+import Error404 from 'components/Error/_404';
 import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
-import { useEffect } from 'react';
+import chal1 from './chal1.sol';
+import info1 from './info1.json';
+import chal2 from './chal2.sol';
+import info2 from './info2.json';
+import chal3 from './chal3.sol';
+import info3 from './info3.json';
+import chal4 from './chal4.sol';
+import info4 from './info4.json';
+import chal5 from './chal5.sol';
+import info5 from './info5.json';
+import useSolvedProblems from 'hooks/useSolvedProblems';
+import WaitEffect from 'components/WaitEffect';
+import { useWeb3React } from '@web3-react/core';
+import NotificationContext from "contexts/NotificationContext";
+
+/* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
+
+declare global {
+    interface Window {
+        ethereum: any;
+        web3: Web3;
+        player: string;
+        contract: Contract;
+        help: () => void;
+    }
+}
+
+type InfoType = {
+    title: string;
+    description: string;
+    tutorial: string;
+    address: string;
+    abi: Array<any>;
+};
+
+type MessageType = {
+    title: string,
+    content: string,
+    date: number,
+};
 
 const CopyBlockWrapper = styled(Container)(
-    ({ theme }) => ({
+    () => ({
         '&.MuiContainer-root': {
             fontFamily: 'monospace',
             fontSize: '16px',
@@ -36,29 +74,6 @@ const CopyBlockWrapper = styled(Container)(
 );
 
 const Challenge: FC = () => {
-    const clickConnect = async () => {
-        if (window?.ethereum?.isMetaMask) {
-            const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            const account = Web3.utils.toChecksumAddress(accounts[0]);
-            window.player = account;
-        }
-
-        const web3 = new Web3(Web3.givenProvider);
-        window.web3 = web3;
-        const contract = new web3.eth.Contract(info.abi, info.address);
-        window.contract = contract;
-        if (contract.events.newSolved) {
-            contract.events.newSolved(function(error, result) {
-                // TODO: Simply reload NFT
-                if(result._solver === player) {
-                    window.location.reload(false);
-                }
-            });
-        }
-        window.help();
-    }
 
     // TODO: Add more function and have a better style.
     window.help = () => {
@@ -66,153 +81,218 @@ const Challenge: FC = () => {
             'web3: web3 object\n',
             'contract: current level contract instance (if connected)');
     }
-    
-    const [chal, setChal] = useState("");
-    const [info, setInfo] = useState([]);
-    const [vuln, setVuln] = useState("");
-    const { id } = useParams();
-    const problemId = Number(id);
-    const problemNum = Number(process.env.REACT_APP_PROBLEM_NUM);
+
+    const [chal, setChal] = useState<string>("");
+    const [info, setInfo] = useState<InfoType>({
+        title: '',
+        description: '',
+        tutorial: '',
+        address: '',
+        abi: [],
+    });
+    const [contract, setContract] = useState<Contract>();
+    const [vuln, setVuln] = useState<string>('');
+    const [connectButtonText, setConnectButtonText] = useState<string>("Connect contract");
+    const [showSnackBar, setShowSnackBar] = useState<number>(0);
+    const [showBackDrop, setShowBackDrop] = useState<boolean>(false);
+    const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
+    const [message, setMessage] = useState<string>('');
+    const { id } = useParams<string>();
+    const { active, account } = useWeb3React();
+    const { addNotification } = useContext(NotificationContext);
+    const { getSolvedProblems, setSolvedProblems } = useSolvedProblems();
+
+    const clickConnect = useCallback(async () => {
+        if (!active || !account) {
+            setMessage("Please login first");
+            setShowSnackBar(2);
+            return;
+        }
+        const web3 = new Web3(Web3.givenProvider);
+        window.web3 = web3;
+        const contract = new web3.eth.Contract(info.abi, info.address);
+        window.contract = contract;
+        setContract(contract);
+        window.help();
+        setConnectButtonText("Connected!");
+        setSubmitDisabled(false);
+    }, [active, account, info, contract]);
+
+    const handleSubmit = useCallback(async () => {
+        if (!active || !account || !contract) {
+            setMessage("Please login first");
+            setShowSnackBar(2);
+            return;
+        }
+        try {
+            setShowBackDrop(true);
+            await contract.methods.win().send({ from: account });
+        } catch (error) {
+            if (error instanceof Error) {
+                setMessage("Transaction failed!! Make sure that you REALLY solved the challenge");
+                setShowSnackBar(2);
+            }
+        }
+        setShowBackDrop(false);
+    }, [active, account, contract]);
 
     useEffect(() => {
-        if (problemId === 0) {
-
+        if (id === '1') {
+            setChal(chal1);
+            setInfo(info1);
+        } else if (id === '2') {
+            setChal(chal2);
+            setInfo(info2);
+        } else if (id === '3') {
+            setChal(chal3);
+            setInfo(info3);
+        } else if (id === '4') {
+            setChal(chal4);
+            setInfo(info4);
+        } else if (id === '5') {
+            setChal(chal5);
+            setInfo(info5);
         } else {
             setChal(chalExample);
             setInfo(infoExample);
         }
         fetch(chal)
-        .then(r=>r.text())
-        .then(text=>{
-            setVuln(text);
-        });
-    });
-    
-    // TODO: better style for code block
-    if (Number.isInteger(problemId) && problemId >= 0 && problemId <= problemNum) {
-        if (problemId === 0){
-            return (
-                <MainWrapper>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <HeaderWrapper>
-                                <HeaderTypography>
-                                    Hello Ethernaut
-                                </HeaderTypography>
-                                <SubtitleTypography>
-                                    This level walks you through the very basics of how to play the game.
-                                </SubtitleTypography>
-                            </HeaderWrapper>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <PaperComponentWrapper>
-                                <Container>
-                                    <SubHeaderTypography>
-                                        1. Set up MetaMask
-                                    </SubHeaderTypography>
-                                    <BodyTypography>
-                                        If you don't have it already, install the <a href="https://metamask.io/">MetaMask browser extension</a> (in Chrome, Firefox, Brave or Opera on your desktop machine). Set up the extension's wallet and use the network selector to point to the 'Rinkeby test network' in the top left of the extension's interface.
-                                    </BodyTypography>
-                                    <SubHeaderTypography>
-                                        2. Open the browser's console
-                                    </SubHeaderTypography>
-                                    <BodyTypography>
-                                        Open your browser's console: <code>Tools &gt; Developer Tools</code>.
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        You should see a few messages from the game. One of them should state your player's address. This will be important during the game! You can always see your player address by entering the following command:
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <code>player</code>
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        Keep an eye out for warnings and errors, since they could provide important information during gameplay.
-                                    </BodyTypography>
-                                    <SubHeaderTypography>
-                                        3. Use the console helpers
-                                    </SubHeaderTypography>
-                                    <BodyTypography>
-                                        You can also see your current ether balance by typing:
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <code>getBalance(player)</code>
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        NOTE: Expand the promise to see the actual value, even if it reads "pending". If you're using Chrome v62, you can use await getBalance(player) for a cleaner console experience.
-            Great! To see what other utility functions you have in the console type:
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <code>help()</code>
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        These will be super handy during gameplay.
-                                    </BodyTypography>
-                                    <SubHeaderTypography>
-                                        4. The ethernaut contract
-                                    </SubHeaderTypography>
-                                    <BodyTypography>
-                                        Enter the following command in the console:
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        <code>ethernaut</code>
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        This is the game's main smart contract. You don't need to interact with it directly through the console (as this app will do that for you) but you can if you want to. Playing around with this object now is a great way to learn how to interact with the other smart contracts of the game.
-                                    </BodyTypography>
-                                    <BodyTypography>
-                                        Go ahead and expand the ethernaut object to see what's inside.
-                                    </BodyTypography>
-                                </Container>
-                            </PaperComponentWrapper>
-                        </Grid>
-                    </Grid>
-                </MainWrapper>
-            );
-        } else if (problemId > 0) {
-            return (
-                <MainWrapper>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <HeaderWrapper>
-                                <HeaderTypography>
-                                    {info.title}
-                                </HeaderTypography>
-                                <SubtitleTypography>
-                                    {info.description}
-                                </SubtitleTypography>
-                            </HeaderWrapper>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <PaperComponentWrapper>
-                                <Container>
-                                    <SubHeaderTypography>
-                                        <Button variant="contained" onClick={clickConnect}>
-                                            Connect contract
-                                        </Button>
-                                    </SubHeaderTypography>
-                                    <SubSubHeaderTypography>
-                                        {info.tutorial}
-                                    </SubSubHeaderTypography>
-                                    <CopyBlockWrapper>
-                                        <CopyBlock
-                                            text={vuln}
-                                            theme={dracula}
-                                            language="javascript"
-                                            showLineNumbers
-                                        /> 
-                                    </CopyBlockWrapper>
-                                </Container>
-                            </PaperComponentWrapper>
-                        </Grid>
-                    </Grid>
-                </MainWrapper>
-            );
+            .then(r => r.text())
+            .then(text => {
+                setVuln(text);
+            });
+    }, [chalExample, infoExample, chal, vuln]);
+
+    useEffect(() => {
+        if (account) {
+            window.player = account;
         }
-    }else {
-        return (
-            <Error404 />
-        );
-    }
+    }, [account]);
+
+    useEffect(() => {
+        if (contract) {
+            if (contract.events.hadSolved) {
+                contract.events.hadSolved({
+                    filter: {
+                        _solver: window.player
+                    }
+                })
+                    .on('data', () => {
+                        setMessage("ERROR! You have already solved the problem!");
+                        setShowSnackBar(2);
+                    })
+                    .on('error', (error: Error) => {
+                        setMessage(error.message);
+                        setShowSnackBar(2);
+                    });
+            }
+            if (contract.events.newSolved) {
+                contract.events.newSolved({
+                    filter: {
+                        _solver: window.player
+                    }
+                })
+                    .on('data', () => {
+                        setMessage(`Congratulation! You solved problem ${id}.`);
+                        setShowSnackBar(1);
+                        addNotification({
+                            title: `Horray! You solve Problem ${id}.`,
+                            content: 'You won NFT1.',
+                            date: Date.now(),
+                        });
+                    })
+                    .on('error', (error: Error) => {
+                        setMessage(error.message);
+                        setShowSnackBar(2);
+                    });
+            }
+        }
+        return () => {
+            /* remove event handler when unmount */
+            if (contract) {
+                if (contract.events.hadSolved) {
+                    contract.events.hadSolved().off();
+                }
+                if (contract.events.newSolved) {
+                    contract.events.newSolved().off();
+                }
+            }
+        };
+    }, [contract]);
+
+    return (
+        <>
+            {
+                (
+                    Number.isInteger(Number(id))
+                    && Number(id) >= 1
+                    && Number(id) <= Number(process.env.REACT_APP_PROBLEM_NUM)
+                ) ? (
+                    <MainWrapper title="Challenge">
+                        <WaitEffect
+                            showBackDrop={showBackDrop}
+                            showSnackBar={showSnackBar}
+                            setShowSnackBar={setShowSnackBar}
+                            success={message}
+                            error={message}
+                        />
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <HeaderWrapper>
+                                    <HeaderTypography>
+                                        {info.title}
+                                    </HeaderTypography>
+                                    <SubtitleTypography>
+                                        {info.description}
+                                    </SubtitleTypography>
+                                </HeaderWrapper>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <PaperComponentWrapper>
+                                    <Container>
+                                        <SubHeaderTypography>
+                                            <Button
+                                                variant="contained"
+                                                onClick={clickConnect}
+                                            >
+                                                {connectButtonText}
+                                            </Button>
+                                        </SubHeaderTypography>
+                                        <SubSubHeaderTypography>
+                                            {info.tutorial}
+                                        </SubSubHeaderTypography>
+                                        <CopyBlockWrapper>
+                                            <CopyBlock
+                                                text={vuln}
+                                                theme={dracula}
+                                                language="javascript"
+                                                showLineNumbers
+                                            />
+                                        </CopyBlockWrapper>
+                                        <SubSubHeaderTypography>
+                                            Submit Solution
+                                        </SubSubHeaderTypography>
+                                        <SubHeaderTypography>
+                                            <Button
+                                                variant="contained"
+                                                color="warning"
+                                                disabled={submitDisabled}
+                                                onClick={handleSubmit}
+                                            >
+                                                Win
+                                            </Button>
+                                        </SubHeaderTypography>
+                                    </Container>
+                                </PaperComponentWrapper>
+                            </Grid>
+                        </Grid>
+                    </MainWrapper>
+                ) : (
+                    <Error404 />
+                )
+            }
+        </>
+    )
 }
 
 export default Challenge;

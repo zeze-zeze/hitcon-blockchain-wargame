@@ -1,8 +1,9 @@
-import { alpha, Badge, Box, Divider, IconButton, List, ListItem, Popover, Tooltip, Typography } from '@mui/material';
-import { useRef, useState } from 'react';
+import { FC, useRef, useState, useContext } from 'react';
+import { alpha, Badge, Box, Divider, IconButton, Popover, Tooltip, Typography } from '@mui/material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import { styled } from '@mui/material/styles';
-import { formatDistance, subDays } from 'date-fns';
+import { styled, useTheme } from '@mui/material/styles';
+import Notification from './Notification';
+import NotificationContext from "contexts/NotificationContext";
 
 const NotificationsBadge = styled(Badge)(
     ({ theme }) => ({
@@ -10,9 +11,16 @@ const NotificationsBadge = styled(Badge)(
             minWidth: '16px',
             height: '16px',
             padding: 0,
-            backgroundColor: alpha(theme.palette.error.main, 0.2),
+            backgroundColor: alpha(theme.palette.error.main, 0.75),
             color: theme.palette.error.main,
         }
+    })
+);
+
+const NotificationsIconWrapper = styled(Box)(
+    ({ theme }) => ({
+        color: theme.colors.alpha.trueWhite[70],
+        padding: 0,
     })
 );
 
@@ -35,66 +43,43 @@ const NotificationTextWrapper = styled(Box)(
 
 const HeaderButtons: FC = () => {
 
-    const ref = useRef<any>(null);
+    const theme = useTheme();
+    const buttonRef = useRef<any>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-
-    const handleOpen = () => {
-        setIsOpen(true);
-    };
-
-    const handleClose = () => {
-        setIsOpen(false);
-    };
+    const { notification } = useContext(NotificationContext);
 
     return (
         <Box>
             <Tooltip arrow title="Notifications">
-                <IconButtonWrapper ref={ref} onClick={handleOpen}>
-                    <NotificationsBadge badgeContent={1}>
-                        <NotificationsActiveIcon />
-                    </NotificationsBadge>
+                <IconButtonWrapper ref={buttonRef} onClick={() => {
+                    setIsOpen(true);
+                }}>
+                    <NotificationsIconWrapper>
+                        <NotificationsBadge
+                            invisible={notification.length === 0}
+                            badgeContent={notification.length}
+                        >
+                            <NotificationsActiveIcon />
+                        </NotificationsBadge>
+                    </NotificationsIconWrapper>
                 </IconButtonWrapper>
             </Tooltip>
             <Popover
-                anchorEl={ref.current}
-                onClose={handleClose}
-                open={isOpen}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
+                anchorEl={buttonRef.current}
+                onClose={() => {
+                    setIsOpen(false);
                 }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                open={isOpen}
+                PaperProps={{
+                    variant: 'outlined',
+                    elevation: 0
                 }}
             >
                 <NotificationTextWrapper>
                     <Typography variant="h5">Notifications</Typography>
                 </NotificationTextWrapper>
                 <Divider />
-                <List sx={{ p: 0 }}>
-                    <ListItem sx={{ p: 2, minWidth: 350, display: { xs: 'block', sm: 'flex' } }}>
-                        <Box flex="1">
-                            <Box display="flex" justifyContent="space-between">
-                                <Typography sx={{ fontWeight: 'bold' }}>
-                                    Horray! You solved Challenge 1.
-                                </Typography>
-                                <Typography variant="caption" sx={{ textTransform: 'none' }}>
-                                    {formatDistance(subDays(new Date(), 3), new Date(), {
-                                        addSuffix: true
-                                    })}
-                                </Typography>
-                            </Box>
-                            <Typography
-                                component="span"
-                                variant="body2"
-                                color="text.secondary"
-                            >
-                                You gained a gift <code>NFT1</code>
-                            </Typography>
-                        </Box>
-                    </ListItem>
-                </List>
+                <Notification />
             </Popover>
         </Box>
     );

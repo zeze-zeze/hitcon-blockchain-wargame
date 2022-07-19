@@ -36,21 +36,24 @@ const registerSchema = Joi.object({
 });
 
 const registerCallback = async (req: Request, res: Response) => {
-  let registerReq: any = req.body;
-  let registerRes: RegisterResponse;
-  try {
-    const { username, password } = await registerSchema.validateAsync(
-      registerReq
-    );
-    /* Generate password hash */
-    console.log(username, password);
-  } catch (error) {
-    if (error instanceof ValidationError) {
-      /*
-       * If multiple validation errors occur,
-       * Just choose one error message (error.details[0]) to display
-       */
-      registerRes = { error: error.details[0].message };
+    let registerReq: any = req.body;
+    let registerRes: RegisterResponse;
+    
+    try {
+        const { username, password } = await registerSchema.validateAsync(registerReq);
+        /* Generate password hash */
+        console.log(username, password)
+        
+
+    } catch (error) {
+        /*if (error instanceof ValidationError) {
+            
+            registerRes = { error: error.details[0].message };
+        } else {
+            registerRes = { error: ErrorMessages.SERVER_ERROR };
+        }
+        res.send(registerRes);
+        */
     }
   }
 };

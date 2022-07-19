@@ -1,19 +1,18 @@
 import { FC, ReactNode, Suspense, lazy } from 'react';
-import { PartialRouteObject } from 'react-router';
-import { useWeb3React } from "@web3-react/core";
 import SuspenseComponent from 'components/Suspense';
 import { Web3ReactProvider } from "@web3-react/core";
-import Web3 from "web3/dist/web3.min.js";
+//import Web3 from "web3/dist/web3.min.js";
+import Web3 from 'web3';
 
-type WrapperProps = {
-    children?: ReactNode;
+type ProviderWrapperProps = {
+    children?: ReactNode,
 };
 
 const getLibrary = (provider: any) => {
     return new Web3(provider);
 };
 
-const Web3ReactProviderWrapper: FC = (props: ReactNode) => {
+const Web3ReactProviderWrapper: FC<ProviderWrapperProps> = (props) => {
     return (
         <Web3ReactProvider getLibrary={getLibrary}>
         { props.children }
@@ -21,7 +20,7 @@ const Web3ReactProviderWrapper: FC = (props: ReactNode) => {
     )
 };
 
-const SuspenseWrapper: FC = (Component) => {
+const SuspenseWrapper = (Component: FC) => {
     return () => (
         <Web3ReactProviderWrapper>
             <Suspense fallback={<SuspenseComponent />}>
@@ -31,21 +30,27 @@ const SuspenseWrapper: FC = (Component) => {
     );
 };
 
-const Home = SuspenseWrapper(lazy(() => import('components/Main/Home')));
-const Login = SuspenseWrapper(lazy(() => import('components/Login')));
-const Tutorial = SuspenseWrapper(lazy(() => import('components/Main/Tutorial')));
-const Problems = SuspenseWrapper(lazy(() => import('components/Main/Problems'))); 
-const Faucet = SuspenseWrapper(lazy(() => import('components/Main/Faucet'))); 
-const Challenge = SuspenseWrapper(lazy(() => import('components/Main/Challenges'))); 
-const Template = SuspenseWrapper(lazy(() => import('components/Main/Template')));
-const Error404 = SuspenseWrapper(lazy(() => import('components/Error/_404')));
+const Home: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Home')));
+const Landing: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Landing')));
+const Connect: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Connect')));
+const Tutorial: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Tutorial')));
+const Problems: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Problems'))); 
+const Faucet: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Faucet'))); 
+const Challenge: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Challenges'))); 
+const Template: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Template')));
+const Error404: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Error/_404')));
 
 /* React router setting */
-const router: PartialRouteObject[] = [
+const router = [
     {
         path: '',
         exact: true,
-        element: <Home />,
+        element: <Landing />,
+    },
+    {
+        path: 'home',
+        exact: true,
+        element: <Home />  
     },
     {
         path: 'tutorial',
@@ -53,9 +58,9 @@ const router: PartialRouteObject[] = [
         element: <Tutorial />,
     },
     {
-        path: 'login',
+        path: 'connect',
         exact: true,
-        element: <Login />,
+        element: <Connect />,
     },
     {
         path: 'problems',

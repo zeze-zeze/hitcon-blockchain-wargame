@@ -1,16 +1,16 @@
 import { FC, useContext } from 'react';
-import { Box, Drawer, useMediaQuery } from '@mui/material';
+import { Box, Drawer, darken, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import SidebarMenu from './SidebarMenu';
 import SidebarLogo from './SidebarLogo';
 import SidebarToggledContext from 'contexts/SidebarToggledContext';
 
-const SidebarWrapper: FC = styled(Box)(
+const SidebarWrapper = styled(Box)(
     ({ theme }) => ({
         width: theme.sidebar.width,
         color: theme.sidebar.textColor,
-        background: theme.sidebar.background,
+        background: darken(theme.colors.alpha.black[100], 0.5),
         boxShadow: theme.sidebar.boxShadow,
         height: '100%',
         position: 'fixed',

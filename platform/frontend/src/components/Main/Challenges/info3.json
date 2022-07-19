@@ -1,0 +1,7 @@
+{
+    "title": "Challenge 3 - hitcon auth",
+    "description": "Learn privacy of solidity.",
+    "tutorial": "We can read private variable by seeking the slot.",
+    "address": "",
+    "abi": []   
+}
