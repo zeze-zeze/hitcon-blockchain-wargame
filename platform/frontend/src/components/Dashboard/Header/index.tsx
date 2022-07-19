@@ -1,6 +1,13 @@
 import { FC, useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { Box, Button, Avatar, Grid, IconButton, Tooltip, lighten, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Avatar,
+  Button,
+  Grid,
+  IconButton,
+  Tooltip,
+  useMediaQuery,
+} from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
@@ -8,27 +15,24 @@ import HeaderButtons from "./HeaderButtons";
 import HeaderUserMenu from "./HeaderUserMenu";
 import SidebarToggledContext from "contexts/SidebarToggledContext";
 import { useWeb3React } from "@web3-react/core";
-import useSolvedProblems from "hooks/useSolvedProblems";
-import LanguageContext from "contexts/LanguageContext";
-import ConnectButton from "components/Connect/ConnectButton";
+import LoginButton from "./LoginButton";
+import HeaderNFTList from "./HeaderNFTList";
 
-const HeaderWrapper = styled(Box)(
-    ({ theme }) => ({
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        width: "auto",
-        height: theme.header.height,
-        color: theme.header.textColor,
-        padding: theme.spacing(3),
-        backgroundColor: theme.colors.alpha.black[100],
-        boxShadow: lighten(theme.colors.primary.main, 0.7),
-    })
-);
+const HeaderWrapper: FC = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  width: "auto",
+  height: theme.header.height,
+  color: theme.header.textColor,
+  padding: theme.spacing(3),
+  backgroundColor: theme.header.background,
+  boxShadow: theme.header.boxShadow,
+}));
 
 const HeaderComponentsWrapper = styled(Box)(
     ({ theme }) => ({
@@ -39,8 +43,18 @@ const HeaderComponentsWrapper = styled(Box)(
     })
 );
 
+const HeaderComponentsWrapper: FC = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexWrap: "nowrap",
+  justifyContent: "space-around",
+  alignItems: "center",
+}));
 
 const Header: FC = () => {
+  const theme = useTheme();
+  const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
+  const { sidebarToggled, toggleSidebar } = useContext(SidebarToggledContext);
+  const { active } = useWeb3React();
 
     const theme = useTheme();
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
@@ -83,6 +97,7 @@ const Header: FC = () => {
                     </Tooltip>
                 </HeaderComponentsWrapper>
                 <HeaderComponentsWrapper>
+                    <HeaderNFTList />
                     <Grid container justifyContent="center" alignItems="center" spacing={7}>
                     {
                         solvedProblems.map((solved: boolean, idx: number) => (
@@ -126,4 +141,3 @@ const Header: FC = () => {
 };
 
 export default Header;
-
