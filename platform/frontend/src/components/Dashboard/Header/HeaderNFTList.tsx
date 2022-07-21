@@ -10,6 +10,7 @@ import info from "./info.json";
 import useSolvedProblems from "hooks/useSolvedProblems";
 import { useTheme } from "@mui/material/styles";
 import LanguageContext from "contexts/LanguageContext";
+import WaitEffectContext from "contexts/WaitEffectContext";
 
 const web3 = new Web3(Web3.givenProvider);
 
@@ -22,8 +23,7 @@ const HeaderNFTList: FC = () => {
     const [chal5State, setChal5State] = useState(false);
     const [chal6State, setChal6State] = useState(false);
 
-    const [showLoading, setShowLoading] = useState(false);
-    const [showSnackBar, setShowSnackBar] = useState(0);
+    const { setShowBackDrop, setShowSnackBar, setSuccessMessage, setErrorMessage, showBackDrop } = useContext(WaitEffectContext);
 
     const { getSolvedProblems } = useSolvedProblems();
     const solvedProblems = getSolvedProblems();
@@ -65,24 +65,22 @@ const HeaderNFTList: FC = () => {
     );
 
     const requestNFT = async () => {
-        setShowLoading(true);
+        setShowBackDrop(true);
         await axios
-            .post(process.env.REACT_APP_BASE_API_URL + "/api/hitcon-nft-sender", {
+            .post(process.env.REACT_APP_BASE_API_URL + "/hitcon-nft-sender", {
                 address: account,
             })
             .then((response) => {
                 // console.log(response);
+                setSuccessMessage("Request NFT Success");
                 setShowSnackBar(1);
             })
             .catch((error) => {
                 // console.log(error);
+                setErrorMessage("ERROR! Request failed");
                 setShowSnackBar(2);
             });
-        setShowLoading(false);
-    };
-
-    const handleClose = () => {
-        setShowSnackBar(0);
+            setShowBackDrop(false);
     };
 
     useEffect(() => {
@@ -182,19 +180,6 @@ const HeaderNFTList: FC = () => {
 
     return (
         <>
-            <Snackbar
-                open={showSnackBar != 0}
-                autoHideDuration={6000}
-                onClose={handleClose}
-            >
-                <Alert
-                    onClose={handleClose}
-                    severity={showSnackBar === 1 ? "success" : "error"}
-                    sx={{ width: "100%" }}
-                >
-                    {showSnackBar === 1 ? "Request NFT Success" : "ERROR! Request failed"}
-                </Alert>
-            </Snackbar>
             <Grid container justifyContent="center" alignItems="center" spacing={8}>
                 {
                     solvedProblems.map((solved: boolean, idx: number) => (
@@ -231,7 +216,7 @@ const HeaderNFTList: FC = () => {
                                 <LoadingButton
                                     variant="contained"
                                     onClick={requestNFT}
-                                    loading={showLoading}
+                                    loading={showBackDrop}
                                     loadingIndicator="Requesting..."
                                 >
                                     Request NFT
