@@ -61,7 +61,7 @@ const LandingButtonsWrapper = styled(Box)(
 const Landing: FC = () => {
     const { lang, changeLang, multiLang } = useContext(LanguageContext);
     const theme = useTheme();
-    const mdUp = useMediaQuery(theme.breakpoints.up('md'));
+    const minWidthUp = useMediaQuery("(min-width:1100px)");
     const navigate = useNavigate();
     
     return (
@@ -69,10 +69,10 @@ const Landing: FC = () => {
             <Helmet>
                 <title>Hitcon Wargame</title>
             </Helmet>
-            <LandingWrapper sx={{ width: mdUp ? '50%' : '450px' }}>
+            <LandingWrapper sx={{ width: minWidthUp ? '50%' : '550px' }}>
                 <LandingCard>
                     <Grid spacing={10} container>
-                        <Grid item md={10} lg={8} mx="auto">
+                        <Grid item mx="auto">
                             <LandingHeaderTypography variant="h1">
                                 {multiLang?.landing.title}
                             </LandingHeaderTypography>

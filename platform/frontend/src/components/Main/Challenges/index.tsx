@@ -19,22 +19,9 @@ import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
 import useSolvedProblems from 'hooks/useSolvedProblems';
 import { useWeb3React } from '@web3-react/core';
-import NotificationContext from "contexts/NotificationContext";
 import WaitEffectContext from "contexts/WaitEffectContext";
 import LanguageContext from "contexts/LanguageContext";
 import Web3Context from "contexts/Web3Context";
-
-/* challenges source code and abis */
-import chal1 from "challenges/chal1/chal1.sol";
-import chal2 from "challenges/chal2/chal2.sol";
-import chal3 from "challenges/chal3/chal3.sol";
-import chal4 from "challenges/chal4/chal4.sol";
-import chal5 from "challenges/chal5/chal5.sol";
-import info1 from "challenges/chal1/info1.json";
-import info2 from "challenges/chal2/info2.json";
-import info3 from "challenges/chal3/info3.json";
-import info4 from "challenges/chal4/info4.json";
-import info5 from "challenges/chal5/info5.json";
 
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 declare global {
@@ -79,7 +66,6 @@ const Challenge: FC = () => {
             "contract: current level contract instance (if connected)");
     }
 
-    const [chal, setChal] = useState<string>("");
     const [info, setInfo] = useState<InfoType>({
         title: "",
         description: "",
@@ -95,27 +81,8 @@ const Challenge: FC = () => {
     const { id } = useParams<string>();
     const problemId = useRef<number>(Number(id));
     const { active, account } = useWeb3React();
-    const { addNotification } = useContext(NotificationContext);
     const { setShowSnackBar, setShowBackDrop, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
-    const { solved } = useContext(Web3Context);
-
-    const clickConnect = useCallback(async () => {
-        setShowBackDrop(true);
-        if (!active || !account) {
-            setErrorMessage(multiLang?.error.connectFirst);
-            setShowSnackBar(2);
-            return;
-        }
-        const web3 = new Web3(Web3.givenProvider);
-        window.web3 = web3;
-        const contract = new web3.eth.Contract(info.abi, info.address);
-        window.contract = contract;
-        setContract(contract);
-        window.help();
-        setConnectButtonText(multiLang?.problems.contract.connected);
-        setSubmitDisabled(false);
-        setShowBackDrop(false);
-    }, [active, account, info, contract]);
+    const { contracts, solved } = useContext(Web3Context);
 
     const handleSubmit = useCallback(async () => {
         if (!active || !account || !contract) {
@@ -136,87 +103,32 @@ const Challenge: FC = () => {
     }, [active, account, contract]);
 
     useEffect(() => {
-        if (id === '1') {
-            setChal(chal1);
-            setInfo(info1);
-        } else if (id === '2') {
-            setChal(chal2);
-            setInfo(info2);
-        } else if (id === '3') {
-            setChal(chal3);
-            setInfo(info3);
-        } else if (id === '4') {
-            setChal(chal4);
-            setInfo(info4);
-        } else if (id === '5') {
-            setChal(chal5);
-            setInfo(info5);
-        } else {
-            setChal(chalExample);
-            setInfo(infoExample);
-        }
-        fetch(chal)
-            .then(r => r.text())
-            .then(text => {
-                setVuln(text);
-            });
-    }, [chalExample, infoExample, chal, vuln]);
+        const fetchChal = async () => {
+            const chalPath = await import(`challenges/chal${problemId.current}/chal.sol`);
+            const chalFile = await fetch(chalPath.default);
+            const chalSource = await chalFile.text();
+            setVuln(chalSource);
+            const chalInfo = await import(`challenges/chal${problemId.current}/info.json`);
+            setInfo(chalInfo.default);
+        };
+        fetchChal();
+    }, [problemId]);
 
     useEffect(() => {
         if (account) {
             window.player = account;
-        }
-    }, [account]);
+            const web3 = new Web3(Web3.givenProvider);
+            window.web3 = web3;
+            const contract = contracts[problemId.current - 1];
+            window.contract = contract;
+            window.help();
 
-    useEffect(() => {
-        if (contract) {
-            if (contract.events.hadSolved) {
-                contract.events.hadSolved({
-                    filter: {
-                        _solver: window.player
-                    }
-                })
-                    .on("data", () => {
-                        setErrorMessage(multiLang?.error.alreadySolved);
-                        setShowSnackBar(2);
-                    })
-                    .on("error", (error: Error) => {
-                        setErrorMessage(error.message);
-                        setShowSnackBar(2);
-                    });
-            }
-            if (contract.events.newSolved) {
-                contract.events.newSolved({
-                    filter: {
-                        _solver: window.player
-                    }
-                })
-                    .on("data", () => {
-                        setSuccessMessage(multiLang?.success.challengeSolved);
-                        setShowSnackBar(1);
-                        addNotification({
-                            idx: problemId.current - 1,
-                            date: Date.now(),
-                        });
-                    })
-                    .on("error", (error: Error) => {
-                        setErrorMessage(error.message);
-                        setShowSnackBar(2);
-                    });
-            }
+            setContract(contract);
+            setConnectButtonText(multiLang?.problems.contract.connected);
+            setSubmitDisabled(false);
         }
-        return () => {
-            /* remove event handler when unmount */
-            if (contract) {
-                if (contract.events.hadSolved) {
-                    contract.events.hadSolved().off();
-                }
-                if (contract.events.newSolved) {
-                    contract.events.newSolved().off();
-                }
-            }
-        };
-    }, [contract]);
+    }, [account, problemId, multiLang]);
+
 
     return (
         <>
@@ -241,14 +153,6 @@ const Challenge: FC = () => {
                             <Grid item xs={12}>
                                 <PaperComponentWrapper>
                                     <Container>
-                                        <SubHeaderTypography>
-                                            <Button
-                                                variant="contained"
-                                                onClick={clickConnect}
-                                            >
-                                                {connectButtonText}
-                                            </Button>
-                                        </SubHeaderTypography>
                                         <SubSubHeaderTypography>
                                             {multiLang?.problems.challenges[problemId.current - 1].tutorial}
                                         </SubSubHeaderTypography>

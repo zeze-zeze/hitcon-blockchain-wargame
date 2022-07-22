@@ -5,6 +5,7 @@ import MainWrapper from 'components/Main';
 import Problem from './Problem';
 import useSolvedProblems from 'hooks/useSolvedProblems';
 import LanguageContext from 'contexts/LanguageContext';
+import Web3Context from 'contexts/Web3Context';
 
 type ChallengeType = {
     title: string;
@@ -13,8 +14,7 @@ type ChallengeType = {
 };
 
 const Problems: FC = () => {
-    const { getSolvedProblems } = useSolvedProblems();
-    const solvedProblems = getSolvedProblems();
+    const { solved } = useContext(Web3Context);
     const { multiLang } = useContext(LanguageContext);
     const challengesRef = useRef<Array<ChallengeType>>(multiLang?.problems.challenges);
 
@@ -28,7 +28,7 @@ const Problems: FC = () => {
                                 key={idx}
                                 index={idx + 1}
                                 title={title}
-                                solved={solvedProblems[idx]}
+                                solved={solved[idx]}
                             />
                         );
                     })
