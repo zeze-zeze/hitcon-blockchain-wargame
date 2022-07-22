@@ -29,7 +29,6 @@ type MessageType = {
 const getLibrary = (provider: any) => {
     return new Web3(provider);
 };
-const web3 = new Web3(Web3.givenProvider);
 
 /* Styled Components */
 const MainComponentWrapper = styled(Box)(
@@ -62,6 +61,7 @@ const App: FC = () => {
     const [notification, setNotification] = useState<MessageType[]>();
     const toggleSidebar = useCallback(() => setSidebarToggled(!sidebarToggled), [sidebarToggled]);
     /* Web3 */
+    const [web3, setWeb3] = useState<Web3>();
     const [solved, setSolved] = useState<boolean[]>([false, false, false, false, false, false]);
     const [contracts, setContracts] = useState<Contract[]>([]);
     /* Wait Effect */
@@ -116,6 +116,7 @@ const App: FC = () => {
     /* Contracts */
     const initContracts = useCallback(async (account: string) => {
         if (account) {
+            const web3 = new Web3(Web3.givenProvider);
             const problemNum: number = Number(process.env.REACT_APP_PROBLEM_NUM);
             const solvedTmp: boolean[] = [];
             const contractsTmp: Contract[] = [];
@@ -137,12 +138,28 @@ const App: FC = () => {
                     contract.events
                         .hadSolved({ filter: { _solver: account } })
                         .on("data", (log: any) => {
-                            setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)])
+                            setErrorMessage(multiLang?.error.alreadySolved);
+                            setShowSnackBar(2);
+                            setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)]);
+                        })
+                        .on("error", (error: Error) => {
+                            setErrorMessage(error.message);
+                            setShowSnackBar(2);
                         });
                     contract.events
                         .newSolved({ filter: { _solver: account } })
                         .on("data", (log: any) => {
-                            setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)])
+                            setSuccessMessage(multiLang?.success.challengeSolved);
+                            setShowSnackBar(1);
+                            addNotification({
+                                idx: idx,
+                                date: Date.now(),
+                            });
+                            setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)]);
+                        })
+                        .on("error", (error: Error) => {
+                            setErrorMessage(error.message);
+                            setShowSnackBar(2);
                         });
                     
                     contractsTmp.push(contract);
@@ -168,7 +185,6 @@ const App: FC = () => {
                             value={{ sidebarToggled, toggleSidebar }}
                         >
                             <CssBaseline />
-
                             <WaitEffectContext.Provider
                                 value={{
                                     showBackDrop,
@@ -181,13 +197,10 @@ const App: FC = () => {
                                     setErrorMessage,
                                 }}
                             >
-
                                 <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>
                             </WaitEffectContext.Provider>
-
                         </SidebarToggledContext.Provider>
                     </Web3Context.Provider>
-
                 </NotificationContext.Provider>
             </LanguageContext.Provider>
         </ThemeProvider>
