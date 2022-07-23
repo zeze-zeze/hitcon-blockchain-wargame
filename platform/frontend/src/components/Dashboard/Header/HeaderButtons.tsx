@@ -1,6 +1,7 @@
 import { FC, useRef, useState, useContext } from 'react';
-import { lighten, alpha, Badge, Box, IconButton, Popover, Tooltip } from '@mui/material';
+import { lighten, alpha, Badge, Box, IconButton, Popover, Tooltip, Button } from '@mui/material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import LanguageIcon from '@mui/icons-material/Language';
 import { styled, useTheme } from '@mui/material/styles';
 import Notification from './Notification';
 import NotificationContext from "contexts/NotificationContext";
@@ -18,7 +19,7 @@ const NotificationsBadge = styled(Badge)(
     })
 );
 
-const NotificationsIconWrapper = styled(Box)(
+const IconWrapper = styled(Box)(
     ({ theme }) => ({
         color: theme.colors.alpha.trueWhite[70],
         padding: 0,
@@ -35,41 +36,95 @@ const IconButtonWrapper = styled(IconButton)(
 const HeaderButtons: FC = () => {
 
     const theme = useTheme();
-    const buttonRef = useRef<any>(null);
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const notificationButtonRef = useRef<any>(null);
+    const langButtonRef = useRef<any>(null);
+    const [notificationOpen, setNotificationOpen] = useState<boolean>(false);
+    const [langOpen, setLangOpen] = useState<boolean>(false);
+
     const { notification } = useContext(NotificationContext);
-    const { multiLang } = useContext(LanguageContext); 
+    const { multiLang, changeLang } = useContext(LanguageContext);
 
     return (
-        <Box>
-            <Tooltip arrow title={multiLang?.dashboard.header.tooltip.notification}>
-                <IconButtonWrapper ref={buttonRef} onClick={() => {
-                    setIsOpen(true);
-                }}>
-                    <NotificationsIconWrapper>
-                        <NotificationsBadge
-                            invisible={notification.length === 0}
-                            badgeContent={notification.length}
+        <>
+            <Box sx={{ mr: theme.spacing(1) }}>
+                <Tooltip arrow title={multiLang?.dashboard.header.tooltip.notification}>
+                    <IconButtonWrapper ref={notificationButtonRef} onClick={() => {
+                        setNotificationOpen(true);
+                    }}>
+                        <IconWrapper>
+                            <NotificationsBadge
+                                invisible={notification.length === 0}
+                                badgeContent={notification.length}
+                            >
+                                <NotificationsActiveIcon />
+                            </NotificationsBadge>
+                        </IconWrapper>
+                    </IconButtonWrapper>
+                </Tooltip>
+                <Popover
+                    anchorEl={notificationButtonRef.current}
+                    onClose={() => {
+                        setNotificationOpen(false);
+                    }}
+                    open={notificationOpen}
+                    PaperProps={{
+                        variant: 'outlined',
+                        elevation: 0
+                    }}
+                >
+                    <Notification />
+                </Popover>
+            </Box>
+            <Box sx={{ ml: theme.spacing(1) }}>
+                <Tooltip arrow title="Language/語言">
+                    <IconButtonWrapper ref={langButtonRef} onClick={() => {
+                        setLangOpen(true);
+                    }}>
+                        <IconWrapper>
+                            <NotificationsBadge invisible={true}>
+                                <LanguageIcon />
+                            </NotificationsBadge>
+                        </IconWrapper>
+                    </IconButtonWrapper>
+                </Tooltip>
+                <Popover
+                    anchorEl={langButtonRef.current}
+                    onClose={() => {
+                        setLangOpen(false);
+                    }}
+                    open={langOpen}
+                    PaperProps={{
+                        variant: 'outlined',
+                        elevation: 0
+                    }}
+                >
+                    <Box sx={{ padding: theme.spacing(1) }}>
+                        <Button
+                            color="primary"
+                            variant="text"
+                            onClick={() => {
+                                changeLang("en-US");
+                                setLangOpen(false);
+                            }}
+                            fullWidth
                         >
-                            <NotificationsActiveIcon />
-                        </NotificationsBadge>
-                    </NotificationsIconWrapper>
-                </IconButtonWrapper>
-            </Tooltip>
-            <Popover
-                anchorEl={buttonRef.current}
-                onClose={() => {
-                    setIsOpen(false);
-                }}
-                open={isOpen}
-                PaperProps={{
-                    variant: 'outlined',
-                    elevation: 0
-                }}
-            >
-                <Notification />
-            </Popover>
-        </Box>
+                            English
+                        </Button>
+                        <Button
+                            color="primary"
+                            variant="text"
+                            onClick={() => {
+                                changeLang("zh-TW");
+                                setLangOpen(false);
+                            }}
+                            fullWidth
+                        >
+                            繁體中文
+                        </Button>
+                    </Box>
+                </Popover>
+            </Box>
+        </>
     );
 }
 

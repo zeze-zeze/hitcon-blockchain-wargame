@@ -17,16 +17,6 @@ import MainWrapper from 'components/Main';
 import Error404 from 'components/Error/_404';
 import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
-import chal1 from './chal1.sol';
-import info1 from './info1.json';
-import chal2 from './chal2.sol';
-import info2 from './info2.json';
-import chal3 from './chal3.sol';
-import info3 from './info3.json';
-import chal4 from './chal4.sol';
-import info4 from './info4.json';
-import chal5 from './chal5.sol';
-import info5 from './info5.json';
 import useSolvedProblems from 'hooks/useSolvedProblems';
 import WaitEffect from 'components/WaitEffect';
 import { useWeb3React } from '@web3-react/core';
@@ -34,8 +24,19 @@ import NotificationContext from "contexts/NotificationContext";
 import WaitEffectContext from "contexts/WaitEffectContext";
 import LanguageContext from "contexts/LanguageContext";
 
-/* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
+/* challenges source code and abis */
+import chal1 from "challenges/chal1/chal1.sol";
+import chal2 from "challenges/chal2/chal2.sol";
+import chal3 from "challenges/chal3/chal3.sol";
+import chal4 from "challenges/chal4/chal4.sol";
+import chal5 from "challenges/chal5/chal5.sol";
+import info1 from "challenges/chal1/info1.json";
+import info2 from "challenges/chal2/info2.json";
+import info3 from "challenges/chal3/info3.json";
+import info4 from "challenges/chal4/info4.json";
+import info5 from "challenges/chal5/info5.json";
 
+/* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 declare global {
     interface Window {
         ethereum: any;
@@ -52,11 +53,6 @@ type InfoType = {
     tutorial: string;
     address: string;
     abi: Array<any>;
-};
-
-type MessageType = {
-    idx: number,
-    date: number,
 };
 
 const CopyBlockWrapper = styled(Container)(
