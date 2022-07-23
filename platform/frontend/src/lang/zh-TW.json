@@ -5,12 +5,20 @@
         "lang": "語言",
         "buttons": [
             {
-                "text": "由 Onepage 登入"
+                "text": "使用入場券登入"
             },
             {
-                "text": "直接開始挑戰"
+                "text": "匿名開始挑戰"
             }
-        ]
+        ],
+        "dialog": {
+            "title": "請輸入您的令牌",
+            "content": "如果您想在解完所有題目後取得 NFT，您必須提供您的入場 JWT 令牌。",
+            "buttons": {
+                "cancel": "取消",
+                "submit": "提交"
+            }
+        }
     },
     "dashboard": {
         "sidebar": {
@@ -135,8 +143,6 @@
         "notSolved": "未完成",
         "buttonText": "開始挑戰",
         "contract": {
-            "connect": "連結合約",
-            "connected": "合約已連結！",
             "submitText": "提交",
             "submitButtonText": "我解完這題了"
         }
@@ -151,10 +157,12 @@
         }
     },
     "success": {
+        "login": "登入成功。重新導向…",
         "requestETH": "成功取得乙太幣",
         "challengeSolved": "太好了！您成功解了這個題目"
     },
     "error": {
+        "login": "錯誤：登入失敗，令牌無效。",
         "requestETH": "錯誤：取得乙太幣失敗。",
         "connectFirst": "錯誤：請先連結您的錢包。",
         "alreadySolved": "錯誤：您重複解了這個題目。",

@@ -15,9 +15,6 @@ import {
 } from 'components/Main';
 import MainWrapper from 'components/Main';
 import Error404 from 'components/Error/_404';
-import chalExample from './chalExample.sol';
-import infoExample from './infoExample.json';
-import useSolvedProblems from 'hooks/useSolvedProblems';
 import { useWeb3React } from '@web3-react/core';
 import WaitEffectContext from "contexts/WaitEffectContext";
 import LanguageContext from "contexts/LanguageContext";
@@ -73,17 +70,9 @@ const Challenge: FC = () => {
         console.table(menu);
     }
 
-    const [info, setInfo] = useState<InfoType>({
-        title: "",
-        description: "",
-        tutorial: "",
-        address: "",
-        abi: [],
-    });
     const { multiLang } = useContext(LanguageContext);
     const [contract, setContract] = useState<Contract>();
     const [vuln, setVuln] = useState<string>("");
-    const [connectButtonText, setConnectButtonText] = useState<string>(multiLang?.problems.contract.connect);
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
     const { id } = useParams<string>();
     const problemId = useRef<number>(Number(id));
@@ -115,8 +104,6 @@ const Challenge: FC = () => {
             const chalFile = await fetch(chalPath.default);
             const chalSource = await chalFile.text();
             setVuln(chalSource);
-            const chalInfo = await import(`challenges/chal${problemId.current}/info.json`);
-            setInfo(chalInfo.default);
         };
         fetchChal();
     }, [problemId]);
@@ -133,14 +120,13 @@ const Challenge: FC = () => {
                 window.player = account;
                 const web3 = new Web3(Web3.givenProvider);
                 window.web3 = web3;
-                const contract = contracts[problemId.current - 1];
+                const contract = contracts[problemId.current];
                 window.contract = contract;
                 window.instance = info.address;
                 window.abi = info.abi; 
                 window.help();
 
                 setContract(contract);
-                setConnectButtonText(multiLang?.problems.contract.connected);
                 setSubmitDisabled(false);
             }, 100);
         }
@@ -152,18 +138,18 @@ const Challenge: FC = () => {
             {
                 (
                     Number.isInteger(problemId.current)
-                    && problemId.current >= 1
-                    && problemId.current <= Number(process.env.REACT_APP_PROBLEM_NUM)
+                    && problemId.current >= 0
+                    && problemId.current < Number(process.env.REACT_APP_PROBLEM_NUM)
                 ) ? (
                     <MainWrapper title="Challenge">
                         <Grid container>
                             <Grid item xs={12}>
                                 <HeaderWrapper>
                                     <HeaderTypography>
-                                        {multiLang?.problems.challenges[problemId.current - 1].title}
+                                        {multiLang?.problems.challenges[problemId.current].title}
                                     </HeaderTypography>
                                     <SubtitleTypography>
-                                        {multiLang?.problems.challenges[problemId.current - 1].description}
+                                        {multiLang?.problems.challenges[problemId.current].description}
                                     </SubtitleTypography>
                                 </HeaderWrapper>
                             </Grid>
@@ -171,7 +157,7 @@ const Challenge: FC = () => {
                                 <PaperComponentWrapper>
                                     <Container>
                                         <SubSubHeaderTypography>
-                                            {multiLang?.problems.challenges[problemId.current - 1].tutorial}
+                                            {multiLang?.problems.challenges[problemId.current].tutorial}
                                         </SubSubHeaderTypography>
                                         <CopyBlockWrapper>
                                             <CopyBlock
