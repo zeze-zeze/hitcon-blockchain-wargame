@@ -18,7 +18,7 @@ const send = async (address: string) => {
   );
   
   // Check whether the address had got NFT
-  const hadSent = await hitconNFTSenderContract.methods.balanceOf(address, 1).call({from: address});
+  const hadSent = await hitconNFTSenderContract.methods.balanceOf(address, 1).call({from: config.PublicKey});
   console.log(hadSent);
   if (hadSent !== 0) {
     return {"status": "fail", "msg": "NFT can only request 1."};
@@ -89,7 +89,7 @@ const hitconNFTSenderCallBack = asyncHandler(async (req: Request, res: Response,
   await Promise.all(contracts.map(async (contract) => {
     const solved = await contract.methods
         .addressToSolved(address)
-        .call({ from: address })
+        .call({ from: config.PublicKey })
     if (!solved) {
       allSolved = false;
     }
