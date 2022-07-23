@@ -56,32 +56,32 @@ const hitconNFTSenderCallBack = asyncHandler(async (req: Request, res: Response,
 
   // Check all challenges solved
   const info = JSON.parse(
-    JSON.stringify(require("../../../frontend/src/hooks/info.json"))
+    JSON.stringify(require("../../../frontend/src/challenges/contracts.json"))
   );
 
   const chal1Contract = new web3.eth.Contract(
-    info["p1"]["abi"] as AbiItem[],
-    info["p1"]["addr"]
+    info[0]["abi"] as AbiItem[],
+    info[0]["addr"]
   );
   const chal2Contract = new web3.eth.Contract(
-    info["p2"]["abi"] as AbiItem[],
-    info["p2"]["addr"]
+    info[1]["abi"] as AbiItem[],
+    info[1]["addr"]
   );
   const chal3Contract = new web3.eth.Contract(
-    info["p3"]["abi"] as AbiItem[],
-    info["p3"]["addr"]
+    info[2]["abi"] as AbiItem[],
+    info[2]["addr"]
   );
   const chal4Contract = new web3.eth.Contract(
-    info["p4"]["abi"] as AbiItem[],
-    info["p4"]["addr"]
+    info[3]["abi"] as AbiItem[],
+    info[3]["addr"]
   );
   const chal5Contract = new web3.eth.Contract(
-    info["p5"]["abi"] as AbiItem[],
-    info["p5"]["addr"]
+    info[4]["abi"] as AbiItem[],
+    info[4]["addr"]
   );
   const chal6Contract = new web3.eth.Contract(
-    info["p5"]["abi"] as AbiItem[],
-    info["p5"]["addr"]
+    info[5]["abi"] as AbiItem[],
+    info[5]["addr"]
   );
 
   let allSolved = true;
