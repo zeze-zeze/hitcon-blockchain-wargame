@@ -1270,7 +1270,11 @@ const mainTheme = createTheme({
                     fontSize: 13
                 },
                 arrow: {
-                    color: alpha(colors.alpha.trueWhite['100'], 0.95)
+                    color: alpha(colors.alpha.trueWhite['100'], 0.95),
+                    "&:before": {
+                        border: '1px solid ' + colors.alpha.black[30],
+                    },
+
                 }
             }
         },

@@ -14,9 +14,10 @@ import HeaderUserMenu from "./HeaderUserMenu";
 import SidebarToggledContext from "contexts/SidebarToggledContext";
 import { useWeb3React } from "@web3-react/core";
 import HeaderNFTList from "./HeaderNFTList";
-import useSolvedProblems from "hooks/useSolvedProblems";
 import LanguageContext from "contexts/LanguageContext";
+import Web3Context from "contexts/Web3Context";
 import ConnectButton from "components/Connect/ConnectButton";
+
 
 const HeaderWrapper = styled(Box)(({ theme }) => ({
     display: 'flex',
@@ -46,11 +47,11 @@ const HeaderComponentsWrapper = styled(Box)(
 const Header: FC = () => {
     const theme = useTheme();
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
+    const showSolved = useMediaQuery("(min-width:940px)");
     const { sidebarToggled, toggleSidebar } = useContext(SidebarToggledContext);
     const { active } = useWeb3React();
-    const { getSolvedProblems } = useSolvedProblems();
 
-    const solvedProblems = getSolvedProblems();
+    const { solved } = useContext(Web3Context);
     const { multiLang } = useContext(LanguageContext);
 
     /* 
@@ -76,7 +77,7 @@ const Header: FC = () => {
                         </Tooltip>
                     </HeaderComponentsWrapper>
                     <HeaderComponentsWrapper>
-                        <HeaderNFTList />
+                        {showSolved && <HeaderNFTList />}
                     </HeaderComponentsWrapper>
                     <HeaderComponentsWrapper>
                         <HeaderButtons />

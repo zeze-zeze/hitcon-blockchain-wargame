@@ -26,7 +26,8 @@
         "header": {
             "tooltip": {
                 "toggleMenu": "Toggle Menu",
-                "notification": "Notification"
+                "notification": "Notification",
+                "achievement": "Achievement"
             },
             "notification": {
                 "title": "Notification",
@@ -62,6 +63,9 @@
                 "connectWallet": "Connect Wallet",
                 "disconnectWallet": "Disconnect Wallet",
                 "setting": "Setting"
+            },
+            "achievement": {
+                "requestNFT": "Request NFT"
             }
         }
     },

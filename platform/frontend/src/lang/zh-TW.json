@@ -26,7 +26,8 @@
         "header": {
             "tooltip": {
                 "toggleMenu": "切換目錄",
-                "notification": "通知"
+                "notification": "通知",
+                "achievement": "成就"
             },
             "notification": {
                 "title": "通知",
@@ -62,6 +63,9 @@
                 "connectWallet": "連結錢包",
                 "disconnectWallet": "登出錢包",
                 "setting": "設定"
+            },
+            "achievement": {
+                "requestNFT": "取得 NFT"
             }
         }
     },

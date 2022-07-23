@@ -1,13 +1,15 @@
 import { FC, useRef, useState, useContext } from 'react';
-import { lighten, alpha, Badge, Box, IconButton, Popover, Tooltip, Button } from '@mui/material';
+import { lighten, alpha, Badge, Box, IconButton, Popover, Tooltip, Button, useMediaQuery } from '@mui/material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import LanguageIcon from '@mui/icons-material/Language';
 import { styled, useTheme } from '@mui/material/styles';
 import Notification from './Notification';
 import NotificationContext from "contexts/NotificationContext";
 import LanguageContext from 'contexts/LanguageContext';
+import HeaderNFTList from './HeaderNFTList';
 
-const NotificationsBadge = styled(Badge)(
+const BadgeWrapper = styled(Badge)(
     ({ theme }) => ({
         '.MuiBadge-badge': {
             minWidth: '16px',
@@ -36,33 +38,71 @@ const IconButtonWrapper = styled(IconButton)(
 const HeaderButtons: FC = () => {
 
     const theme = useTheme();
-    const notificationButtonRef = useRef<any>(null);
+    const showSolved = useMediaQuery("(min-width:940px)");
+    const notificationRef = useRef<any>(null);
     const langButtonRef = useRef<any>(null);
+    const achievementRef = useRef<any>(null);
+
     const [notificationOpen, setNotificationOpen] = useState<boolean>(false);
     const [langOpen, setLangOpen] = useState<boolean>(false);
+    const [achievementOpen, setAchievementOpen] = useState<boolean>(false);
 
     const { notification } = useContext(NotificationContext);
     const { multiLang, changeLang } = useContext(LanguageContext);
 
     return (
         <>
+            {
+                showSolved || (
+                    <Box sx={{ mr: theme.spacing(1) }}>
+                        <Tooltip arrow title={multiLang?.dashboard.header.tooltip.achievement}>
+                            <IconButtonWrapper ref={achievementRef} onClick={() => {
+                                setAchievementOpen(true);
+                            }}>
+                                <IconWrapper>
+                                    <BadgeWrapper
+                                        invisible={true}
+                                    >
+                                        <EmojiEventsIcon />
+                                    </BadgeWrapper>
+                                </IconWrapper>
+                            </IconButtonWrapper>
+                        </Tooltip>
+                        <Popover
+                            anchorEl={achievementRef.current}
+                            onClose={() => {
+                                setAchievementOpen(false);
+                            }}
+                            open={achievementOpen}
+                            PaperProps={{
+                                variant: 'outlined',
+                                elevation: 0
+                            }}
+                        >
+                            <Box sx={{ padding: theme.spacing(1) }}>
+                                <HeaderNFTList />
+                            </Box>
+                        </Popover>
+                    </Box>
+                )
+            }
             <Box sx={{ mr: theme.spacing(1) }}>
                 <Tooltip arrow title={multiLang?.dashboard.header.tooltip.notification}>
-                    <IconButtonWrapper ref={notificationButtonRef} onClick={() => {
+                    <IconButtonWrapper ref={notificationRef} onClick={() => {
                         setNotificationOpen(true);
                     }}>
                         <IconWrapper>
-                            <NotificationsBadge
+                            <BadgeWrapper
                                 invisible={notification.length === 0}
                                 badgeContent={notification.length}
                             >
                                 <NotificationsActiveIcon />
-                            </NotificationsBadge>
+                            </BadgeWrapper>
                         </IconWrapper>
                     </IconButtonWrapper>
                 </Tooltip>
                 <Popover
-                    anchorEl={notificationButtonRef.current}
+                    anchorEl={notificationRef.current}
                     onClose={() => {
                         setNotificationOpen(false);
                     }}
@@ -75,15 +115,15 @@ const HeaderButtons: FC = () => {
                     <Notification />
                 </Popover>
             </Box>
-            <Box sx={{ ml: theme.spacing(1) }}>
+            <Box>
                 <Tooltip arrow title="Language/語言">
                     <IconButtonWrapper ref={langButtonRef} onClick={() => {
                         setLangOpen(true);
                     }}>
                         <IconWrapper>
-                            <NotificationsBadge invisible={true}>
+                            <BadgeWrapper invisible={true}>
                                 <LanguageIcon />
-                            </NotificationsBadge>
+                            </BadgeWrapper>
                         </IconWrapper>
                     </IconButtonWrapper>
                 </Tooltip>

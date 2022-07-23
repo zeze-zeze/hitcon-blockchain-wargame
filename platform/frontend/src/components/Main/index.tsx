@@ -7,10 +7,11 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 import { MainComponentWrapper } from 'App';
 import Dashboard from 'components/Dashboard';
 import SidebarToggledContext from 'contexts/SidebarToggledContext';
-import useEagerConnect from 'hooks/useEagerConnect';
 import { useWeb3React } from '@web3-react/core';
 import { useNavigate } from 'react-router';
 import WaitEffect from 'components/WaitEffect';
+import useEagerConnect from 'hooks/useEagerConnect';
+import Web3Context from 'contexts/Web3Context';
 
 type WrapperProps = {
     children: ReactNode,
@@ -104,9 +105,9 @@ const PaperCenteredComponentWrapper = styled(Paper)(
 
 const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
     const theme = useTheme();
-    const navigate = useNavigate();
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
     const { sidebarToggled } = useContext(SidebarToggledContext);
+    const { initContracts } = useContext(Web3Context);
 
     /* 
      * Adjust the width & left property according to
@@ -115,14 +116,20 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
      */
     const calculatedLeft = sidebarToggled && lgUp ? theme.sidebar.width : 0;
     const calculatedWidth = sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%';
-    const { active } = useWeb3React();
+    const { active, account } = useWeb3React();
     
     /*
      * Retrieve problems that the current user solved
      */
 
     const tried = useEagerConnect();
-    //console.log(tried, active);
+
+    useEffect(() => {
+        if (tried && active && account) {
+            console.log("Contracts successfully initialized");
+            initContracts(account);
+        }
+    }, [tried, active, account])
 
     return (
         <HelmetProvider>

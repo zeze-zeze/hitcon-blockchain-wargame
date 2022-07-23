@@ -15,7 +15,7 @@ import contractsInfo from "challenges/contracts.json";
 import WaitEffectContext from "contexts/WaitEffectContext";
 import SidebarToggledContext from "contexts/SidebarToggledContext";
 import NotificationContext from "contexts/NotificationContext";
-import ContractsContext from "contexts/ContractsContext";
+import Web3Context from "contexts/Web3Context";
 import LanguageContext from "contexts/LanguageContext";
 import { fontFamily } from "@mui/system";
 
@@ -61,9 +61,8 @@ const App: FC = () => {
     /* Notifications */
     const [notification, setNotification] = useState<MessageType[]>();
     const toggleSidebar = useCallback(() => setSidebarToggled(!sidebarToggled), [sidebarToggled]);
-    /* All contracts */
-    const { active, account } = useWeb3React();
-    const [solved, setSolved] = useState<boolean[]>([]);
+    /* Web3 */
+    const [solved, setSolved] = useState<boolean[]>([false, false, false, false, false, false]);
     const [contracts, setContracts] = useState<Contract[]>([]);
     /* Wait Effect */
     const [showBackDrop, setShowBackDrop] = useState<boolean>(false);
@@ -115,55 +114,45 @@ const App: FC = () => {
         }
     }, []);
     /* Contracts */
-    useEffect(() => {
-        if (active) {
+    const initContracts = useCallback(async (account: string) => {
+        if (account) {
+            const problemNum: number = Number(process.env.REACT_APP_PROBLEM_NUM);
             const solvedTmp: boolean[] = [];
             const contractsTmp: Contract[] = [];
-            const problemNum: number = Number(process.env.REACT_APP_PROBLEM_NUM);
-            for (let i = 1; i <= problemNum; i++) {
+            for (let i = 0; i < problemNum; i++) {
                 const contract: Contract = new web3.eth.Contract(
                     contractsInfo[i]["abi"] as AbiItem[],
                     contractsInfo[i]["addr"]
                 );
+
                 /* use function closure to preserve index */
-                (() => {
-                    const idx = i;
-                    /* call contract apis */
-                    contract.methods
+                await (async (idx: number) => {
+                    /* call contract apis and add events */
+                    const tf = await contract.methods
                         .addressToSolved(account)
-                        .call({ from: account })
-                        .then((t: boolean) => solvedTmp.push(t));
+                        .call({ from: account });
+
+                    solvedTmp.push(tf);
+                    /* Add event handlers */
                     contract.events
                         .hadSolved({ filter: { _solver: account } })
                         .on("data", (log: any) => {
-                            const newSolved = [...solved];
-                            newSolved[idx] = true;
-                            setSolved(newSolved);
+                            setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)])
                         });
                     contract.events
                         .newSolved({ filter: { _solver: account } })
                         .on("data", (log: any) => {
-                            const newSolved = [...solved];
-                            newSolved[idx] = true;
-                            setSolved(newSolved);
+                            setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)])
                         });
-                })();
-                contractsTmp.push(contract);
+                    
+                    contractsTmp.push(contract);
+                })(i);
             }
-            setContracts(contractsTmp);
             setSolved(solvedTmp);
-            return () => {
-                for (let i = 1; i <= problemNum; i++) {
-                    contracts[i].events
-                        .hadSolved({ filter: { _solver: account } })
-                        .off();
-                    contracts[i].events
-                        .newSolved({ filter: { _solver: account } })
-                        .off();
-                }
-            };
+            setContracts(contractsTmp);
         }
-    }, [active, account]);
+    }, []);
+
     return (
         <ThemeProvider>
             <LanguageContext.Provider
@@ -172,8 +161,8 @@ const App: FC = () => {
                 <NotificationContext.Provider
                     value={{ notification: notification ?? [], addNotification, deleteNotification }}
                 >
-                    <ContractsContext.Provider
-                        value={{ contracts, solved, setContracts, setSolved }}
+                    <Web3Context.Provider
+                        value={{ contracts, solved, initContracts }}
                     >
                         <SidebarToggledContext.Provider
                             value={{ sidebarToggled, toggleSidebar }}
@@ -197,7 +186,7 @@ const App: FC = () => {
                             </WaitEffectContext.Provider>
 
                         </SidebarToggledContext.Provider>
-                    </ContractsContext.Provider>
+                    </Web3Context.Provider>
 
                 </NotificationContext.Provider>
             </LanguageContext.Provider>
