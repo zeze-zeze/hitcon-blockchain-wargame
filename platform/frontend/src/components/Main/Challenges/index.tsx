@@ -19,6 +19,7 @@ import { useWeb3React } from '@web3-react/core';
 import WaitEffectContext from "contexts/WaitEffectContext";
 import LanguageContext from "contexts/LanguageContext";
 import Web3Context from "contexts/Web3Context";
+import info from "challenges/contracts.json";
 
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 declare global {
@@ -77,7 +78,7 @@ const Challenge: FC = () => {
     const { id } = useParams<string>();
     const problemId = useRef<number>(Number(id));
     const { active, account } = useWeb3React();
-    const { setShowSnackBar, setShowBackDrop, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
+    const { setShowSnackBar, setShowBackDrop, setErrorMessage } = useContext(WaitEffectContext);
     const { contracts, solved } = useContext(Web3Context);
 
     const handleSubmit = useCallback(async () => {
@@ -100,7 +101,7 @@ const Challenge: FC = () => {
 
     useEffect(() => {
         const fetchChal = async () => {
-            const chalPath = await import(`challenges/chal${problemId.current}/chal.sol`);
+            const chalPath = await import(`challenges/chal${problemId.current}.sol`);
             const chalFile = await fetch(chalPath.default);
             const chalSource = await chalFile.text();
             setVuln(chalSource);
@@ -116,14 +117,14 @@ const Challenge: FC = () => {
                 console.log('%cWelcome to HITCON Wargame!', style);
                 var style = 'color: blue; background:#eee; -webkit-text-stroke: 1px black; font-size:10px;';
                 console.log('%cYour address: %s', style, account);
-                console.log('%cContract address: %s', style, info.address);
+                console.log('%cContract address: %s', style, info[problemId.current].addr);
                 window.player = account;
                 const web3 = new Web3(Web3.givenProvider);
                 window.web3 = web3;
                 const contract = contracts[problemId.current];
                 window.contract = contract;
-                window.instance = info.address;
-                window.abi = info.abi; 
+                window.instance = info[problemId.current].addr;
+                window.abi = info[problemId.current].abi; 
                 window.help();
 
                 setContract(contract);

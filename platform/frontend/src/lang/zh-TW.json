@@ -108,6 +108,11 @@
     "problems": {
         "challenges": [
             {
+                "title": "挑戰零",
+                "description": "挑戰零敘述",
+                "tutorial": "挑戰零題點"
+            },
+            {
                 "title": "挑戰一",
                 "description": "挑戰一敘述",
                 "tutorial": "挑戰一題點"
@@ -131,11 +136,6 @@
                 "title": "挑戰五",
                 "description": "挑戰五敘述",
                 "tutorial": "挑戰五題點"
-            },
-            {
-                "title": "挑戰六",
-                "description": "挑戰六敘述",
-                "tutorial": "挑戰六題點"
             }
         ],
         "challenge": "挑戰",

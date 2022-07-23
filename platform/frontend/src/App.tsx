@@ -17,7 +17,6 @@ import SidebarToggledContext from "contexts/SidebarToggledContext";
 import NotificationContext from "contexts/NotificationContext";
 import Web3Context from "contexts/Web3Context";
 import LanguageContext from "contexts/LanguageContext";
-import { fontFamily } from "@mui/system";
 
 /* Types */
 type MessageType = {
