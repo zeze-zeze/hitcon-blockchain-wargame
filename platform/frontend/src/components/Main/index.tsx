@@ -126,7 +126,6 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
 
     useEffect(() => {
         if (tried && active && account) {
-            console.log("Contracts successfully initialized");
             initContracts(account);
         }
     }, [tried, active, account])
