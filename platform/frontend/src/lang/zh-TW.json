@@ -61,7 +61,7 @@
             "userMenu": {
                 "connectWallet": "連結錢包",
                 "disconnectWallet": "登出錢包",
-                "userSetting": "使用者設定"
+                "setting": "設定"
             }
         }
     },
@@ -87,7 +87,7 @@
         "title": "水龍頭",
         "subtitle": "取得一些 Rinkeby 測試鏈乙太幣",
         "content": {
-            "address": "以太幣地址",
+            "address": "以太幣地址（一個地址只能取得一次）",
             "amount": "金額",
             "buttonText": "取得乙太幣",
             "needMore": "需要更多測試鏈乙太幣嗎？"
@@ -135,6 +135,15 @@
             "connected": "合約已連結！",
             "submitText": "提交",
             "submitButtonText": "我解完這題了"
+        }
+    },
+    "setting": {
+        "title": "設定",
+        "subtitle": "您可以在此改變您的大頭貼、語言等",
+        "content": {
+            "language": "語言",
+            "avatar": "大頭貼",
+            "reset": "Reset Everything"
         }
     },
     "success": {

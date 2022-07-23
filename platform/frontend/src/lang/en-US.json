@@ -61,7 +61,7 @@
             "userMenu": {
                 "connectWallet": "Connect Wallet",
                 "disconnectWallet": "Disconnect Wallet",
-                "userSetting": "User Setting"
+                "setting": "Setting"
             }
         }
     },
@@ -85,7 +85,7 @@
     },
     "faucet": {
         "title": "Faucet",
-        "subtitle": "Get some Rinkeby ETH!",
+        "subtitle": "Get some Rinkeby ETH (One request only per address)",
         "content": {
             "address": "Wallet Address",
             "amount": "Request Amount",
@@ -135,6 +135,15 @@
             "connected": "Contract Connected!",
             "submitText": "Submit",
             "submitButtonText": "I've Finished the level!"
+        }
+    },
+    "setting": {
+        "title": "Setting",
+        "subtitle": "Change your profile, language, etc. here",
+        "content": {
+            "language": "Language",
+            "avatar": "Avatar",
+            "reset": "Reset settings to default"
         }
     },
     "success": {
