@@ -30,6 +30,8 @@ declare global {
         web3: Web3;
         player: string;
         contract: Contract;
+        instance: string;
+        abi: Array<any>;
         help: () => void;
     }
 }
@@ -58,12 +60,17 @@ const CopyBlockWrapper = styled(Container)(
 );
 
 const Challenge: FC = () => {
-
-    // TODO: Add more function and have a better style.
     window.help = () => {
-        console.log(" player: current player address\n",
-            "web3: web3 object\n",
-            "contract: current level contract instance (if connected)");
+        const menu = {
+            "player" : "current player address",
+            "web3" : "web3 object",
+            "contract" : "current level contract instance",
+            "instance" : "challenge contract address",
+            "abi" : "abi of challenge contract",
+            "help()" : "Show this table"
+        };
+
+        console.table(menu);
     }
 
     const [info, setInfo] = useState<InfoType>({
@@ -116,11 +123,19 @@ const Challenge: FC = () => {
 
     useEffect(() => {
         if (account) {
+            window.console.clear();
+            var style = 'color: tomato; background:#eee; -webkit-text-stroke: 1px black; font-size:30px;';
+            console.log('%cWelcome to HITCON Wargame!', style);
+            var style = 'color: blue; background:#eee; -webkit-text-stroke: 1px black; font-size:10px;';
+            console.log('%cYour address: %s', style, account);
+            console.log('%cContract address: %s', style, info.address);
             window.player = account;
             const web3 = new Web3(Web3.givenProvider);
             window.web3 = web3;
             const contract = contracts[problemId.current - 1];
             window.contract = contract;
+            window.instance = info.address;
+            window.abi = info.abi; 
             window.help();
 
             setContract(contract);
