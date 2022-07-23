@@ -108,34 +108,34 @@
     "problems": {
         "challenges": [
             {
+                "title": "Problem 0",
+                "description": "Problem 0 description",
+                "tutorial": "Problem 0 tutorial"
+            },
+            {
                 "title": "Problem 1",
-                "description": "Problem 1 description",
+                "description": "Problem 1 description" ,
                 "tutorial": "Problem 1 tutorial"
             },
             {
                 "title": "Problem 2",
-                "description": "Problem 2 description" ,
-                "tutorial": "Problem 2 tutorial"
+                "description": "Problem 2 description",
+                "tutorial": "Problem 2 tutorial" 
             },
             {
                 "title": "Problem 3",
                 "description": "Problem 3 description",
-                "tutorial": "Problem 3 tutorial" 
+                "tutorial": "Problem 3 tutorial"
             },
             {
                 "title": "Problem 4",
                 "description": "Problem 4 description",
-                "tutorial": "Problem 4 tutorial"
+                "tutorial": "Problem 4 tutorial" 
             },
             {
                 "title": "Problem 5",
                 "description": "Problem 5 description",
                 "tutorial": "Problem 5 tutorial" 
-            },
-            {
-                "title": "Problem 6",
-                "description": "Problem 6 description",
-                "tutorial": "Problem 6 tutorial" 
             }
         ],
         "challenge": "Challenge",
