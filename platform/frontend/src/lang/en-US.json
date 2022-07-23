@@ -5,12 +5,20 @@
         "lang": "Language",
         "buttons": [
             {
-                "text": "Login via Onepage"
+                "text": "Login via Token"
             },
             {
                 "text": "Play Anonymously"
             }
-        ]
+        ],
+        "dialog": {
+            "title": "Please enter your token",
+            "content": "In order to win an NFT after you've solved all the challenges, you must provide your admission JWT token",
+            "buttons": {
+                "cancel": "Cancel",
+                "submit": "Submit"
+            }
+        }
     },
     "dashboard": {
         "sidebar": {
@@ -135,8 +143,6 @@
         "notSolved": "Not Solved",
         "buttonText": "Start Challenge",
         "contract": {
-            "connect": "Connect Contract",
-            "connected": "Contract Connected!",
             "submitText": "Submit",
             "submitButtonText": "I've Finished the level!"
         }
@@ -151,10 +157,13 @@
         }
     },
     "success": {
+        "login": "Token successfully verified. Redirecting...",
         "requestETH": "Request ETH success.",
         "challengeSolved": "Congratulation! You solved the challenge"
+        
     },
     "error": {
+        "login": "Error: Login Failed, Invalid token.",
         "requestETH": "Error: Request ETH Failed.",
         "connectFirst": "Error: Please connect your wallet first.",
         "alreadySolved": "Error: You have alread solved the challenge.",
