@@ -18,11 +18,11 @@ import Error404 from 'components/Error/_404';
 import chalExample from './chalExample.sol';
 import infoExample from './infoExample.json';
 import useSolvedProblems from 'hooks/useSolvedProblems';
-import WaitEffect from 'components/WaitEffect';
 import { useWeb3React } from '@web3-react/core';
 import NotificationContext from "contexts/NotificationContext";
 import WaitEffectContext from "contexts/WaitEffectContext";
 import LanguageContext from "contexts/LanguageContext";
+import Web3Context from "contexts/Web3Context";
 
 /* challenges source code and abis */
 import chal1 from "challenges/chal1/chal1.sol";
@@ -97,7 +97,7 @@ const Challenge: FC = () => {
     const { active, account } = useWeb3React();
     const { addNotification } = useContext(NotificationContext);
     const { setShowSnackBar, setShowBackDrop, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
-    const { getSolvedProblems, setSolvedProblems } = useSolvedProblems();
+    const { solved } = useContext(Web3Context);
 
     const clickConnect = useCallback(async () => {
         setShowBackDrop(true);

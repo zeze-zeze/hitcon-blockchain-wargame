@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useWeb3React } from "@web3-react/core";
 import Web3 from "web3";
-import info from "./info.json";
+import info from "challenges/info.json";
 import { AbiItem } from "web3-utils";
 
 const web3 = new Web3(Web3.givenProvider);
