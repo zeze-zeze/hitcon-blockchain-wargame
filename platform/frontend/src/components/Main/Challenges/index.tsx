@@ -123,24 +123,26 @@ const Challenge: FC = () => {
 
     useEffect(() => {
         if (account) {
-            window.console.clear();
-            var style = 'color: tomato; background:#eee; -webkit-text-stroke: 1px black; font-size:30px;';
-            console.log('%cWelcome to HITCON Wargame!', style);
-            var style = 'color: blue; background:#eee; -webkit-text-stroke: 1px black; font-size:10px;';
-            console.log('%cYour address: %s', style, account);
-            console.log('%cContract address: %s', style, info.address);
-            window.player = account;
-            const web3 = new Web3(Web3.givenProvider);
-            window.web3 = web3;
-            const contract = contracts[problemId.current - 1];
-            window.contract = contract;
-            window.instance = info.address;
-            window.abi = info.abi; 
-            window.help();
+            setTimeout(() => {
+                window.console.clear();
+                var style = 'color: tomato; background:#eee; -webkit-text-stroke: 1px black; font-size:30px;';
+                console.log('%cWelcome to HITCON Wargame!', style);
+                var style = 'color: blue; background:#eee; -webkit-text-stroke: 1px black; font-size:10px;';
+                console.log('%cYour address: %s', style, account);
+                console.log('%cContract address: %s', style, info.address);
+                window.player = account;
+                const web3 = new Web3(Web3.givenProvider);
+                window.web3 = web3;
+                const contract = contracts[problemId.current - 1];
+                window.contract = contract;
+                window.instance = info.address;
+                window.abi = info.abi; 
+                window.help();
 
-            setContract(contract);
-            setConnectButtonText(multiLang?.problems.contract.connected);
-            setSubmitDisabled(false);
+                setContract(contract);
+                setConnectButtonText(multiLang?.problems.contract.connected);
+                setSubmitDisabled(false);
+            }, 100);
         }
     }, [account, problemId, multiLang]);
 
