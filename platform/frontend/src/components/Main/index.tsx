@@ -1,17 +1,18 @@
 import { FC, ReactNode, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { Typography, Box, Paper, Container, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import axios from "axios";
 
 import { MainComponentWrapper } from 'App';
 import Dashboard from 'components/Dashboard';
 import SidebarToggledContext from 'contexts/SidebarToggledContext';
-import { useWeb3React } from '@web3-react/core';
-import { useNavigate } from 'react-router';
 import WaitEffect from 'components/WaitEffect';
 import useEagerConnect from 'hooks/useEagerConnect';
 import Web3Context from 'contexts/Web3Context';
+import { useWeb3React } from '@web3-react/core';
 
 type WrapperProps = {
     children: ReactNode,
@@ -106,6 +107,7 @@ const PaperCenteredComponentWrapper = styled(Paper)(
 const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
     const theme = useTheme();
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
+    const navigate = useNavigate();
     const { sidebarToggled } = useContext(SidebarToggledContext);
     const { initContracts } = useContext(Web3Context);
 
@@ -117,10 +119,6 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
     const calculatedLeft = sidebarToggled && lgUp ? theme.sidebar.width : 0;
     const calculatedWidth = sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%';
     const { active, account } = useWeb3React();
-    
-    /*
-     * Retrieve problems that the current user solved
-     */
 
     const tried = useEagerConnect();
 
@@ -129,6 +127,24 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
             initContracts(account);
         }
     }, [tried, active, account])
+
+    /* Check whether session expires */
+    useEffect(() => {
+        const ping = async () => {
+            try {
+                const result = await axios
+                .post(process.env.REACT_APP_BASE_API_URL + "/ping", null, {
+                    withCredentials: true
+                });
+                if (result.data.expired) {
+                    navigate("/");
+                }
+            } catch (err) {
+                navigate("/");
+            }
+        };
+        ping();
+    }, []);
 
     return (
         <HelmetProvider>
