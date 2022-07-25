@@ -21,6 +21,7 @@ import LanguageContext from "contexts/LanguageContext";
 import Web3Context from "contexts/Web3Context";
 import info from "challenges/contracts.json";
 
+/* Typescript declaration merging */
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 declare global {
     interface Window {

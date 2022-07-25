@@ -35,26 +35,38 @@ const send = async (address: string) => {
 
 const faucetCallBack = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
 
-  if (!req.body.address) {
-    return next(new BadRequest("Missing Address or Amount."));
-  }
+  try {
+    if (!req.body.address) {
+      return next(new BadRequest("Missing Address or Amount"));
+    }
+    if (!req.session || !req.session.type) {
+      return next(new BadRequest("User unauthorized"));
+    }
 
-  const { address }  = req.body;
+    const { address } = req.body;
 
-  if (!checkAddress(address)) {
-    return next(new UnprocessableEntity("Incorrect Wallet Address."));
-  }
+    if (!checkAddress(address)) {
+      return next(new UnprocessableEntity("Incorrect Wallet Address"));
+    }
 
-  await send(address);
+    await send(address);
 
-  if (res.statusCode === 500) {
-    return res.status(500);
-  }
-  else {
-    return res.status(200).json({
-      ok: true,
-      address: address,
-    });
+    if (res.statusCode === 500) {
+      return res.status(500);
+    }
+    else {
+      return res.status(200).json({
+        ok: true,
+        address: address,
+      });
+    }
+  } catch (err) {
+    if (err instanceof Error) {
+      console.log(err.message);
+      return next(new BadRequest("Already requested Ether"));
+    } else {
+      return res.status(500);
+    }
   }
 });
 
