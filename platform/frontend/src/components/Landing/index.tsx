@@ -69,7 +69,8 @@ const LandingButtonsWrapper = styled(Box)(
 
 const Landing: FC = () => {
 
-    const [open, setOpen] = useState<boolean>(false);
+    const [tokenDialogOpen, setTokenDialogOpen] = useState<boolean>(false);
+    const [anonymDialogOpen, setAnonymDialogOpen] = useState<boolean>(false);
     const [token, setToken] = useState<string>("");
     const { lang, changeLang, multiLang } = useContext(LanguageContext);
     const theme = useTheme();
@@ -78,7 +79,11 @@ const Landing: FC = () => {
     const { setShowBackDrop, setShowSnackBar, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
 
     const handleLogin = useCallback(async (anonym: boolean) => {
-        setOpen(false);
+        if (anonym) {
+            setAnonymDialogOpen(false);
+        } else {
+            setTokenDialogOpen(false);
+        }
         setShowBackDrop(true);
         try {
             if (anonym) {
@@ -99,8 +104,10 @@ const Landing: FC = () => {
             }
             setSuccessMessage(multiLang?.success.login);
             setShowSnackBar(1);
-            setShowBackDrop(false);
-            navigate("/home");
+            setTimeout(() => {
+                setShowBackDrop(false);
+                navigate("/home");
+            }, 4000);
             
         } catch (err) {
             if (err instanceof AxiosError) {
@@ -136,16 +143,17 @@ const Landing: FC = () => {
                 <title>Hitcon Wargame</title>
             </Helmet>
             <WaitEffect />
+            { /* login with token dialog */ }
             <Dialog
-                open={open}
-                onClose={() => setOpen(false)}
+                open={tokenDialogOpen}
+                onClose={() => setTokenDialogOpen(false)}
             >
                 <DialogTitle id="dialog-title">
-                    {multiLang?.landing.dialog.title}
+                    {multiLang?.landing.dialogs[0].title}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="dialog-content">
-                        {multiLang?.landing.dialog.content}
+                        {multiLang?.landing.dialogs[0].content}
                     </DialogContentText>
                     <Box>
                         <TextField
@@ -162,11 +170,33 @@ const Landing: FC = () => {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setOpen(false)}>
-                        {multiLang?.landing.dialog.buttons.cancel}
+                    <Button onClick={() => setTokenDialogOpen(false)}>
+                        {multiLang?.landing.dialogs[0].buttons.cancel}
                     </Button>
                     <Button onClick={() => handleLogin(false)}>
-                        {multiLang?.landing.dialog.buttons.submit}
+                        {multiLang?.landing.dialogs[0].buttons.submit}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            { /* login anonymously dialog */ }
+            <Dialog
+                open={anonymDialogOpen}
+                onClose={() => setAnonymDialogOpen(false)}
+            >
+                <DialogTitle id="dialog-title">
+                    {multiLang?.landing.dialogs[1].title}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="dialog-content">
+                        {multiLang?.landing.dialogs[1].content}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setAnonymDialogOpen(false)}>
+                        {multiLang?.landing.dialogs[1].buttons.cancel}
+                    </Button>
+                    <Button onClick={() => handleLogin(true)}>
+                        {multiLang?.landing.dialogs[1].buttons.submit}
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -206,7 +236,7 @@ const Landing: FC = () => {
                                     variant="contained"
                                     size="large"
                                     onClick={() => {
-                                        setOpen(true);
+                                        setTokenDialogOpen(true);
                                     }}
                                     sx={{ margin: theme.spacing(3) }}
                                 >
@@ -216,7 +246,9 @@ const Landing: FC = () => {
                                     color="error"
                                     variant="contained"
                                     size="large"
-                                    onClick={() => handleLogin(true)}
+                                    onClick={() => {
+                                        setAnonymDialogOpen(true);
+                                    }}
                                     sx={{ margin: theme.spacing(3) }}
                                 >
                                     {multiLang?.landing.buttons[1].text}

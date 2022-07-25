@@ -11,14 +11,24 @@
                 "text": "Play Anonymously"
             }
         ],
-        "dialog": {
-            "title": "Please enter your token",
-            "content": "In order to win an NFT after you've solved all the challenges, you must provide your admission JWT token",
-            "buttons": {
-                "cancel": "Cancel",
-                "submit": "Submit"
+        "dialogs": [
+            {
+                "title": "Please enter your token",
+                "content": "In order to win an NFT after you've solved all the challenges, you must provide your admission JWT token",
+                "buttons": {
+                    "cancel": "Cancel",
+                    "submit": "Submit"
+                }
+            },
+            {
+                "title": "Login Anonymously",
+                "content": "If you login anonymously, You cannot win an NFT after you've solved all the challenges.",
+                "buttons": {
+                    "cancel": "Cancel",
+                    "submit": "OK, I understand"
+                }
             }
-        }
+        ]
     },
     "dashboard": {
         "sidebar": {
@@ -170,7 +180,7 @@
         "invalidToken": "Login Error: Invalid token.",
         "loginPermissionDenied": "Login Error: Your do not have permission to play the wargame.",
         "invalidLoginType": "Login Error: Invalid login type.",
-        "userUnauthorized": "Authentication Error: Please login first.",
+        "userUnauthorized": "Authentication Error: You are not logged in. It is possible that the session has expired. Please refresh.",
         "missingAddressOrAmount": "Error: Missing address or amount",
         "incorrectAddress": "Error: Incorrect wallet address",
         "alreadyRequested": "Error: You already requested Ether",
