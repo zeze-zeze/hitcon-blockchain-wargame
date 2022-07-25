@@ -33,7 +33,7 @@ const SuspenseWrapper = (Component: FC) => {
 const Home: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Home')));
 const Landing: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Landing')));
 const Tutorial: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Tutorial')));
-const Problems: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Problems'))); 
+const ChallengeList: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/ChallengeList'))); 
 const Faucet: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Faucet'))); 
 const Challenge: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Main/Challenges'))); 
 const Error404: () => JSX.Element = SuspenseWrapper(lazy(() => import('components/Error/_404')));
@@ -56,11 +56,11 @@ const router = [
         element: <Tutorial />,
     },
     {
-        path: 'problems',
+        path: 'challenges',
         children: [
             {
                 path: '',
-                element: <Problems />
+                element: <ChallengeList />
             },
             {
                 path: ':id',

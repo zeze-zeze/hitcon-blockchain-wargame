@@ -1,9 +1,9 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { Avatar, Box, Grid, List, ListItem, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useWeb3React } from "@web3-react/core";
 import Web3 from "web3";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import useSolvedProblems from "hooks/useSolvedProblems";
 import { styled, useTheme } from "@mui/material/styles";
 import LanguageContext from "contexts/LanguageContext";
@@ -36,24 +36,49 @@ const HeaderNFTList: FC = () => {
         "https://i.imgur.com/yvn5IdB.png"
     ];
 
-    const requestNFT = async () => {
+    const requestNFT = useCallback(async () => {
         setShowBackDrop(true);
-        await axios
+        try {
+            await axios
             .post(process.env.REACT_APP_BASE_API_URL + "/hitcon-nft-sender", {
                 address: account,
-            })
-            .then((response) => {
-                // console.log(response);
-                setSuccessMessage("Request NFT Success");
-                setShowSnackBar(1);
-            })
-            .catch((error) => {
-                // console.log(error);
-                setErrorMessage("ERROR! Request failed");
-                setShowSnackBar(2);
+            }, {
+                withCredentials: true
             });
-        setShowBackDrop(false);
-    };
+            setSuccessMessage(multiLang?.success.requestNFT);
+            setShowSnackBar(1);
+            setShowBackDrop(false);
+        } catch (err) {
+            if (err instanceof AxiosError) {
+                if (err.code === "ERR_BAD_REQUEST") {
+                    const response: AxiosResponse = err.response as AxiosResponse;
+                    if (!response.data.ok) {
+                        const errMessage = response.data.message
+                        if (errMessage === "Missing Address or Amount") {
+                            setErrorMessage(multiLang?.error.missingAddressOrAmount);
+                        } else if (errMessage === "User unauthorized") {
+                            setErrorMessage(multiLang?.error.NFTDenied);
+                        } else if (errMessage === "Not all challenges are solved") {
+                            setErrorMessage(multiLang?.error.notAllSolved);
+                        } else if (errMessage === "Incorrect Wallet Address") {
+                            setErrorMessage(multiLang?.error.incorrectAddress);
+                        } else if (errMessage === "NFT can only be requested once") {
+                            setErrorMessage(multiLang?.error.NFTRequestOnce);
+                        } else {
+                            setErrorMessage(multiLang?.error.NFTFailed);
+                        }
+                    }
+                } else {
+                    setErrorMessage(multiLang?.error.serverError);
+                }
+                
+            } else {
+                setErrorMessage(multiLang?.error.unexpectedError);
+            }
+            setShowSnackBar(2);
+            setShowBackDrop(false);
+        }
+    }, [account, multiLang]);
 
     return showSolved ? (
         <Grid container justifyContent="center" alignItems="center" spacing={8}>

@@ -5,7 +5,7 @@ import { useTheme, styled } from '@mui/material/styles';
 import EmojiFlagsTwoToneIcon from '@mui/icons-material/EmojiFlagsTwoTone';
 import LanguageContext from 'contexts/LanguageContext';
 
-type ProblemProps = {
+type ChallengeProps = {
     index: number,
     title: string,
     solved: boolean,
@@ -24,7 +24,7 @@ const StatusBadge = styled(Box)(
     })
 );
 
-const ProblemCard = styled(Card)(
+const ChallengeCard = styled(Card)(
     ({ theme }) => ({
         height: '240px',
         minWidth: '240px',
@@ -32,7 +32,7 @@ const ProblemCard = styled(Card)(
     })
 );
 
-const ProblemWrapper = styled(CardContent)(
+const ChallengeWrapper = styled(CardContent)(
     ({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',
@@ -42,7 +42,7 @@ const ProblemWrapper = styled(CardContent)(
     })
 );
 
-const ProblemTitle = styled(Typography)(
+const ChallengeTitle = styled(Typography)(
     ({ theme }) => ({
         margin: theme.spacing(2),
         display: 'flex',
@@ -51,7 +51,7 @@ const ProblemTitle = styled(Typography)(
     })
 );
 
-const ProblemContent = styled(Box)(
+const ChallengeContent = styled(Box)(
     ({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',
@@ -62,16 +62,16 @@ const ProblemContent = styled(Box)(
     })
 );
 
-const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
+const ChallengeDesc: FC<ChallengeProps> = ({ index, title, solved }) => {
 
     const theme = useTheme();
     const navigate = useNavigate();
     const { multiLang } = useContext(LanguageContext);
 
     return (
-        <ProblemCard>
-            <ProblemWrapper>
-                <ProblemTitle variant="h4" noWrap>
+        <ChallengeCard>
+            <ChallengeWrapper>
+                <ChallengeTitle variant="h4" noWrap>
                     <Box sx={{ marginRight: theme.spacing(0.5) }}>
                         <EmojiFlagsTwoToneIcon />
                     </Box>
@@ -79,8 +79,8 @@ const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
                     <Box sx={{ marginLeft: theme.spacing(0.5) }}>
                         <EmojiFlagsTwoToneIcon />
                     </Box>
-                </ProblemTitle>
-                <ProblemContent>
+                </ChallengeTitle>
+                <ChallengeContent>
                     <Typography variant="h2">
                         {title}
                     </Typography>
@@ -93,15 +93,15 @@ const Problem: FC<ProblemProps> = ({ index, title, solved }) => {
                         variant="contained"
                         style={{ marginTop: theme.spacing(2) }}
                         onClick={() => {
-                            navigate(`/problems/${index}`);
+                            navigate(`/challenges/${index}`);
                         }}
                     >
                         { multiLang?.problems.buttonText }
                     </Button>
-                </ProblemContent>
-            </ProblemWrapper>
-        </ProblemCard>
+                </ChallengeContent>
+            </ChallengeWrapper>
+        </ChallengeCard>
     );
 };
 
-export default Problem;
+export default ChallengeDesc;

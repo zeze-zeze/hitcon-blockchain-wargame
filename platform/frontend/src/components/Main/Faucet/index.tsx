@@ -11,7 +11,7 @@ import {
     BodyTypography,
     PaperCenteredComponentWrapper,
 } from "components/Main";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import LanguageContext from "contexts/LanguageContext";
 import WaitEffectContext from "contexts/WaitEffectContext";
 
@@ -37,16 +37,40 @@ const Faucet: FC = () => {
             await axios
             .post(process.env.REACT_APP_BASE_API_URL + "/faucet", {
                 address: account,
+            }, {
+                withCredentials: true
             });
             setSuccessMessage(multiLang?.success.requestETH);
             setShowSnackBar(1);
-            
-        } catch (error) {
-            setErrorMessage(multiLang?.error.requestETH);
+            setShowBackDrop(false);
+        } catch (err) {
+            if (err instanceof AxiosError) {
+                if (err.code === "ERR_BAD_REQUEST") {
+                    const response: AxiosResponse = err.response as AxiosResponse;
+                    if (!response.data.ok) {
+                        const errMessage = response.data.message
+                        if (errMessage === "Missing Address or Amount") {
+                            setErrorMessage(multiLang?.error.missingAddressOrAmount);
+                        } else if (errMessage === "User unauthorized") {
+                            setErrorMessage(multiLang?.error.userUnauthorized);
+                        } else if (errMessage === "Already requested Ether") {
+                            setErrorMessage(multiLang?.error.alreadyRequested);
+                        } else if (errMessage === "Incorrect Wallet Address") {
+                            setErrorMessage(multiLang?.error.incorrectAddress);
+                        } else {
+                            setErrorMessage(multiLang?.error.faucetFailed);
+                        }
+                    }
+                } else {
+                    setErrorMessage(multiLang?.error.serverError);
+                }
+            } else {
+                setErrorMessage(multiLang?.error.unexpectedError);
+            }
             setShowSnackBar(2);
+            setShowBackDrop(false);
         }
-        setShowBackDrop(false);
-    }, [account]);
+    }, [account, multiLang]);
 
     return (
         <MainWrapper title="Faucet">
@@ -69,7 +93,7 @@ const Faucet: FC = () => {
                             </SubHeaderTypography>
                             <BodyTypography>
                                 <code>
-                                    {account}
+                                    {account ?? multiLang?.faucet.content.walletNotConnected}
                                 </code>
                             </BodyTypography>
                             <SubHeaderTypography>
@@ -78,7 +102,6 @@ const Faucet: FC = () => {
                             <BodyTypography>
                                 <kbd>0.1 ETH</kbd>
                             </BodyTypography>
-                            { /*Testing sitekey*/}
                             <Box
                                 sx={{
                                     padding: theme.spacing(2)
@@ -100,13 +123,28 @@ const Faucet: FC = () => {
                                     padding: theme.spacing(2)
                                 }}
                             >
-                                <Link href="https://rinkebyfaucet.com/ " underline="hover">
+                                <Link
+                                    href="https://rinkebyfaucet.com/"
+                                    target="_blank"
+                                    rel="noopener"
+                                    underline="hover"
+                                >
                                     Rinkeby FAUCET
                                 </Link>
-                                <Link href="https://faucets.chain.link/rinkeby" underline="hover">
+                                <Link
+                                    href="https://faucets.chain.link/rinkeby"
+                                    target="_blank"
+                                    rel="noopener"
+                                    underline="hover"
+                                >
                                     Chainlink Faucet
                                 </Link>
-                                <Link href="https://faucet.rinkeby.io/" underline="hover">
+                                <Link
+                                    href="https://faucet.rinkeby.io/"
+                                    target="_blank"
+                                    rel="noopener"
+                                    underline="hover"
+                                >
                                     Rinkeby Authenticated Faucet
                                 </Link>
                             </Grid>

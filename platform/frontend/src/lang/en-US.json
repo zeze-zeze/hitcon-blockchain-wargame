@@ -102,7 +102,8 @@
             "address": "Wallet Address",
             "amount": "Request Amount",
             "buttonText": "Request ETH",
-            "needMore": "Need more Rinkeby ETH?"
+            "needMore": "Need more Rinkeby ETH?",
+            "walletNotConnected": "Wallet not connected"
         }
     },
     "problems": {
@@ -159,15 +160,28 @@
     "success": {
         "login": "Token successfully verified. Redirecting...",
         "requestETH": "Request ETH success.",
+        "requestNFT": "Request NFT Success",
         "challengeSolved": "Congratulation! You solved the challenge"
         
     },
     "error": {
-        "login": "Error: Login Failed, Invalid token.",
-        "requestETH": "Error: Request ETH Failed.",
+        "serverError": "Server Error: Please contact the administrator.",
+        "unexpectedError": "Unexpected Error: Please contact the developer.",
+        "invalidToken": "Login Error: Invalid token.",
+        "loginPermissionDenied": "Login Error: Your do not have permission to play the wargame.",
+        "invalidLoginType": "Login Error: Invalid login type.",
+        "userUnauthorized": "Authentication Error: Please login first.",
+        "missingAddressOrAmount": "Error: Missing address or amount",
+        "incorrectAddress": "Error: Incorrect wallet address",
+        "alreadyRequested": "Error: You already requested Ether",
         "connectFirst": "Error: Please connect your wallet first.",
         "alreadySolved": "Error: You have alread solved the challenge.",
         "notSolved": "Error: Unfortunately, you did not solved the challenge.",
+        "notAllSolved": "Error: Unfortunately, you did not solved all the challenges.",
+        "NFTDenied": "Error: Sorry, you do not have the permission to get the NFT.",
+        "NFTRequestOnce": "Error: NFT can only be requested once.",
+        "faucetFailed": "Error: Faucet is not working. Please contact the administrator.",
+        "NFTFailed": "Error: NFT cannot be transferred. Please contact the administrator.",
         "transactionFailed": "Error: Transaction Failed."
     }
 }   

@@ -25,7 +25,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import LanguageContext from 'contexts/LanguageContext';
 import WaitEffect from 'components/WaitEffect';
 import WaitEffectContext from "contexts/WaitEffectContext";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 const LandingWrapper = styled(Container)(
     ({ theme }) => ({
@@ -77,27 +77,58 @@ const Landing: FC = () => {
     const navigate = useNavigate();
     const { setShowBackDrop, setShowSnackBar, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
 
-    const verifyJWT = useCallback(async () => {
+    const handleLogin = useCallback(async (anonym: boolean) => {
         setOpen(false);
         setShowBackDrop(true);
         try {
-            await axios
-            .post(process.env.REACT_APP_BASE_API_URL + "/login", {
-                token: token,
-            }, {
-                withCredentials: true
-            });
+            if (anonym) {
+                await axios
+                .post(process.env.REACT_APP_BASE_API_URL + "/login", {
+                    type: "anonymous",
+                }, {
+                    withCredentials: true
+                });
+            } else {
+                await axios
+                .post(process.env.REACT_APP_BASE_API_URL + "/login", {
+                    type: "token",
+                    token: token,
+                }, {
+                    withCredentials: true
+                });
+            }
             setSuccessMessage(multiLang?.success.login);
             setShowSnackBar(1);
             setShowBackDrop(false);
             navigate("/home");
             
-        } catch (error) {
-            setErrorMessage(multiLang?.error.login);
+        } catch (err) {
+            if (err instanceof AxiosError) {
+                if (err.code === "ERR_BAD_REQUEST") {
+                    const response: AxiosResponse = err.response as AxiosResponse;
+                    if (!response.data.ok) {
+                        const errMessage = response.data.message
+                        if (errMessage === "Invalid Token") {
+                            setErrorMessage(multiLang?.error.invalidToken);
+                        } else if (errMessage === "Permission denied") {
+                            setErrorMessage(multiLang?.error.loginPermissionDenied);
+                        } else if (errMessage === "Invalid login type") {
+                            setErrorMessage(multiLang?.error.invalidLoginType);
+                        } else {
+                            setErrorMessage(multiLang?.error.serverError);
+                        }
+                    }
+                } else {
+                    setErrorMessage(multiLang?.error.serverError);
+                }
+                
+            } else {
+                setErrorMessage(multiLang?.error.unexpectedError);
+            }
             setShowSnackBar(2);
             setShowBackDrop(false);
         }
-    }, [token]);
+    }, [token, multiLang]);
 
     return (
         <HelmetProvider>
@@ -134,7 +165,7 @@ const Landing: FC = () => {
                     <Button onClick={() => setOpen(false)}>
                         {multiLang?.landing.dialog.buttons.cancel}
                     </Button>
-                    <Button onClick={verifyJWT}>
+                    <Button onClick={() => handleLogin(false)}>
                         {multiLang?.landing.dialog.buttons.submit}
                     </Button>
                 </DialogActions>
@@ -185,9 +216,7 @@ const Landing: FC = () => {
                                     color="error"
                                     variant="contained"
                                     size="large"
-                                    onClick={() => {
-                                        navigate('/home');
-                                    }}
+                                    onClick={() => handleLogin(true)}
                                     sx={{ margin: theme.spacing(3) }}
                                 >
                                     {multiLang?.landing.buttons[1].text}

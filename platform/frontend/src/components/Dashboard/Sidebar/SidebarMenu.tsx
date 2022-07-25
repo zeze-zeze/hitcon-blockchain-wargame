@@ -116,7 +116,7 @@ const SidebarMenu: FC = () => {
                     </Button>
                 </ListItem>
                 <ListItem>
-                    <Button component={NavLink} startIcon={<FlagIcon />} to="/problems" >
+                    <Button component={NavLink} startIcon={<FlagIcon />} to="/challenges" >
                         {multiLang?.dashboard.sidebar.entries.problems}
                     </Button>
                 </ListItem>
