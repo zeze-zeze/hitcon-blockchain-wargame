@@ -59,33 +59,33 @@ const hitconNFTSenderCallBack = asyncHandler(async (req: Request, res: Response,
     JSON.stringify(require("../../../frontend/src/challenges/contracts.json"))
   );
 
-  const chal1Contract = new web3.eth.Contract(
+  const chal0Contract = new web3.eth.Contract(
     info[0]["abi"] as AbiItem[],
     info[0]["addr"]
   );
-  const chal2Contract = new web3.eth.Contract(
+  const chal1Contract = new web3.eth.Contract(
     info[1]["abi"] as AbiItem[],
     info[1]["addr"]
   );
-  const chal3Contract = new web3.eth.Contract(
+  const chal2Contract = new web3.eth.Contract(
     info[2]["abi"] as AbiItem[],
     info[2]["addr"]
   );
-  const chal4Contract = new web3.eth.Contract(
+  const chal3Contract = new web3.eth.Contract(
     info[3]["abi"] as AbiItem[],
     info[3]["addr"]
   );
-  const chal5Contract = new web3.eth.Contract(
+  const chal4Contract = new web3.eth.Contract(
     info[4]["abi"] as AbiItem[],
     info[4]["addr"]
   );
-  const chal6Contract = new web3.eth.Contract(
+  const chal5Contract = new web3.eth.Contract(
     info[5]["abi"] as AbiItem[],
     info[5]["addr"]
   );
 
   let allSolved = true;
-  const contracts = [chal1Contract, chal2Contract, chal3Contract, chal4Contract, chal5Contract, chal6Contract];
+  const contracts = [chal0Contract, chal1Contract, chal2Contract, chal3Contract, chal4Contract, chal5Contract];
   await Promise.all(contracts.map(async (contract) => {
     const solved = await contract.methods
         .addressToSolved(address)

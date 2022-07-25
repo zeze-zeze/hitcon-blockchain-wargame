@@ -1,12 +1,6 @@
-//SPSPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-/// @title Vulnerability for challenge one
-/// @author zeze
 contract Vuln0 {
-  /*************************
-  **    MAIN VARIABLE     **
-  *************************/
   struct tutorial {
     bool knowPlayerAddress;
     bool knowContractAddress;
@@ -15,9 +9,6 @@ contract Vuln0 {
 
   mapping (address => tutorial) solverToTutorial;
 
-  /*************************
-  **    HELPER SECTION    **
-  *************************/
   modifier winCondition() {
     require (solverToTutorial[tx.origin].knowPlayerAddress);
     require (solverToTutorial[tx.origin].knowContractAddress);
@@ -25,9 +16,6 @@ contract Vuln0 {
     _;
   }
 
-  /*************************
-  **     USERS SECTION    **
-  *************************/
   function giveMeYourAddress(address _player) public {
     require (_player == tx.origin);
     solverToTutorial[tx.origin].knowPlayerAddress = true;
