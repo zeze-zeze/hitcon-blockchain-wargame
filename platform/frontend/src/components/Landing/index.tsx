@@ -106,8 +106,9 @@ const Landing: FC = () => {
             setShowSnackBar(1);
             setTimeout(() => {
                 setShowBackDrop(false);
+                setShowSnackBar(0);
                 navigate("/home");
-            }, 4000);
+            }, 2000);
             
         } catch (err) {
             if (err instanceof AxiosError) {

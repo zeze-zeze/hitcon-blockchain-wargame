@@ -4,7 +4,7 @@ import { Typography, Box, Paper, Container, useMediaQuery } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { Scrollbars } from 'react-custom-scrollbars-2';
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 import { MainComponentWrapper } from 'App';
 import Dashboard from 'components/Dashboard';
@@ -13,6 +13,8 @@ import WaitEffect from 'components/WaitEffect';
 import useEagerConnect from 'hooks/useEagerConnect';
 import Web3Context from 'contexts/Web3Context';
 import { useWeb3React } from '@web3-react/core';
+import WaitEffectContext from 'contexts/WaitEffectContext';
+import LanguageContext from 'contexts/LanguageContext';
 
 type WrapperProps = {
     children: ReactNode,
@@ -118,6 +120,8 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
      */
     const calculatedLeft = sidebarToggled && lgUp ? theme.sidebar.width : 0;
     const calculatedWidth = sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%';
+    const { setShowBackDrop, setErrorMessage, setShowSnackBar } = useContext(WaitEffectContext);
+    const { multiLang } = useContext(LanguageContext);
     const { active, account } = useWeb3React();
 
     const tried = useEagerConnect();
@@ -137,10 +141,40 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
                     withCredentials: true
                 });
                 if (result.data.expired) {
-                    navigate("/");
+                    setShowBackDrop(true);
+                    setErrorMessage(multiLang?.error.sessionExpired);
+                    setShowSnackBar(2);
+                    setTimeout(() => {
+                        setShowSnackBar(0);
+                        setShowBackDrop(false);
+                        navigate("/");
+                    }, 2000);
                 }
             } catch (err) {
-                navigate("/");
+                if (err instanceof AxiosError) {
+                    if (err.code === "ERR_BAD_REQUEST") {
+                        const response: AxiosResponse = err.response as AxiosResponse;
+                        if (!response.data.ok) {
+                            const errMessage = response.data.message
+                            if (errMessage === "User unauthorized") {
+                                setErrorMessage(multiLang?.error.userUnauthorized);
+                            } else {
+                                setErrorMessage(multiLang?.error.serverError);
+                            }
+                        }
+                    } else {
+                        setErrorMessage(multiLang?.error.serverError);
+                    }
+                } else {
+                    setErrorMessage(multiLang?.error.unexpectedError);
+                }
+                setShowBackDrop(true);
+                setShowSnackBar(2);
+                setTimeout(() => {
+                    setShowSnackBar(0);
+                    setShowBackDrop(false);
+                    navigate("/");
+                }, 2000);
             }
         };
         ping();
