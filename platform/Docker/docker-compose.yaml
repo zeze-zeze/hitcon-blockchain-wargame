@@ -2,7 +2,9 @@ version: "3.8"
 services:
   wargame-nginx:
     depends_on:
-      - wargame-frontend
+      - wargame-frontend-1
+      - wargame-frontend-2
+      - wargame-frontend-3
       - wargame-backend
     build:
       dockerfile: Dockerfile
@@ -10,17 +12,41 @@ services:
     container_name: wargame-nginx
     ports:
       - 80:80
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
-  wargame-frontend:
+  wargame-frontend-1:
     build:
       dockerfile: Dockerfile
       context: ../frontend
-    container_name: wargame-frontend
+    container_name: wargame-frontend-1
     volumes:
       - /app/node_modules
       - ../frontend:/app
     ports:
       - 3000:3000
+
+  wargame-frontend-2:
+    build:
+      dockerfile: Dockerfile
+      context: ../frontend
+    container_name: wargame-frontend-2
+    volumes:
+      - /app/node_modules
+      - ../frontend:/app
+    ports:
+      - 3002:3000
+
+  wargame-frontend-3:
+    build:
+      dockerfile: Dockerfile
+      context: ../frontend
+    container_name: wargame-frontend-3
+    volumes:
+      - /app/node_modules
+      - ../frontend:/app
+    ports:
+      - 3003:3000
 
   wargame-backend:
     build:

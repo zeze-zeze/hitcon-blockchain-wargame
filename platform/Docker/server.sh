@@ -59,7 +59,6 @@ main() {
             start_container
             ;;
         stop)
-            echo "stop"
             stop_container $DELETE_FLAG
             ;;
         ?)
