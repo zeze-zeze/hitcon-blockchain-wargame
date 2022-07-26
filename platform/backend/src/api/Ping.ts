@@ -13,16 +13,18 @@ const { BadRequest } = createError;
 
 const expiryCallBack = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-
-        console.log(req.session);
-        
-        if (!req.session.type) {
+        if (!req.session) {
+            return next(new BadRequest("User unauthorized"));
+        } else if (!req.session.type) {
+            req.session.destroy((err) => {
+                console.log("Cannot destroy session");
+                console.error(err);
+            });
             return res.json({
                 ok: true,
                 expired: true
             });
         } else {
-            req.session.touch();
             return res.json({
                 ok: true,
                 expired: false

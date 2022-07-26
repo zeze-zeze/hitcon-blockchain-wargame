@@ -19,8 +19,10 @@ router.use(expressSession({
     store: new FileStore({
         path: path.resolve(__dirname, "../sessions")
     }),
-    saveUninitialized: false,
-    resave: true, // reset session cookie each ping. (See 'src/api/Ping.ts')
+    saveUninitialized: false, // If session expired, 
+    resave: false,
+    unset: 'destroy',
+    rolling: true, // reset session cookie each ping. (See 'src/api/Ping.ts')
     cookie: {
         sameSite: true,
         secure: true,
