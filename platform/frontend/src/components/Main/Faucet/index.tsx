@@ -32,14 +32,29 @@ const Faucet: FC = () => {
     const { setShowBackDrop, setShowSnackBar, setSuccessMessage, setErrorMessage } = useContext(WaitEffectContext);
 
     const requestETH = useCallback(async () => {
+        let apiURL;
+        switch (process.env.NODE_ENV) {
+            case "development":
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                break;
+            case "test":
+                apiURL = process.env.REACT_APP_BASE_API_URL_TEST;
+                break;
+            case "production":
+                apiURL = process.env.REACT_APP_BASE_API_URL_PROD;
+                break;
+            default:
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                break;
+        }
         setShowBackDrop(true);
         try {
             await axios
-            .post(process.env.REACT_APP_BASE_API_URL + "/faucet", {
-                address: account,
-            }, {
-                withCredentials: true
-            });
+                .post(apiURL + "/faucet", {
+                    address: account,
+                }, {
+                    withCredentials: true
+                });
             setSuccessMessage(multiLang?.success.requestETH);
             setShowSnackBar(1);
             setShowBackDrop(false);

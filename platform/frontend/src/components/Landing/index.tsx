@@ -79,6 +79,21 @@ const Landing: FC = () => {
     const { setShowBackDrop, setShowSnackBar, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
 
     const handleLogin = useCallback(async (anonym: boolean) => {
+        let apiURL;
+        switch (process.env.NODE_ENV) {
+            case "development":
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                break;
+            case "test":
+                apiURL = process.env.REACT_APP_BASE_API_URL_TEST;
+                break;
+            case "production":
+                apiURL = process.env.REACT_APP_BASE_API_URL_PROD;
+                break;
+            default:
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                break;
+        }
         if (anonym) {
             setAnonymDialogOpen(false);
         } else {
@@ -88,14 +103,14 @@ const Landing: FC = () => {
         try {
             if (anonym) {
                 await axios
-                .post(process.env.REACT_APP_BASE_API_URL + "/login", {
+                .post(apiURL + "/login", {
                     type: "anonymous",
                 }, {
                     withCredentials: true
                 });
             } else {
                 await axios
-                .post(process.env.REACT_APP_BASE_API_URL + "/login", {
+                .post(apiURL + "/login", {
                     type: "token",
                     token: token,
                 }, {
