@@ -5,13 +5,15 @@ services:
       - wargame-frontend-1
       - wargame-frontend-2
       - wargame-frontend-3
-      - wargame-backend
+      - wargame-backend-1
+      - wargame-backend-2
     build:
       dockerfile: Dockerfile
       context: ../Nginx
     container_name: wargame-nginx
     ports:
       - 80:80
+      - 3001:3001
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -24,7 +26,7 @@ services:
       - /app/node_modules
       - ../frontend:/app
     ports:
-      - 3000:3000
+      - 4000:3000
 
   wargame-frontend-2:
     build:
@@ -35,7 +37,7 @@ services:
       - /app/node_modules
       - ../frontend:/app
     ports:
-      - 3002:3000
+      - 4001:3000
 
   wargame-frontend-3:
     build:
@@ -46,15 +48,26 @@ services:
       - /app/node_modules
       - ../frontend:/app
     ports:
-      - 3003:3000
+      - 4002:3000
 
-  wargame-backend:
+  wargame-backend-1:
     build:
       dockerfile: Dockerfile
       context: ../backend
-    container_name: wargame-backend
+    container_name: wargame-backend-1
     volumes:
       - /app/node_modules
       - ../backend:/app
     ports:
-      - 3001:3001
+      - 4010:3001
+
+  wargame-backend-2:
+    build:
+      dockerfile: Dockerfile
+      context: ../backend
+    container_name: wargame-backend-2
+    volumes:
+      - /app/node_modules
+      - ../backend:/app
+    ports:
+      - 4011:3001
