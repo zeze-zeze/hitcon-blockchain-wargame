@@ -42,28 +42,28 @@
                 "empty": "Empty",
                 "messages": [
                     {
-                        "title": "Horray! You solve Problem 1.",
+                        "title": "Horray! You solve Challenge 0.",
+                        "content": "You won NFT0."
+                    },
+                    {
+                        "title": "Horray! You solve Challenge 1.",
                         "content": "You won NFT1."
                     },
                     {
-                        "title": "Horray! You solve Problem 2.",
+                        "title": "Horray! You solve Challenge 2.",
                         "content": "You won NFT2."
                     },
                     {
-                        "title": "Horray! You solve Problem 3.",
+                        "title": "Horray! You solve Challenge 3.",
                         "content": "You won NFT3."
                     },
                     {
-                        "title": "Horray! You solve Problem 4.",
+                        "title": "Horray! You solve Challenge 4.",
                         "content": "You won NFT4."
                     },
                     {
-                        "title": "Horray! You solve Problem 5.",
+                        "title": "Horray! You solve Challenge 5.",
                         "content": "You won NFT5."
-                    },
-                    {
-                        "title": "Horray! You solve Problem 6.",
-                        "content": "You won NFT6."
                     }
                 ]
             },
@@ -108,34 +108,34 @@
     "problems": {
         "challenges": [
             {
-                "title": "Problem 0",
-                "description": "Problem 0 description",
-                "tutorial": "Problem 0 tutorial"
+                "title": "Solidity 101",
+                "description": "Learn to call function with parameters by using web3.",
+                "tutorial": "I am glad to see you start the challenge. We are going through the first challenge. First of all, look at the modifier winCondition, which is our target to win the challenge. To meet the conditions, we have to satisfy the require statements. hint: await contract.methods.<FUNCTION YOU WANT TO CALL>(<PARAMETERS>).send({from:player})"
             },
             {
-                "title": "Problem 1",
-                "description": "Problem 1 description" ,
-                "tutorial": "Problem 1 tutorial"
+                "title": "I love hitcon",
+                "description": "Learn to encode and hash by using web3." ,
+                "tutorial": "To encode a string, we can use web3.utils.encodedPacked. To do a hash, we can use web3.utils.keccak256"
             },
             {
-                "title": "Problem 2",
-                "description": "Problem 2 description",
-                "tutorial": "Problem 2 tutorial" 
+                "title": "Points",
+                "description": "Learn int and unsigned int.",
+                "tutorial": "We have to get 10000000000 points, but we can only get at most 10 points in each transaction. What if we try to get negative integer points?" 
             },
             {
-                "title": "Problem 3",
-                "description": "Problem 3 description",
-                "tutorial": "Problem 3 tutorial"
+                "title": "Authentication",
+                "description": "Learn to read slot on blockchain.",
+                "tutorial": "Store private variable is not really private on blockchain. We can read slot to get the private variable. web3.eth.getStorageAt(instance, 0) to read the first slot. Also note that we can use web3.utils.toAscii to convert byte32 to string or web3.utils.fromAscii to convert string to byte32."
             },
             {
-                "title": "Problem 4",
-                "description": "Problem 4 description",
-                "tutorial": "Problem 4 tutorial" 
+                "title": "Math Homework",
+                "description": "Learn to interact a contract with an another contract.",
+                "tutorial": "We can use online editor Remix to implement the functions plus and minus in an another contract. Then call the submit function by implementing an interface for vuln4."
             },
             {
-                "title": "Problem 5",
-                "description": "Problem 5 description",
-                "tutorial": "Problem 5 tutorial" 
+                "title": "Final Gates",
+                "description": "Learn the difference between msg.sender and tx.origin, to get gasleft to meet the condition, and to calculate xor.",
+                "tutorial": "msg.sender is the caller, which means is can also be a contract instead of wallet address. tx.origin is just the original wallet address to call function. About gas fee, we can observe the gas fee by inspecting remix or just try 22 times to bruteforce."
             }
         ],
         "challenge": "Challenge",

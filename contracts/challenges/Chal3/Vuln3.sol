@@ -1,7 +1,7 @@
 //SPSPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-/// @title Vulnerability for challenge one
+/// @title Vulnerability for challenge three
 /// @author zeze
 contract Vuln3 {
   /*************************
