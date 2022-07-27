@@ -122,10 +122,10 @@ const Challenge: FC = () => {
                 window.player = account;
                 const web3 = new Web3(Web3.givenProvider);
                 window.web3 = web3;
-                const contract = contracts[problemId.current];
-                window.contract = contract;
                 window.instance = info[problemId.current].addr;
                 window.abi = info[problemId.current].abi; 
+                const contract = new web3.eth.Contract(window.abi, window.instance);
+                window.contract = contract;
                 window.help();
 
                 setContract(contract);

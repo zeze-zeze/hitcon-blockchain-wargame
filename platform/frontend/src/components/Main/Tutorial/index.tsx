@@ -39,7 +39,7 @@ const Tutorial: FC = () => {
                                 2. Open the browser's console
                             </SubHeaderTypography>
                             <BodyTypography>
-                                Open your browser's console: <code>Tools &gt; Developer Tools</code>.
+                                First, open our <a href="problems/0">challenge 0</a>. Then open your browser's console: <code>Tools &gt; Developer Tools</code>.
                             </BodyTypography>
                             <BodyTypography>
                                 You should see a few messages from the game. One of them should state your player's address. This will be important during the game! You can always see your player address by entering the following command:
@@ -54,35 +54,25 @@ const Tutorial: FC = () => {
                                 3. Use the console helpers
                             </SubHeaderTypography>
                             <BodyTypography>
-                                You can also see your current ether balance by typing:
-                            </BodyTypography>
-                            <BodyTypography>
-                                <code>getBalance(player)</code>
-                            </BodyTypography>
-                            <BodyTypography>
-                                NOTE: Expand the promise to see the actual value, even if it reads "pending". If you're using Chrome v62, you can use await getBalance(player) for a cleaner console experience.
-    Great! To see what other utility functions you have in the console type:
-                            </BodyTypography>
-                            <BodyTypography>
                                 <code>help()</code>
                             </BodyTypography>
                             <BodyTypography>
                                 These will be super handy during gameplay.
                             </BodyTypography>
                             <SubHeaderTypography>
-                                4. The ethernaut contract
+                                4. The contract
                             </SubHeaderTypography>
                             <BodyTypography>
                                 Enter the following command in the console:
                             </BodyTypography>
                             <BodyTypography>
-                                <code>ethernaut</code>
+                                <code>contract</code>
                             </BodyTypography>
                             <BodyTypography>
                                 This is the game's main smart contract. You don't need to interact with it directly through the console (as this app will do that for you) but you can if you want to. Playing around with this object now is a great way to learn how to interact with the other smart contracts of the game.
                             </BodyTypography>
                             <BodyTypography>
-                                Go ahead and expand the ethernaut object to see what's inside.
+                                Go ahead and expand the object to see what's inside.
                             </BodyTypography>
                         </Container>
                     </PaperComponentWrapper>

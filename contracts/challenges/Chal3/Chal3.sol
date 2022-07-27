@@ -7,7 +7,7 @@ interface CheckSolvedInterface {
   function chal3Solved (address _solver) external;
 }
 
-/// @title Challenge one
+/// @title Challenge three
 /// @author zeze
 contract Chal3 is  Vuln3("hitcon_is_very_good_LLLLLOLLLLL"), Ownable {
   /*************************

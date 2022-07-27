@@ -2,49 +2,34 @@
 pragma solidity ^0.8.10;
 
 /// @title Vulnerability for challenge two
-/// @author Albert (Reference: Ethernaut)
+/// @author zeze
 contract Vuln2 {
-    /*************************
-     **    MAIN VARIABLE     **
-     *************************/
-    mapping(address => bool) public crackerList;
+  /*************************
+  **    MAIN VARIABLE     **
+  *************************/
+  mapping (address => uint) solverToPoints;
 
-    /*************************
-     **    HELPER SECTION    **
-     *************************/
-    modifier winCondition() {
-        require(crackerList[tx.origin] == true);
-        _;
-    }
+  /*************************
+  **    HELPER SECTION    **
+  *************************/
+  modifier winCondition() {
+    require (solverToPoints[tx.origin] > 10000000000);
+    _;
+  }
 
-    modifier contractGate() {
-        require(msg.sender != tx.origin);
-        _;
-    }
+  /*************************
+  **     USERS SECTION    **
+  *************************/
+  function getPoints() public view returns (uint) {
+    return solverToPoints[tx.origin];
+  }
 
-    modifier gasGate() {
-        require((gasleft() % 22) == 0);
-        _;
+  function addPoints(int _amount) public {
+    require (_amount < 10);
+    if (_amount >= 0) {
+      solverToPoints[tx.origin] += uint(_amount);  
+    } else {
+      solverToPoints[tx.origin] += uint(-_amount);  
     }
-
-    modifier keyGate(bytes8 _gateKey) {
-        unchecked {
-            require(
-                uint64(uint160(msg.sender)) ^ uint64(_gateKey) == uint64(0) - 1
-            );
-        }
-        _;
-    }
-
-    /*************************
-     **     USERS SECTION    **
-     *************************/
-    function crack(bytes8 _gateKey)
-        public
-        contractGate
-        gasGate
-        keyGate(_gateKey)
-    {
-        crackerList[tx.origin] = true;
-    }
+  }
 }
