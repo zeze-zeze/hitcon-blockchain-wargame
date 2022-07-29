@@ -5,6 +5,5 @@ COPY package.json /app/
 COPY yarn.lock /app/
 RUN yarn install
 COPY ./ ./
-EXPOSE 3001
-CMD ["yarn", "run", "dev"]
+CMD ["yarn", "start"]
 
