@@ -1,25 +1,26 @@
 import express from "express";
 import expressSession from "express-session";
 import sessionFileStore from "session-file-store";
+import path from "path";
 
-//import registerCallback from "./api/Register";
+/* import all callback functions */
 import faucetCallBack from "./api/Faucet";
-import solveCallBack from "./api/Solve";
 import hitconNFTSenderCallBack from "./api/HitconNFTSender";
 import loginCallback from "./api/Login";
 import pingCallback from "./api/Ping";
-import path from "path";
+
+import config from "./config";
 
 const router = express.Router({ caseSensitive: true });
 
 const FileStore = sessionFileStore(expressSession);
 
 router.use(expressSession({
-    secret: process.env.COOKIE_SECRET ?? "secret",
+    secret: config.sessionSecret,
     store: new FileStore({
-        path: path.resolve(__dirname, "../sessions")
+        path: process.env.NODE_ENV === "development" ? "/tmp/hitcon_wargame_sessions" : path.resolve(__dirname, "../sessions")
     }),
-    saveUninitialized: false, // If session expired, 
+    saveUninitialized: false, // don't store empty session if session expired
     resave: false,
     unset: 'destroy',
     rolling: true, // reset session cookie each ping. (See 'src/api/Ping.ts')
@@ -27,12 +28,11 @@ router.use(expressSession({
         sameSite: true,
         secure: true,
         httpOnly: true,
-        //maxAge: 1000 * 60 * 60,
-        maxAge: 1000 * 30,
+        maxAge: 1000 * 60 * 60 * 12, // half a day
         path: "/"
-    },
+    }, 
 }));
-router.post("/solve", solveCallBack);
+
 router.post("/faucet", faucetCallBack);
 router.post("/hitcon-nft-sender", hitconNFTSenderCallBack);
 router.post("/login", loginCallback);

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = process.env.JWT_SECRET ?? "secret";
+const secret = process.env.JWT_SECRET;
 
 const result = jwt.sign({
     "scope": "wargame"

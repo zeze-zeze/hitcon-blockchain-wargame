@@ -62,8 +62,11 @@ const faucetCallBack = asyncHandler(async (req: Request, res: Response, next: Ne
     }
   } catch (err) {
     if (err instanceof Error) {
-      console.log(err.message);
-      return next(new BadRequest("Already requested Ether"));
+      if (err.message === "Returned error: execution reverted: Already requested Ether") {
+        return next(new BadRequest("Already requested Ether"));
+      } else {
+        return res.status(500);
+      }
     } else {
       return res.status(500);
     }
