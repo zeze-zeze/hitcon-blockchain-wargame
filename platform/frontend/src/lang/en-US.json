@@ -170,8 +170,8 @@
     "success": {
         "login": "Token successfully verified. Redirecting...",
         "requestETH": "Request ETH success.",
-        "requestNFT": "Request NFT Success",
-        "challengeSolved": "Congratulation! You solved the challenge"
+        "requestNFT": "Request NFT success",
+        "challengeSolved": "Congratulations! You solved the challenge"
         
     },
     "error": {
@@ -188,7 +188,7 @@
         "connectFirst": "Error: Please connect your wallet first.",
         "alreadySolved": "Error: You have alread solved the challenge.",
         "notSolved": "Error: Unfortunately, you did not solved the challenge.",
-        "notAllSolved": "Error: Unfortunately, you did not solved all the challenges.",
+        "notAllSolved": "Error: Unfortunately, you did not solve all the challenges.",
         "NFTDenied": "Error: Sorry, you do not have the permission to get the NFT.",
         "NFTRequestOnce": "Error: NFT can only be requested once.",
         "faucetFailed": "Error: Faucet is not working. Please contact the administrator.",
