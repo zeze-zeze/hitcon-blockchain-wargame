@@ -1,18 +1,28 @@
-import dotenv from "dotenv";
 import fs from "fs";
 import https, {Server} from "https";
-import path from "path";
-import app from "./App";
 import createError from "http-errors";
 import { exit } from "process";
 
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+import config from "./config";
+import app from "./App";
 
-if (process.env.JWT_SECRET === undefined) {
-  console.error("Please provide your JWT secret key");
-  exit(1);
+/* Sanity Check */
+if (!config.MainnetRPC) {
+    console.error('Please provide mainnet RPC address');
+    exit(1);
 }
-const port: string = process.env.PORT ?? "8080";
+if (!config.PublicKey || !config.PrivateKey) {
+    console.error('Please provide your test address key pair');
+    exit(1);
+}
+if (!config.jwtSecret) {
+    console.error('Please provide your JWT secret key');
+    exit(1);
+}
+if (!config.sessionSecret) {
+    console.error('Please provide your session secret key');
+    exit(1);
+}
 
 app.use((err: any, req: any, res: any, next: any) => {
     if (!createError.isHttpError(err)) {
@@ -25,12 +35,19 @@ app.use((err: any, req: any, res: any, next: any) => {
     });
 });
 
-/* ssl certificates */
-const server: Server = https.createServer({
-    key: fs.readFileSync(path.resolve(__dirname, "../ssl/sample.key")),
-    cert: fs.readFileSync(path.resolve(__dirname, "../ssl/sample.crt"))
-}, app);
+if (process.env.NODE_ENV === "development") {
+    /* ssl certificates */
+    const server: Server = https.createServer({
+        key: fs.readFileSync(config.sslPrivKey),
+        cert: fs.readFileSync(config.sslCert)
+    }, app);
 
-server.listen(port, () => {
-    console.log(`[express]: Running at port ${port}`);
-});
+    server.listen(config.port, () => {
+        console.log(`[express]: Running at port ${config.port}`);
+    });
+} else {
+    app.listen(config.port, () => {
+        console.log(`[express]: Running at port ${config.port}`);
+    });
+}
+

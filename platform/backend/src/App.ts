@@ -12,6 +12,7 @@ import router from './Routes';
 const app: Express = express();
 
 /* Setup express */
+
 if (process.env.NODE_ENV === "development") {
     /* Setup CORS for the development environment */
 
@@ -34,7 +35,7 @@ app.use(helmet());
 app.use(bodyParser.json({ limit: "200kb" }));
 app.use(bodyParser.urlencoded({ limit: "200kb", extended: true }));
 app.use(bodyParser.raw());
-app.use('/', express.static(path.resolve(__dirname, '../client')))
-app.use('/api', router);
+app.use('/', express.static(path.resolve(__dirname, '../client'))); // react wep app
+app.use('/api', router); // api router
 
 export default app;

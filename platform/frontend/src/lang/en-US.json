@@ -80,7 +80,7 @@
             "userMenu": {
                 "connectWallet": "Connect Wallet",
                 "disconnectWallet": "Disconnect Wallet",
-                "setting": "Setting"
+                "logout": "Logout"
             },
             "achievement": {
                 "requestNFT": "Request NFT"

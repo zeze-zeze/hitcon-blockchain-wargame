@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
 import asyncHandler from "express-async-handler";
+import config from "../config";
 
 declare module "express-session" {
     export interface SessionData {
@@ -9,7 +10,7 @@ declare module "express-session" {
     }
 }
 
-const { BadRequest, InternalServerError } = createError;
+const { BadRequest } = createError;
 
 const loginCallBack = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
@@ -26,7 +27,7 @@ const loginCallBack = asyncHandler(async (req: Request, res: Response, next: Nex
                 ok: true,
             });
         } else if (type === "token") {
-            const secret = process.env.JWT_SECRET ?? "secret";
+            const secret = config.jwtSecret;
             const decoded = jwt.verify(token, secret, {
                 issuer: "https://hitcon.org",
             });
