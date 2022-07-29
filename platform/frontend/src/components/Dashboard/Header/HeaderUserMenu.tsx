@@ -1,10 +1,9 @@
-import { FC, ElementType, useRef, useState, useEffect, useContext, useMemo } from 'react';
+import { FC, useRef, useState, useEffect, useContext, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Avatar, Box, Button, Divider, List, ListItem, ListItemText, Popover, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { useWeb3React } from "@web3-react/core";
 import LanguageContext from 'contexts/LanguageContext';
 
@@ -86,9 +85,15 @@ const HeaderUserMenu: FC = () => {
                 }}
             >
                 <List sx={{ p: 1 }} component="nav">
-                    <ListItem button to="/settings" component={NavLink}>
-                        <AccountTreeIcon fontSize="small" />
-                        <ListItemText primary={multiLang?.dashboard.header.userMenu.userSetting} />
+                    <ListItem
+                        button
+                        onClick={() => {
+                            deactivate();
+                            localStorage.removeItem("_hitcon_wargame_");
+                        }}
+                    >
+                        <AccountBalanceWalletIcon fontSize="small" />
+                        <ListItemText primary={multiLang?.dashboard.header.userMenu.disconnectWallet} />
                     </ListItem>
                 </List>
                 <Divider />
@@ -96,14 +101,12 @@ const HeaderUserMenu: FC = () => {
                     <Button
                         color="primary"
                         variant="text"
-                        onClick={() => {
-                            deactivate();
-                            localStorage.removeItem("_hitcon_wargame_");
-                        }}
+                        component={NavLink}
+                        to="/"
                         fullWidth
                     >
                         <LogoutIcon sx={{ mr: 1 }} />
-                        {multiLang?.dashboard.header.userMenu.disconnectWallet}
+                        {multiLang?.dashboard.header.userMenu.logout}
                     </Button>
                 </UserBoxSignoutBox>
             </Popover>
