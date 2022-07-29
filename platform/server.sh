@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-COMPOSE="./docker-compose.yaml"
+
+FRONTEND_BASE="frontend"
+BACKEND_BASE="backend"
+COMPOSE="Docker/docker-compose.yaml"
 
 usage() {
     cat << EOF
@@ -8,6 +11,9 @@ Description:
 
 Usage:
     ./server.sh [Option] [Action]
+
+Environment:
+    development 
 
 Action:
     start   start server
@@ -29,6 +35,8 @@ stop_container() {
 }
 
 start_container() {
+    yarn --cwd $FRONTEND_BASE build
+    yarn --cwd $BACKEND_BASE build
     docker-compose -f $COMPOSE up -d --build
 }
 

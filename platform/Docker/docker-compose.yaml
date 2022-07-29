@@ -2,30 +2,16 @@ version: "3.8"
 services:
   wargame-nginx:
     depends_on:
-      - wargame-frontend
       - wargame-backend
     build:
       dockerfile: Dockerfile
-      context: ../Nginx
+      context: ../Nginx/
     container_name: wargame-nginx
     ports:
-      - 80:80
-      - 3001:3001
+      - 31337:443
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
-  wargame-frontend:
-    build:
-      dockerfile: Dockerfile
-      context: ../frontend
-    volumes:
-      - /app/node_modules
-      - ../frontend:/app
-    ports:
-      - 4000-4002:3000
-    deploy:
-      mode: replicated
-      replicas: 3
+    restart: unless-stopped
 
   wargame-backend:
     build:
@@ -34,8 +20,8 @@ services:
     volumes:
       - /app/node_modules
       - ../backend:/app
-    ports:
-      - 4010-4011:3001
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 3
+      endpoint_mode: dnsrr
+    restart: unless-stopped

@@ -3,7 +3,7 @@ import path from "path";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const config = {
-  port: process.env.NODE_ENV === "development" ? "3001" : (process.env.PORT || "31337"),
+  port: process.env.NODE_ENV === "development" ? "3001" : (process.env.PORT || "8080"),
   problemNum: process.env.PROBLEM_NUM || 6,
   MainnetRPC: process.env.RPC_URL || "",
   PublicKey: process.env.TEST_ADDRESS || "",
