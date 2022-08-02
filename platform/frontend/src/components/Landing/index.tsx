@@ -79,19 +79,19 @@ const Landing: FC = () => {
     const { setShowBackDrop, setShowSnackBar, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
 
     const handleLogin = useCallback(async (anonym: boolean) => {
-        let apiURL;
+        let apiURL: string;
         switch (process.env.NODE_ENV) {
             case "development":
-                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV ?? "https://localhost:3001/api";
                 break;
             case "test":
-                apiURL = process.env.REACT_APP_BASE_API_URL_TEST;
+                apiURL = process.env.REACT_APP_BASE_API_URL_TEST ?? "https://localhost:3001/api";
                 break;
             case "production":
-                apiURL = process.env.REACT_APP_BASE_API_URL_PROD;
+                apiURL = process.env.REACT_APP_BASE_API_URL_PROD ?? "https://localhost:31337/api";
                 break;
             default:
-                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV ?? "https://localhost:3001/api";
                 break;
         }
         if (anonym) {
@@ -103,28 +103,57 @@ const Landing: FC = () => {
         try {
             if (anonym) {
                 await axios
-                .post(apiURL + "/login", {
-                    type: "anonymous",
-                }, {
-                    withCredentials: true
-                });
+                    .post(apiURL + "/login", {
+                        type: "anonymous",
+                    }, {
+                        withCredentials: true
+                    });
             } else {
                 await axios
-                .post(apiURL + "/login", {
-                    type: "token",
-                    token: token,
-                }, {
-                    withCredentials: true
-                });
+                    .post(apiURL + "/login", {
+                        type: "token",
+                        token: token,
+                    }, {
+                        withCredentials: true
+                    });
             }
             setSuccessMessage(multiLang?.success.login);
             setShowSnackBar(1);
-            setTimeout(() => {
-                setShowBackDrop(false);
-                setShowSnackBar(0);
-                navigate("/home");
-            }, 2000);
-            
+
+            /*
+             * The server might not create the session instantly. 
+             * Besides, there's a slim chance that the server might crashes here.
+             * So ping the server periodically and check whether the session is established
+             */
+
+            let tryPing = 0;
+            const pingInterval = setInterval(() => {
+                tryPing++;
+                if (tryPing === 60) {
+                    /* If you reached here, the server is probably down */
+                    clearInterval(pingInterval);
+                    setErrorMessage(multiLang?.error.serverError);
+                    setTimeout(() => {
+                        setShowBackDrop(false);
+                        setShowSnackBar(2);
+                    }, 4000); // set timeout for users to read the message
+                }
+                try {
+                    (async () => {
+                        const result = await axios
+                            .post(apiURL + "/ping", null, {
+                                withCredentials: true
+                            });
+                        if (result.data.expired === false) {
+                            clearInterval(pingInterval);
+                            setShowBackDrop(false);
+                            setShowSnackBar(0);
+                            navigate("/home");
+                        }
+                    })();
+                } catch (err) { } // ignore all unexpected errors
+            }, 1000);
+
         } catch (err) {
             if (err instanceof AxiosError) {
                 if (err.code === "ERR_BAD_REQUEST") {
@@ -144,7 +173,7 @@ const Landing: FC = () => {
                 } else {
                     setErrorMessage(multiLang?.error.serverError);
                 }
-                
+
             } else {
                 setErrorMessage(multiLang?.error.unexpectedError);
             }
@@ -159,7 +188,7 @@ const Landing: FC = () => {
                 <title>Hitcon Wargame</title>
             </Helmet>
             <WaitEffect />
-            { /* login with token dialog */ }
+            { /* "login with token" dialog */}
             <Dialog
                 open={tokenDialogOpen}
                 onClose={() => setTokenDialogOpen(false)}
@@ -194,7 +223,7 @@ const Landing: FC = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            { /* login anonymously dialog */ }
+            { /* "login anonymously" dialog */}
             <Dialog
                 open={anonymDialogOpen}
                 onClose={() => setAnonymDialogOpen(false)}

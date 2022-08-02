@@ -16,10 +16,6 @@ const expiryCallBack = asyncHandler(async (req: Request, res: Response, next: Ne
         if (!req.session) {
             return next(new BadRequest("User unauthorized"));
         } else if (!req.session.type) {
-            req.session.destroy((err) => {
-                console.log("Cannot destroy session");
-                console.error(err);
-            });
             return res.json({
                 ok: true,
                 expired: true
