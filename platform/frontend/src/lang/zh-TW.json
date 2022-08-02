@@ -192,6 +192,8 @@
         "NFTRequestOnce": "錯誤：您只能取得一個 NFT。",
         "faucetFailed": "錯誤：水龍頭無法運行。請聯繫系統管理員。",
         "NFTFailed": "錯誤：無法取得 NFT。請聯繫系統管理員。",
-        "transactionFailed": "錯誤：交易失敗。"
+        "transactionFailed": "錯誤：交易失敗。",
+        "noProvider": "錯誤：您並沒有任何 Web3 provider。",
+        "authorizeError": "認證錯誤：請認證以登入錢包。"
     }
 }

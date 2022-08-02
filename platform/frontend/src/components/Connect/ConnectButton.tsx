@@ -1,5 +1,5 @@
-import { useState, FC, useEffect, useContext, useCallback } from 'react';
-import { Button, Snackbar } from "@mui/material";
+import { FC, useContext, useCallback } from 'react';
+import { Button } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import {
@@ -8,8 +8,6 @@ import {
 } from "@web3-react/injected-connector";
 import { injected } from './InjectedConnector';
 import { setupNetwork } from './walletNetwork';
-import WaitEffect from 'components/WaitEffect';
-import { useNavigate } from 'react-router';
 import WaitEffectContext from 'contexts/WaitEffectContext';
 import LanguageContext from 'contexts/LanguageContext';
 
@@ -33,11 +31,11 @@ const ConnectButton: FC = () => {
             } else {
                 setShowSnackBar(2);
                 if (error instanceof NoEthereumProviderError) {
-                    setErrorMessage("Provider Error: No provider was found");
+                    setErrorMessage(multiLang?.error.noProvider);
                 } else if (error instanceof UserRejectedRequestErrorInjected) {
-                    setErrorMessage("Authorization Error: Please authorize to access your account");
+                    setErrorMessage(multiLang?.error.authorizeError);
                 } else {
-                    setErrorMessage(`${error.name ?? 'Unknown Error'}: ${error.message}`);
+                    setErrorMessage(multiLang?.error.unexpectedError);
                 }
                 deactivate();
             }

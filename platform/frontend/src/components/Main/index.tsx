@@ -189,7 +189,7 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
                     setShowSnackBar(0);
                     setShowBackDrop(false);
                     navigate("/");
-                }, 2000);
+                }, 2000); // set timeout for users to read the message
             }
         };
         ping();

@@ -12,9 +12,6 @@ Description:
 Usage:
     ./server.sh [Option] [Action]
 
-Environment:
-    development 
-
 Action:
     start   start server
     stop    stop server [-d]

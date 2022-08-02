@@ -172,7 +172,6 @@
         "requestETH": "Request ETH success.",
         "requestNFT": "Request NFT success",
         "challengeSolved": "Congratulations! You solved the challenge"
-        
     },
     "error": {
         "serverError": "Server Error: Please contact the administrator.",
@@ -193,6 +192,8 @@
         "NFTRequestOnce": "Error: NFT can only be requested once.",
         "faucetFailed": "Error: Faucet is not working. Please contact the administrator.",
         "NFTFailed": "Error: NFT cannot be transferred. Please contact the administrator.",
-        "transactionFailed": "Error: Transaction Failed."
+        "transactionFailed": "Error: Transaction Failed.",
+        "noProvider": "Provider Error: No web3 provider was found.",
+        "authorizeError": "Authorization Error: Please authorize to access your account"
     }
 }   
