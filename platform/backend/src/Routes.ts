@@ -24,6 +24,7 @@ router.use(expressSession({
     resave: false,
     unset: 'destroy',
     rolling: true, // reset session cookie each ping. (See 'src/api/Ping.ts')
+    proxy: process.env.NODE_ENV !== "development", // Trust the reverse proxy when setting X-Forwarded-Proto
     cookie: {
         sameSite: true,
         secure: true,

@@ -35,7 +35,10 @@ app.use(helmet());
 app.use(bodyParser.json({ limit: "200kb" }));
 app.use(bodyParser.urlencoded({ limit: "200kb", extended: true }));
 app.use(bodyParser.raw());
-app.use('/', express.static(path.resolve(__dirname, '../client'))); // react wep app
 app.use('/api', router); // api router
+app.use(express.static(path.resolve(__dirname, '../client'))); // react wep app
+app.use('*', (req: Request, res: Response) => {
+    res.sendFile(path.resolve(__dirname, '../client', 'index.html'));
+});
 
 export default app;

@@ -9,8 +9,6 @@ services:
     container_name: wargame-nginx
     ports:
       - 31337:443
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     restart: unless-stopped
 
   wargame-backend:
@@ -18,7 +16,6 @@ services:
       dockerfile: Dockerfile
       context: ../backend
     volumes:
-      - /app/node_modules
       - ../backend:/app
     deploy:
       mode: replicated

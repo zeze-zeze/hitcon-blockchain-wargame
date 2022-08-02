@@ -160,7 +160,7 @@ const App: FC = () => {
                             setErrorMessage(error.message);
                             setShowSnackBar(2);
                         });
-                    
+
                     contractsTmp.push(contract);
                 })(i);
             }
