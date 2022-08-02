@@ -12,7 +12,7 @@ import Web3Context from "contexts/Web3Context";
 
 const HeaderNFTList: FC = () => {
     const { account, active } = useWeb3React();
-    
+
     const {
         setShowBackDrop,
         setShowSnackBar,
@@ -21,20 +21,26 @@ const HeaderNFTList: FC = () => {
         showBackDrop
     } = useContext(WaitEffectContext);
 
-    
+
     const { solved } = useContext(Web3Context);
     const theme = useTheme();
     const showSolved = useMediaQuery("(min-width:940px)");
     const { multiLang } = useContext(LanguageContext);
 
-    const nftImgLinks = [
-        "https://i.imgur.com/fSFl7io.png",
-        "https://i.imgur.com/OP9jv73.png",
-        "https://i.imgur.com/VRYrAZ5.png",
-        "https://i.imgur.com/IFRMdTA.png",
-        "https://i.imgur.com/lgGrqE6.png",
-        "https://i.imgur.com/yvn5IdB.png"
-    ];
+    const [NFTImgLinks, setNFTImgLinks] = useState<any[]>([]);
+
+    useEffect(() => {
+        const loadImg = async () => {
+            const links = [];
+            for (let i = 0; i < Number(process.env.REACT_APP_PROBLEM_NUM); i++) {
+                const imgPng = await import(`assets/chal${i}.png`);
+                const imgPath = imgPng.default;
+                links.push(imgPath);
+            }
+            setNFTImgLinks(links);
+        };
+        loadImg();
+    }, []);
 
     const requestNFT = useCallback(async () => {
         let apiURL;
@@ -55,11 +61,11 @@ const HeaderNFTList: FC = () => {
         setShowBackDrop(true);
         try {
             await axios
-            .post(apiURL + "/hitcon-nft-sender", {
-                address: account,
-            }, {
-                withCredentials: true
-            });
+                .post(apiURL + "/hitcon-nft-sender", {
+                    address: account,
+                }, {
+                    withCredentials: true
+                });
             setSuccessMessage(multiLang?.success.requestNFT);
             setShowSnackBar(1);
             setShowBackDrop(false);
@@ -86,7 +92,7 @@ const HeaderNFTList: FC = () => {
                 } else {
                     setErrorMessage(multiLang?.error.serverError);
                 }
-                
+
             } else {
                 setErrorMessage(multiLang?.error.unexpectedError);
             }
@@ -103,7 +109,7 @@ const HeaderNFTList: FC = () => {
                         <Tooltip arrow title={multiLang?.problems.challenges[idx].title ?? ""}>
                             <Avatar
                                 variant="rounded"
-                                src={nftImgLinks[idx]}
+                                src={NFTImgLinks[idx]}
                                 sx={{
                                     borderWidth: "3px",
                                     borderStyle: "dashed",
@@ -161,7 +167,7 @@ const HeaderNFTList: FC = () => {
                             >
                                 <Avatar
                                     variant="rounded"
-                                    src={nftImgLinks[idx]}
+                                    src={NFTImgLinks[idx]}
                                     sx={{
                                         borderWidth: "3px",
                                         borderStyle: "dashed",
