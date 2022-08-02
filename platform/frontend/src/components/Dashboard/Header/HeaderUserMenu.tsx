@@ -69,7 +69,7 @@ const HeaderUserMenu: FC = () => {
             <UserBoxButton color="secondary" ref={ref} onClick={() => {
                 setIsOpen(true);
             }}>
-                <Avatar variant="rounded" src="https://i.imgur.com/Osl0YMx.jpeg" />
+                <Avatar variant="rounded" />
                 <UserBoxText>
                     <UserBoxLabel>{walletAddress}</UserBoxLabel>
                 </UserBoxText>
