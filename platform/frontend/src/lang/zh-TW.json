@@ -121,32 +121,258 @@
             {
                 "title": "Solidity 101",
                 "description": "學習用 web3 呼叫函數",
-                "tutorial": "很高興見到你開始了挑戰，我們將要通過第零關。首先從下方程式碼可以看到 modifier winCondition，它就是我們的目標，其中可以看到 require，必須要滿足裡面的條件。使用 await contract.methods.<要執行的函數>(函數的參數).send({from:player}) 可以呼叫目標函數。"
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "很高興見到你開始了挑戰，我們將要通過第零關。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "首先從下方程式碼可以看到 modifier "
+                        },
+                        {
+                            "type": "code",
+                            "data": "winCondition"
+                        },
+                        {
+                            "type": "text",
+                            "data": "，它就是我們的目標，其中可以看到 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "require"
+                        },
+                        {
+                            "type": "text",
+                            "data": "，必須要滿足裡面的條件。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "使用 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "await contract.methods.<要執行的函數>(函數的參數).send({from:player})"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 可以呼叫目標函數。"
+                        }
+                    ]
+                ]
             },
             {
                 "title": "I love hitcon",
                 "description": "學習用 web3 做 encode 與 hash",
-                "tutorial": "我們可以使用 web3.utils.encodedPacked 來編碼字串，並用 web3.utils.keccak256 來做 hash。"
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "我們可以使用 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.encodedPacked"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 來編碼字串，並用 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.keccak256"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 來做 hash。"
+                        }
+                    ]
+                ]
             },
             {
                 "title": "Points",
                 "description": "學習 int 與 unsigned int",
-                "tutorial": "目標是達到 10000000000 分，但是我們每次最多只能拿到 10 分。如果我們輸入負的分數會發生什麼事？"
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "目標是達到 10000000000 分，但是我們每次最多只能拿到 10 分。如果我們輸入負的分數會發生什麼事？"
+                        }
+                    ]
+                ]
             },
             {
                 "title": "Authentication",
                 "description": "學習讀區塊鏈上的 slot",
-                "tutorial": "在區塊鏈上的 private 變數並不是真的無法讀取。我們可以透過 web3.eth.getStorageAt(instance, 0) 來讀取第一個 slot。另外使用 web3.utils.toAscii 可以把 byte32 轉成 string 型別，或是 web3.utils.fromAscii 把字串轉成 byte32。"
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "在區塊鏈上的 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "private"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 變數並不是真的無法讀取。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "我們可以透過 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.eth.getStorageAt(instance, 0)"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 來讀取第一個 slot。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "另外使用 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.toAscii"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 可以把 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "byte32"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 轉成 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "string"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 型別，或是 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.fromAscii"
+                        },
+                        {
+                            "type": "text",
+                            "data": "把字串轉成 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "byte32"
+                        },
+                        {
+                            "type": "text",
+                            "data": "。"
+                        }
+                    ]
+                ]
             },
             {
                 "title": "Math Homework",
                 "description": "學習用合約與合約互動",
-                "tutorial": "使用線上的編輯器 Remix 來實作 plus 與 minus 函數在另一個合約中。再寫個 vuln4 的 interface 呼叫 submit 函數。"
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "使用線上的編輯器 Remix 來實作 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "plus"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 與 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "minus"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 函數在另一個合約中。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "再寫個 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "vuln4"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 的 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "interface"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 呼叫 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "submit"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 函數。"
+                        }
+                    ]
+                ]
             },
             {
                 "title": "Final Gates",
                 "description": "學習辨別 msg.sender 和 tx.origin、得知 gasleft 的值、計算 xor",
-                "tutorial": "msg.sender 是直接呼叫合約的對象，即有可能微錢包地址或合約地址；tx.origin 則是最原始的錢包地址。關於 gas fee，我們可以透過觀察 remix 來得知或者直接爆破 22 次來滿足條件。"
+                "tutorial": [
+                    [
+                        {
+                            "type": "code",
+                            "data": "msg.sender"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 是直接呼叫合約的對象，即有可能微錢包地址或合約地址；"
+                        },
+                        {
+                            "type": "code",
+                            "data": "tx.origin"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 則是最原始的錢包地址。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "關於 gas fee，我們可以透過觀察 remix 來得知或者直接爆破 22 次來滿足條件。"
+                        }
+                    ]
+                ]
             }
         ],
         "challenge": "挑戰",
