@@ -44,6 +44,11 @@ type InfoType = {
     abi: Array<any>;
 };
 
+type TutorialType = {
+    type: string;
+    data: string;
+};
+
 const CopyBlockWrapper = styled(Container)(
     ({ theme }) => ({
         "&.MuiContainer-root": {
@@ -67,12 +72,12 @@ const CopyBlockWrapper = styled(Container)(
 const Challenge: FC = () => {
     window.help = () => {
         const menu = {
-            "player" : "current player address",
-            "web3" : "web3 object",
-            "contract" : "current level contract instance",
-            "instance" : "challenge contract address",
-            "abi" : "abi of challenge contract",
-            "help()" : "Show this table"
+            "player": "current player address",
+            "web3": "web3 object",
+            "contract": "current level contract instance",
+            "instance": "challenge contract address",
+            "abi": "abi of challenge contract",
+            "help()": "Show this table"
         };
 
         console.table(menu);
@@ -129,7 +134,7 @@ const Challenge: FC = () => {
                 const web3 = new Web3(Web3.givenProvider);
                 window.web3 = web3;
                 window.instance = info[problemId.current].addr;
-                window.abi = info[problemId.current].abi; 
+                window.abi = info[problemId.current].abi;
                 const contract = new web3.eth.Contract(window.abi, window.instance);
                 window.contract = contract;
                 window.help();
@@ -164,9 +169,22 @@ const Challenge: FC = () => {
                             <Grid item xs={12}>
                                 <PaperComponentWrapper>
                                     <Container>
-                                        <SubSubHeaderTypography>
-                                            {multiLang?.problems.challenges[problemId.current].tutorial}
-                                        </SubSubHeaderTypography>
+                                        {
+                                            multiLang?.problems.challenges[problemId.current].tutorial
+                                                .map((statement: TutorialType[]) => ((
+                                                    <SubSubHeaderTypography key={JSON.stringify(statement)}>
+                                                        {
+                                                            statement.map((component: TutorialType) => {
+                                                                return component.type === "text" ? (
+                                                                    component.data
+                                                                ) : (
+                                                                    <code>{component.data}</code>
+                                                                )
+                                                            })
+                                                        }
+                                                    </SubSubHeaderTypography>
+                                                )))
+                                        }
                                         <CopyBlockWrapper>
                                             <CopyBlock
                                                 text={vuln}
@@ -175,7 +193,7 @@ const Challenge: FC = () => {
                                             />
                                         </CopyBlockWrapper>
                                         <SubSubHeaderTypography>
-                                        {multiLang?.problems.contract.submitText}
+                                            {multiLang?.problems.contract.submitText}
                                         </SubSubHeaderTypography>
                                         <SubHeaderTypography>
                                             <Button

@@ -121,32 +121,278 @@
             {
                 "title": "Solidity 101",
                 "description": "Learn to call function with parameters by using web3.",
-                "tutorial": "I am glad to see you start the challenge. We are going through the first challenge. First of all, look at the modifier winCondition, which is our target to win the challenge. To meet the conditions, we have to satisfy the require statements. hint: await contract.methods.<FUNCTION YOU WANT TO CALL>(<PARAMETERS>).send({from:player})"
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "I am glad to see you start the challenge."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "We are going through the first challenge."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "First of all, look at the modifier"
+                        },
+                        {
+                            "type": "code",
+                            "data": "winCondition"
+                        },
+                        {
+                            "type": "text",
+                            "data": " , which is our target to win the challenge."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "To meet the conditions, we have to satisfy the "
+                        },
+                        {
+                            "type": "code",
+                            "data": "require"
+                        },
+                        {
+                            "type": "text",
+                            "data": " statement."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "hint: "
+                        },
+                        {
+                            "type": "code",
+                            "data": "await contract.methods.<FUNCTION YOU WANT TO CALL>(<PARAMETERS>).send({from:player})"
+                        },
+                        {
+                            "type": "text",
+                            "data": " ."
+                        }
+                    ]
+                ]
             },
             {
                 "title": "I love hitcon",
                 "description": "Learn to encode and hash by using web3." ,
-                "tutorial": "To encode a string, we can use web3.utils.encodedPacked. To do a hash, we can use web3.utils.keccak256"
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "To encode a string, we can use "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.encodedPacked"
+                        },
+                        {
+                            "type": "text",
+                            "data": ". To generate a hash, we can use "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.keccak256"
+                        },
+                        {
+                            "type": "text",
+                            "data": " ."
+                        }
+                    ]
+                ]
             },
             {
                 "title": "Points",
                 "description": "Learn int and unsigned int.",
-                "tutorial": "We have to get 10000000000 points, but we can only get at most 10 points in each transaction. What if we try to get negative integer points?" 
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "We have to get 10000000000 points, but we can only get at most 10 points in each transaction. What if we try to get negative integer points?"
+                        }
+                    ]
+                ]
             },
             {
                 "title": "Authentication",
                 "description": "Learn to read slot on blockchain.",
-                "tutorial": "Store private variable is not really private on blockchain. We can read slot to get the private variable. web3.eth.getStorageAt(instance, 0) to read the first slot. Also note that we can use web3.utils.toAscii to convert byte32 to string or web3.utils.fromAscii to convert string to byte32."
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "Store "
+                        },
+                        {
+                            "type": "code",
+                            "data": "private"
+                        },
+                        {
+                            "type": "text",
+                            "data": " variable is not really private on blockchain."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "We can read slot to get the private variable."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "For instance, we can use "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.eth.getStorageAt(instance, 0)"
+                        },
+                        {
+                            "type": "text",
+                            "data": "to read the first slot."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "Also note that we can use "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.toAscii"
+                        },
+                        {
+                            "type": "text",
+                            "data": " to convert "
+                        },
+                        {
+                            "type": "code",
+                            "data": "byte32"
+                        },
+                        {
+                            "type": "text",
+                            "data": " to "
+                        },
+                        {
+                            "type": "code",
+                            "data": "string"
+                        },
+                        {
+                            "type": "text",
+                            "data": " or "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.fromAscii"
+                        },
+                        {
+                            "type": "text",
+                            "data": " to convert "
+                        },
+                        {
+                            "type": "code",
+                            "data": "string"
+                        },
+                        {
+                            "type": "text",
+                            "data": " to "
+                        },
+                        {
+                            "type": "code",
+                            "data": "byte32"
+                        },
+                        {
+                            "type": "text",
+                            "data": " ."
+                        }
+                    ]
+                ]
             },
             {
                 "title": "Math Homework",
                 "description": "Learn to interact a contract with an another contract.",
-                "tutorial": "We can use online editor Remix to implement the functions plus and minus in an another contract. Then call the submit function by implementing an interface for vuln4."
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "We can use online editor Remix to implement the functions "
+                        },
+                        {
+                            "type": "code",
+                            "data": "plus"
+                        },
+                        {
+                            "type": "text",
+                            "data": " and "
+                        },
+                        {
+                            "type": "code",
+                            "data": "minus"
+                        },
+                        {
+                            "type": "text",
+                            "data": " in an another contract."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "Then call the "
+                        },
+                        {
+                            "type": "code",
+                            "data": "submit"
+                        },
+                        {
+                            "type": "text",
+                            "data": " function by implementing an interface for "
+                        },
+                        {
+                            "type": "code",
+                            "data": "vuln4"
+                        },
+                        {
+                            "type": "text",
+                            "data": " ."
+                        }
+                    ]
+                ]
             },
             {
                 "title": "Final Gates",
                 "description": "Learn the difference between msg.sender and tx.origin, to get gasleft to meet the condition, and to calculate xor.",
-                "tutorial": "msg.sender is the caller, which means is can also be a contract instead of wallet address. tx.origin is just the original wallet address to call function. About gas fee, we can observe the gas fee by inspecting remix or just try 22 times to bruteforce."
+                "tutorial": [
+                    [
+                        {
+                            "type": "code",
+                            "data": "msg.sender"
+                        },
+                        {
+                            "type": "text",
+                            "data": " is the caller, which means it can also be a contract instead of wallet address."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "code",
+                            "data": "tx.origin"
+                        },
+                        {
+                            "type": "text",
+                            "data": " is just the original wallet address to call function."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "About gas fee, we can observe the gas fee by inspecting remix or just try 22 times to bruteforce."
+                        }
+                    ]
+                ]
             }
         ],
         "challenge": "Challenge",
