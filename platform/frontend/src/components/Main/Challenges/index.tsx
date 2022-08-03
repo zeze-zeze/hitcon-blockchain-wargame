@@ -20,6 +20,7 @@ import WaitEffectContext from "contexts/WaitEffectContext";
 import LanguageContext from "contexts/LanguageContext";
 import Web3Context from "contexts/Web3Context";
 import info from "challenges/contracts.json";
+import ThemedSnippet from "react-code-blocks/dist/ThemedSnippet";
 
 /* Typescript declaration merging */
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
@@ -44,16 +45,21 @@ type InfoType = {
 };
 
 const CopyBlockWrapper = styled(Container)(
-    () => ({
+    ({ theme }) => ({
         "&.MuiContainer-root": {
             fontFamily: "monospace",
             fontSize: "16px",
+            div: {
+                padding: theme.spacing(2, 4),
+            },
             span: {
+                padding: "0!important",
                 code: {
                     backgroundColor: "transparent",
                     color: "white",
+                    paddingLeft: "0 !important",
                 }
-            }
+            },
         }
     })
 );
@@ -166,7 +172,6 @@ const Challenge: FC = () => {
                                                 text={vuln}
                                                 theme={dracula}
                                                 language="javascript"
-                                                showLineNumbers
                                             />
                                         </CopyBlockWrapper>
                                         <SubSubHeaderTypography>

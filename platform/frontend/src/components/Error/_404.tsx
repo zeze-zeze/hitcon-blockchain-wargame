@@ -55,7 +55,6 @@ const Error404 = () => {
                         <Button
                             variant="contained"
                             color="error"
-                            size="large"
                             onClick={() => { navigate(-1); }}
                         >
                             Back
