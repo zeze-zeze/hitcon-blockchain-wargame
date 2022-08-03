@@ -25,7 +25,7 @@ contract CheckSolved is ERC1155Supply, Ownable, ReentrancyGuard {
      **    HELPER SECTION    **
      *************************/
     modifier validChalNum(uint256 _chalNum) {
-        require(_chalNum > 0 && _chalNum <= 5, "out of range");
+        require(_chalNum >= 0 && _chalNum <= 5, "out of range");
         _;
     }
 
@@ -65,6 +65,15 @@ contract CheckSolved is ERC1155Supply, Ownable, ReentrancyGuard {
     ///         logic of preventing double minting was implemented in chalContract
     /// @dev    Prevent double minting and reentery attack. Make sure chalContract
     ///         address is correct and preventing double minting logic is correct.
+    function chal0Solved(address _solver)
+        external
+        validChalNum(0)
+        checkSource(0)
+        nonReentrant
+    {
+        _mint(_solver, 0, 1, "");
+    }
+    
     function chal1Solved(address _solver)
         external
         validChalNum(1)
@@ -119,7 +128,7 @@ contract CheckSolved is ERC1155Supply, Ownable, ReentrancyGuard {
         external
         onlyOwner
     {
-        require(_chalNum > 0 && _chalNum <= 5, "out of range");
+        require(_chalNum >= 0 && _chalNum <= 5, "out of range");
         chalContract[_chalNum] = _address;
     }
 
