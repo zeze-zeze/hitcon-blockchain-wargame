@@ -70,7 +70,7 @@ const Header: FC = () => {
                  */
                 <HeaderWrapper sx={{ left: lgUp && sidebarToggled ? theme.sidebar.width : 0 }}>
                     <HeaderComponentsWrapper>
-                        <Tooltip arrow title={multiLang?.dashboard.header.tooltip.toggleMenu}>
+                        <Tooltip arrow title={multiLang?.dashboard.header.tooltip.toggleMenu ?? ""}>
                             <IconButton color="primary" onClick={toggleSidebar}>
                                 {sidebarToggled ? <MenuOpenIcon /> : <MenuIcon />}
                             </IconButton>
