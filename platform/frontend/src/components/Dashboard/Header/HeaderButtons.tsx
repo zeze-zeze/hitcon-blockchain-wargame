@@ -55,7 +55,7 @@ const HeaderButtons: FC = () => {
             {
                 showSolved || (
                     <Box sx={{ mr: theme.spacing(1) }}>
-                        <Tooltip arrow title={multiLang?.dashboard.header.tooltip.achievement}>
+                        <Tooltip arrow title={multiLang?.dashboard.header.tooltip.achievement ?? ""}>
                             <IconButtonWrapper ref={achievementRef} onClick={() => {
                                 setAchievementOpen(true);
                             }}>
@@ -87,7 +87,7 @@ const HeaderButtons: FC = () => {
                 )
             }
             <Box sx={{ mr: theme.spacing(1) }}>
-                <Tooltip arrow title={multiLang?.dashboard.header.tooltip.notification}>
+                <Tooltip arrow title={multiLang?.dashboard.header.tooltip.notification ?? ""}>
                     <IconButtonWrapper ref={notificationRef} onClick={() => {
                         setNotificationOpen(true);
                     }}>
