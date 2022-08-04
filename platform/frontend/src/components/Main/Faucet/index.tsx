@@ -34,6 +34,22 @@ const Faucet: FC = () => {
   } = useContext(WaitEffectContext);
 
   const requestETH = useCallback(async () => {
+    let apiURL;
+    switch (process.env.NODE_ENV) {
+      case "development":
+        apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+        break;
+      case "test":
+        apiURL = process.env.REACT_APP_BASE_API_URL_TEST;
+        break;
+      case "production":
+        apiURL = process.env.REACT_APP_BASE_API_URL_PROD;
+        break;
+      default:
+        apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+        break;
+    }
+
     setShowBackDrop(true);
     try {
       await axios.post(
