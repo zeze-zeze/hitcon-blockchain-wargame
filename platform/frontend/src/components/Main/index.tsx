@@ -135,9 +135,24 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
     /* Check whether session expires */
     useEffect(() => {
         const ping = async () => {
+            let apiURL;
+            switch (process.env.NODE_ENV) {
+                case "development":
+                    apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                    break;
+                case "test":
+                    apiURL = process.env.REACT_APP_BASE_API_URL_TEST;
+                    break;
+                case "production":
+                    apiURL = process.env.REACT_APP_BASE_API_URL_PROD;
+                    break;
+                default:
+                    apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                    break;
+            }
             try {
                 const result = await axios
-                .post(process.env.REACT_APP_BASE_API_URL + "/ping", null, {
+                .post(apiURL + "/ping", null, {
                     withCredentials: true
                 });
                 if (result.data.expired) {
