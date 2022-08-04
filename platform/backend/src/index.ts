@@ -50,4 +50,3 @@ if (process.env.NODE_ENV === "development") {
         console.log(`[express]: Running at port ${config.port}`);
     });
 }
-
