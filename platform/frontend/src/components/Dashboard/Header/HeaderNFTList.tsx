@@ -61,11 +61,11 @@ const HeaderNFTList: FC = () => {
         setShowBackDrop(true);
         try {
             await axios
-                .post(apiURL + "/hitcon-nft-sender", {
-                    address: account,
-                }, {
-                    withCredentials: true
-                });
+            .post(apiURL + "/hitcon-nft-sender", {
+                address: account,
+            }, {
+                withCredentials: true
+            });
             setSuccessMessage(multiLang?.success.requestNFT);
             setShowSnackBar(1);
             setShowBackDrop(false);

@@ -79,19 +79,19 @@ const Landing: FC = () => {
     const { setShowBackDrop, setShowSnackBar, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
 
     const handleLogin = useCallback(async (anonym: boolean) => {
-        let apiURL: string;
+        let apiURL;
         switch (process.env.NODE_ENV) {
             case "development":
-                apiURL = process.env.REACT_APP_BASE_API_URL_DEV ?? "https://localhost:3001/api";
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
                 break;
             case "test":
-                apiURL = process.env.REACT_APP_BASE_API_URL_TEST ?? "https://localhost:3001/api";
+                apiURL = process.env.REACT_APP_BASE_API_URL_TEST;
                 break;
             case "production":
-                apiURL = process.env.REACT_APP_BASE_API_URL_PROD ?? "https://localhost:31337/api";
+                apiURL = process.env.REACT_APP_BASE_API_URL_PROD;
                 break;
             default:
-                apiURL = process.env.REACT_APP_BASE_API_URL_DEV ?? "https://localhost:3001/api";
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
                 break;
         }
         if (anonym) {
@@ -103,19 +103,19 @@ const Landing: FC = () => {
         try {
             if (anonym) {
                 await axios
-                    .post(apiURL + "/login", {
-                        type: "anonymous",
-                    }, {
-                        withCredentials: true
-                    });
+                .post(apiURL + "/login", {
+                    type: "anonymous",
+                }, {
+                    withCredentials: true
+                });
             } else {
                 await axios
-                    .post(apiURL + "/login", {
-                        type: "token",
-                        token: token,
-                    }, {
-                        withCredentials: true
-                    });
+                .post(apiURL + "/login", {
+                    type: "token",
+                    token: token,
+                }, {
+                    withCredentials: true
+                });
             }
             setSuccessMessage(multiLang?.success.login);
             setShowSnackBar(1);
