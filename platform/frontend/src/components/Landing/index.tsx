@@ -79,19 +79,19 @@ const Landing: FC = () => {
     const { setShowBackDrop, setShowSnackBar, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
 
     const handleLogin = useCallback(async (anonym: boolean) => {
-        let apiURL;
+        let apiURL: string;
         switch (process.env.NODE_ENV) {
             case "development":
-                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV as string;
                 break;
             case "test":
-                apiURL = process.env.REACT_APP_BASE_API_URL_TEST;
+                apiURL = process.env.REACT_APP_BASE_API_URL_TEST as string;
                 break;
             case "production":
-                apiURL = process.env.REACT_APP_BASE_API_URL_PROD;
+                apiURL = process.env.REACT_APP_BASE_API_URL_PROD as string;
                 break;
             default:
-                apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+                apiURL = process.env.REACT_APP_BASE_API_URL_DEV as string;
                 break;
         }
         if (anonym) {
@@ -103,19 +103,19 @@ const Landing: FC = () => {
         try {
             if (anonym) {
                 await axios
-                .post(apiURL + "/login", {
-                    type: "anonymous",
-                }, {
-                    withCredentials: true
-                });
+                    .post(apiURL + "/login", {
+                        type: "anonymous",
+                    }, {
+                        withCredentials: true
+                    });
             } else {
                 await axios
-                .post(apiURL + "/login", {
-                    type: "token",
-                    token: token,
-                }, {
-                    withCredentials: true
-                });
+                    .post(apiURL + "/login", {
+                        type: "token",
+                        token: token,
+                    }, {
+                        withCredentials: true
+                    });
             }
             setSuccessMessage(multiLang?.success.login);
             setShowSnackBar(1);
