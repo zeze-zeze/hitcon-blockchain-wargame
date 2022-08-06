@@ -37,23 +37,23 @@ const Faucet: FC = () => {
     let apiURL;
     switch (process.env.NODE_ENV) {
       case "development":
-        apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+        apiURL = process.env.REACT_APP_BASE_API_URL_DEV as string;
         break;
       case "test":
-        apiURL = process.env.REACT_APP_BASE_API_URL_TEST;
+        apiURL = process.env.REACT_APP_BASE_API_URL_TEST as string;
         break;
       case "production":
-        apiURL = process.env.REACT_APP_BASE_API_URL_PROD;
+        apiURL = process.env.REACT_APP_BASE_API_URL_PROD as string;
         break;
       default:
-        apiURL = process.env.REACT_APP_BASE_API_URL_DEV;
+        apiURL = process.env.REACT_APP_BASE_API_URL_DEV as string;
         break;
     }
 
     setShowBackDrop(true);
     try {
       await axios.post(
-        process.env.REACT_APP_BASE_API_URL + "/faucet",
+        apiURL + "/faucet",
         {
           address: account,
         },
