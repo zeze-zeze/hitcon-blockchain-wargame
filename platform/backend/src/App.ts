@@ -31,7 +31,9 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(compression());
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false
+}));
 app.use(bodyParser.json({ limit: "200kb" }));
 app.use(bodyParser.urlencoded({ limit: "200kb", extended: true }));
 app.use(bodyParser.raw());
