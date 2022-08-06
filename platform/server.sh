@@ -34,7 +34,7 @@ stop_container() {
 start_container() {
     yarn --cwd $FRONTEND_BASE build
     yarn --cwd $BACKEND_BASE build
-    sudo docker-compose -f $COMPOSE up -d --build
+    sudo DOCKER_BUILDKIT=1 docker-compose -f $COMPOSE up -d --build
 }
 
 main() {
