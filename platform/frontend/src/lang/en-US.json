@@ -38,7 +38,7 @@
                 "home": "Home",
                 "tutorial": "Tutorial",
                 "faucet": "Faucet",
-                "problems": "Problems"
+                "challenges": "Challenges"
             }
         },
         "header": {
@@ -116,8 +116,8 @@
             "walletNotConnected": "Wallet not connected"
         }
     },
-    "problems": {
-        "challenges": [
+    "challenges": {
+        "list": [
             {
                 "title": "Solidity 101",
                 "description": "Learn to call function with parameters by using web3.",
