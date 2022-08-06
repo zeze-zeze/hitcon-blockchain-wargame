@@ -25,16 +25,16 @@ EOF
 
 stop_container() {
     if [[ "$1" -eq 1 ]]; then
-        docker-compose -f $COMPOSE down --volumes
+        sudo docker-compose -f $COMPOSE down --volumes
     else
-        docker-compose -f $COMPOSE down
+        sudo docker-compose -f $COMPOSE down
     fi
 }
 
 start_container() {
     yarn --cwd $FRONTEND_BASE build
     yarn --cwd $BACKEND_BASE build
-    docker-compose -f $COMPOSE up -d --build
+    sudo docker-compose -f $COMPOSE up -d --build
 }
 
 main() {
