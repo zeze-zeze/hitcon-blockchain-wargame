@@ -103,7 +103,137 @@
     },
     "tutorial": {
         "title": "教學",
-        "subtitle": "此教學將帶領大家學會 Metamask，Solidity 等乙太坊基礎知識"
+        "subtitle": "此教學將帶領大家學會 Metamask，Solidity 等乙太坊基礎知識",
+        "content": [
+            {
+                "type": "header",
+                "data": "1. 建立 MetaMask"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "如果還沒建立 MetaMask，首先安裝 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "MetaMask 擴充功能",
+                            "to": "https://metamask.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": "（使用 Chrome、Firefox、Brave 或 Opera 瀏覽器）。在擴充功能中建立一個錢包然後點選擴充功能左上方的「網路」，並選擇「Rinkeby 測試網路」。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "2. 開啟瀏覽器的 console"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "打開"
+                        },
+                        {
+                            "type": "link",
+                            "data": "挑戰 0",
+                            "to": "REACT_APP_BASE_URL_challenges/0"
+                        },
+                        {
+                            "type": "text",
+                            "data": "。然後打開瀏覽器的 console："
+                        },
+                        {
+                            "type": "code",
+                            "data": "更多工具 > 開發人員工具"
+                        },
+                        {
+                            "type": "text",
+                            "data": "。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "你應該會看到一些訊息。其中一個就是你目前正在使用的錢包地址。這是挑戰中重要的一項資訊！你將會在解題過程中常常使用到它："
+                        }
+                    ],
+                    [
+                        {
+                            "type": "code",
+                            "data": "player"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "另外如果在挑戰過程中看到一些警告或錯誤，它們會提供你一些解題相關的有用資訊。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "3. 查看挑戰的使用說明"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "code",
+                            "data": "help()"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "忘記一些功能怎麼使用時可以複習一下。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "4. 合約"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "在 console 輸入以下指令："
+                        }
+                    ],
+                    [
+                        {
+                            "type": "code",
+                            "data": "contract"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "這個是連結題目合約的物件。你不需要自己從頭用 web3 連結合約，因為這個平台有幫你完成前置作業，不過你想的話還是可以自己實做，因此可以直接使用這個物件來與合約互動。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "可以展開 console 中顯示的 object 來仔細看一下內容。"
+                        }
+                    ]
+                ]
+            }
+        ]
     },
     "faucet": {
         "title": "水龍頭",
