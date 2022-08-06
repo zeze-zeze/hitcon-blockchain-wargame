@@ -103,7 +103,137 @@
     },
     "tutorial": {
         "title": "Tutorial",
-        "subtitle": "This tutorial walks you through the very basics of some Ethereum concepts, including Metamask, Solidity, and more!"
+        "subtitle": "This tutorial walks you through the very basics of some Ethereum concepts, including Metamask, Solidity, and more!",
+        "content": [
+            {
+                "type": "header",
+                "data": "1. Set up MetaMask"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "If you don't have it already, install the "
+                        },
+                        {
+                            "type": "link",
+                            "data": "MetaMask browser extension",
+                            "to": "https://metamask.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": " (in Chrome, Firefox, Brave or Opera on your desktop machine). Set up the extension's wallet and use the network selector to point to the 'Rinkeby test network' in the top left of the extension's interface."
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "2. Open the browser's console"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "First, open our "
+                        },
+                        {
+                            "type": "link",
+                            "data": "challenge 0",
+                            "to": "REACT_APP_BASE_URL/challenges/0"
+                        },
+                        {
+                            "type": "text",
+                            "data": ". Then open your browser's console: "
+                        },
+                        {
+                            "type": "code",
+                            "data": "Tools > Developer Tools"
+                        },
+                        {
+                            "type": "text",
+                            "data": " ."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "You should see a few messages from the game. One of them should state your player's address. This will be important during the game! You can always see your player address by entering the following command:"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "code",
+                            "data": "player"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "Keep an eye out for warnings and errors, since they could provide important information during gameplay."
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "3. Use the console helpers"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "code",
+                            "data": "help()"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "These will be super handy during gameplay."
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "4. The contract"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "Enter the following command in the console:"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "code",
+                            "data": "contract"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "This is the game's main smart contract. You don't need to interact with it directly through the console (as this app will do that for you) but you can if you want to. Playing around with this object now is a great way to learn how to interact with the other smart contracts of the game."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "Go ahead and expand the object to see what's inside."
+                        }
+                    ]
+                ]
+            }
+        ]
     },
     "faucet": {
         "title": "Faucet",
@@ -180,7 +310,7 @@
             },
             {
                 "title": "I love hitcon",
-                "description": "Learn to encode and hash by using web3." ,
+                "description": "Learn to encode and hash by using web3.",
                 "tutorial": [
                     [
                         {
@@ -442,4 +572,4 @@
         "noProvider": "Provider Error: No web3 provider was found.",
         "authorizeError": "Authorization Error: Please authorize to access your account"
     }
-}   
+}
