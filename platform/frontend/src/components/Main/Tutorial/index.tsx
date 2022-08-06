@@ -39,7 +39,7 @@ const Tutorial: FC = () => {
                                 2. Open the browser's console
                             </SubHeaderTypography>
                             <BodyTypography>
-                                First, open our <a href="problems/0">challenge 0</a>. Then open your browser's console: <code>Tools &gt; Developer Tools</code>.
+                                First, open our <a href="challenges/0">challenge 0</a>. Then open your browser's console: <code>Tools &gt; Developer Tools</code>.
                             </BodyTypography>
                             <BodyTypography>
                                 You should see a few messages from the game. One of them should state your player's address. This will be important during the game! You can always see your player address by entering the following command:

@@ -100,7 +100,7 @@ const Home: FC = () => {
                             <FixedButtonContainer>
                                 <Button
                                     component={NavLink}
-                                    to="/problems"
+                                    to="/challenges"
                                     variant="contained"
                                     size="large"
                                     color="primary"

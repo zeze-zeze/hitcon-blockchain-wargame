@@ -88,7 +88,7 @@ const Challenge: FC = () => {
     const [vuln, setVuln] = useState<string>("");
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
     const { id } = useParams<string>();
-    const problemId = useRef<number>(Number(id));
+    const challengeId = useRef<number>(Number(id));
     const { active, account } = useWeb3React();
     const { setShowSnackBar, setShowBackDrop, setErrorMessage } = useContext(WaitEffectContext);
     const { contracts, solved } = useContext(Web3Context);
@@ -113,13 +113,13 @@ const Challenge: FC = () => {
 
     useEffect(() => {
         const fetchChal = async () => {
-            const chalPath = await import(`challenges/chal${problemId.current}.sol`);
+            const chalPath = await import(`challenges/chal${challengeId.current}.sol`);
             const chalFile = await fetch(chalPath.default);
             const chalSource = await chalFile.text();
             setVuln(chalSource);
         };
         fetchChal();
-    }, [problemId]);
+    }, [challengeId]);
 
     useEffect(() => {
         if (account) {
@@ -129,12 +129,12 @@ const Challenge: FC = () => {
                 console.log('%cWelcome to HITCON Wargame!', style);
                 var style = 'color: blue; background:#eee; -webkit-text-stroke: 1px black; font-size:10px;';
                 console.log('%cYour address: %s', style, account);
-                console.log('%cContract address: %s', style, info[problemId.current].addr);
+                console.log('%cContract address: %s', style, info[challengeId.current].addr);
                 window.player = account;
                 const web3 = new Web3(Web3.givenProvider);
                 window.web3 = web3;
-                window.instance = info[problemId.current].addr;
-                window.abi = info[problemId.current].abi;
+                window.instance = info[challengeId.current].addr;
+                window.abi = info[challengeId.current].abi; 
                 const contract = new web3.eth.Contract(window.abi, window.instance);
                 window.contract = contract;
                 window.help();
@@ -143,26 +143,26 @@ const Challenge: FC = () => {
                 setSubmitDisabled(false);
             }, 100);
         }
-    }, [account, problemId, multiLang]);
+    }, [account, challengeId, multiLang]);
 
 
     return (
         <>
             {
                 (
-                    Number.isInteger(problemId.current)
-                    && problemId.current >= 0
-                    && problemId.current < Number(process.env.REACT_APP_PROBLEM_NUM)
+                    Number.isInteger(challengeId.current)
+                    && challengeId.current >= 0
+                    && challengeId.current < Number(process.env.REACT_APP_CHALLENGE_NUM)
                 ) ? (
                     <MainWrapper title="Challenge">
                         <Grid container>
                             <Grid item xs={12}>
                                 <HeaderWrapper>
                                     <HeaderTypography>
-                                        {multiLang?.problems.challenges[problemId.current].title}
+                                        {multiLang?.challenges.list[challengeId.current].title}
                                     </HeaderTypography>
                                     <SubtitleTypography>
-                                        {multiLang?.problems.challenges[problemId.current].description}
+                                        {multiLang?.challenges.list[challengeId.current].description}
                                     </SubtitleTypography>
                                 </HeaderWrapper>
                             </Grid>
@@ -170,7 +170,7 @@ const Challenge: FC = () => {
                                 <PaperComponentWrapper>
                                     <Container>
                                         {
-                                            multiLang?.problems.challenges[problemId.current].tutorial
+                                            multiLang?.challenges.list[challengeId.current].tutorial
                                                 .map((statement: TutorialType[]) => ((
                                                     <SubSubHeaderTypography key={JSON.stringify(statement)}>
                                                         {
@@ -178,7 +178,7 @@ const Challenge: FC = () => {
                                                                 return component.type === "text" ? (
                                                                     component.data
                                                                 ) : (
-                                                                    <code>{component.data}</code>
+                                                                    <code key={component.data}>{component.data}</code>
                                                                 )
                                                             })
                                                         }
@@ -193,7 +193,7 @@ const Challenge: FC = () => {
                                             />
                                         </CopyBlockWrapper>
                                         <SubSubHeaderTypography>
-                                            {multiLang?.problems.contract.submitText}
+                                            {multiLang?.challenges.contract.submitText}
                                         </SubSubHeaderTypography>
                                         <SubHeaderTypography>
                                             <Button
@@ -202,7 +202,7 @@ const Challenge: FC = () => {
                                                 disabled={submitDisabled}
                                                 onClick={handleSubmit}
                                             >
-                                                {multiLang?.problems.contract.submitButtonText}
+                                                {multiLang?.challenges.contract.submitButtonText}
                                             </Button>
                                         </SubHeaderTypography>
                                     </Container>

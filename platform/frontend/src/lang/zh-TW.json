@@ -38,7 +38,7 @@
                 "home": "首頁",
                 "tutorial": "教學",
                 "faucet": "水龍頭",
-                "problems": "挑戰"
+                "challenges": "挑戰"
             }
         },
         "header": {
@@ -116,8 +116,8 @@
             "walletNotConnected": "未連結錢包"
         }
     },
-    "problems": {
-        "challenges": [
+    "challenges": {
+        "list": [
             {
                 "title": "Solidity 101",
                 "description": "學習用 web3 呼叫函數",

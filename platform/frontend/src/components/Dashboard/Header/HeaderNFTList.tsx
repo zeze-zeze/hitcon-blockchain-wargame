@@ -30,7 +30,7 @@ const HeaderNFTList: FC = () => {
     useEffect(() => {
         const loadImg = async () => {
             const links = [];
-            for (let i = 0; i < Number(process.env.REACT_APP_PROBLEM_NUM); i++) {
+            for (let i = 0; i < Number(process.env.REACT_APP_CHALLENGE_NUM); i++) {
                 const imgPng = await import(`assets/chal${i}.png`);
                 const imgPath = imgPng.default;
                 links.push(imgPath);
@@ -104,7 +104,7 @@ const HeaderNFTList: FC = () => {
             {
                 solved.map((yn: boolean, idx: number) => (
                     <Grid item xs={1} key={idx}>
-                        <Tooltip arrow title={multiLang?.problems.challenges[idx].title ?? ""}>
+                        <Tooltip arrow title={multiLang?.challenges.list[idx].title ?? ""}>
                             <Avatar
                                 variant="rounded"
                                 src={NFTImgLinks[idx]}
@@ -161,7 +161,7 @@ const HeaderNFTList: FC = () => {
                             <Tooltip
                                 arrow
                                 placement="left"
-                                title={multiLang?.problems.challenges[idx].title ?? ""}
+                                title={multiLang?.challenges.list[idx].title ?? ""}
                             >
                                 <Avatar
                                     variant="rounded"
@@ -188,7 +188,7 @@ const HeaderNFTList: FC = () => {
                                         color: yn ? theme.colors.success.main : theme.colors.error.main
                                     }}
                                 >
-                                    {yn ? multiLang?.problems.solved : multiLang?.problems.notSolved}
+                                    {yn ? multiLang?.challenges.solved : multiLang?.challenges.notSolved}
                                 </Typography>
                             </Box>
                         </ListItem>

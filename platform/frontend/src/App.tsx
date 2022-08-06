@@ -116,10 +116,10 @@ const App: FC = () => {
     const initContracts = useCallback(async (account: string) => {
         if (account) {
             const web3 = new Web3(Web3.givenProvider);
-            const problemNum: number = Number(process.env.REACT_APP_PROBLEM_NUM);
+            const challengeNum: number = Number(process.env.REACT_APP_CHALLENGE_NUM);
             const solvedTmp: boolean[] = [];
             const contractsTmp: Contract[] = [];
-            for (let i = 0; i < problemNum; i++) {
+            for (let i = 0; i < challengeNum; i++) {
                 const contract: Contract = new web3.eth.Contract(
                     contractsInfo[i]["abi"] as AbiItem[],
                     contractsInfo[i]["addr"]
