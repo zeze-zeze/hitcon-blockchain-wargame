@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[2194],{72194:function(e,n,s){e.exports=s.p+"static/media/chal2.2d8b8427f0a4f947b150.sol"}}]);

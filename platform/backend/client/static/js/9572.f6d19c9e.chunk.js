@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[9572],{49572:function(c,e,f){c.exports=f.p+"static/media/chal3.ccfdff3316c388620fa5.sol"}}]);
