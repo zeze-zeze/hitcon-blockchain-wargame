@@ -60,7 +60,6 @@ const App: FC = () => {
     const [notification, setNotification] = useState<MessageType[]>();
     const toggleSidebar = useCallback(() => setSidebarToggled(!sidebarToggled), [sidebarToggled]);
     /* Web3 */
-    const [web3, setWeb3] = useState<Web3>();
     const [solved, setSolved] = useState<boolean[]>([false, false, false, false, false, false]);
     const [contracts, setContracts] = useState<Contract[]>([]);
     /* Wait Effect */
@@ -139,7 +138,6 @@ const App: FC = () => {
                         .on("data", (log: any) => {
                             setErrorMessage(multiLang?.error.alreadySolved);
                             setShowSnackBar(2);
-                            setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)]);
                         })
                         .on("error", (error: Error) => {
                             setErrorMessage(error.message);
@@ -167,7 +165,7 @@ const App: FC = () => {
             setSolved(solvedTmp);
             setContracts(contractsTmp);
         }
-    }, []);
+    }, [multiLang, notification, solved]);
 
     return (
         <ThemeProvider>
