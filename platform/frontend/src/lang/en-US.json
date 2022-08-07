@@ -38,7 +38,8 @@
                 "home": "Home",
                 "tutorial": "Tutorial",
                 "faucet": "Faucet",
-                "challenges": "Challenges"
+                "challenges": "Challenges",
+                "logout": "Logout"
             }
         },
         "header": {

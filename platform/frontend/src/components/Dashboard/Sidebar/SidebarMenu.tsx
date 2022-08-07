@@ -13,7 +13,7 @@ import { styled } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';
 import FlagIcon from '@mui/icons-material/Flag';
-import CodeIcon from '@mui/icons-material/Code';
+import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageContext from 'contexts/LanguageContext';
 
 const WaterDropIcon: FC = () => {
@@ -118,6 +118,11 @@ const SidebarMenu: FC = () => {
                 <ListItem>
                     <Button component={NavLink} startIcon={<FlagIcon />} to="/challenges" >
                         {multiLang?.dashboard.sidebar.entries.challenges}
+                    </Button>
+                </ListItem>
+                <ListItem>
+                    <Button component={NavLink} startIcon={<LogoutIcon />} to="/" >
+                        {multiLang?.dashboard.sidebar.entries.logout}
                     </Button>
                 </ListItem>
             </MenuSubEntryWrapper>
