@@ -103,14 +103,14 @@ const Landing: FC = () => {
         try {
             if (anonym) {
                 await axios
-                    .post(apiURL + "/login", {
+                    .post(apiURL + "/auth", {
                         type: "anonymous",
                     }, {
                         withCredentials: true
                     });
             } else {
                 await axios
-                    .post(apiURL + "/login", {
+                    .post(apiURL + "/auth", {
                         type: "token",
                         token: token,
                     }, {

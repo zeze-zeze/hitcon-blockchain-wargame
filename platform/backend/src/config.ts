@@ -8,6 +8,7 @@ const config = {
       ? "3001"
       : process.env.PORT || "8080",
   problemNum: process.env.PROBLEM_NUM || 6,
+  reactBaseURL: process.env.REACT_BASE_URL || "",
   TestnetRPC: process.env.TESTNET_RPC_URL || "",
   MainnetRPC: process.env.MAINNET_RPC_URL || "",
   PublicKey: process.env.TEST_ADDRESS || "",
