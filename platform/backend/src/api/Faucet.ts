@@ -9,7 +9,9 @@ import faucetABI from "../web3/FaucetABI.json";
 const { BadRequest, UnprocessableEntity } = createError;
 
 const send = async (address: string) => {
-  const FaucetABI = JSON.parse(JSON.stringify(faucetABI));
+  const FaucetABI = JSON.parse(
+    JSON.stringify(faucetABI)
+  );
   const FaucetContract = new web3.eth.Contract(
     FaucetABI["abi"],
     FaucetABI["address"]

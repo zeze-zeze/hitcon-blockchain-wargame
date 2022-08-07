@@ -5,16 +5,17 @@ import { checkAddress } from "../web3/utils";
 import { web3, mainnetWeb3 } from "../web3/index";
 import { AbiItem } from "web3-utils";
 import config from "../config";
+import hitconNFTSenderABI from "../web3/HitconNFTSenderABI.json";
 
 const { BadRequest, UnprocessableEntity } = createError;
 
 const send = async (address: string) => {
-  const hitconNFTSenderABI = JSON.parse(
-    JSON.stringify(require("../web3/HitconNFTSenderABI.json"))
+  const HitconNFTSenderABI = JSON.parse(
+    JSON.stringify(hitconNFTSenderABI)
   );
   const hitconNFTSenderContract = new mainnetWeb3.eth.Contract(
-    hitconNFTSenderABI["abi"],
-    hitconNFTSenderABI["address"]
+    HitconNFTSenderABI["abi"],
+    HitconNFTSenderABI["address"]
   );
 
   // Check whether the address had got NFT
@@ -30,7 +31,7 @@ const send = async (address: string) => {
   const transaction = hitconNFTSenderContract.methods.allSolved(address);
 
   const options = {
-    to: hitconNFTSenderABI["address"],
+    to: HitconNFTSenderABI["address"],
     data: transaction.encodeABI(),
     gas: await transaction.estimateGas({ from: config.PublicKey }),
     gasPrice: await mainnetWeb3.eth.getGasPrice(),
