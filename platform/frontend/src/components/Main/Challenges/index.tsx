@@ -70,19 +70,6 @@ const CopyBlockWrapper = styled(Container)(
 );
 
 const Challenge: FC = () => {
-    window.help = () => {
-        const menu = {
-            "player": "current player address",
-            "web3": "web3 object",
-            "contract": "current level contract instance",
-            "instance": "challenge contract address",
-            "abi": "abi of challenge contract",
-            "help()": "Show this table"
-        };
-
-        console.table(menu);
-    }
-
     const { multiLang } = useContext(LanguageContext);
     const [contract, setContract] = useState<Contract>();
     const [vuln, setVuln] = useState<string>("");
@@ -137,6 +124,18 @@ const Challenge: FC = () => {
                 window.abi = info[challengeId.current].abi; 
                 const contract = new web3.eth.Contract(window.abi, window.instance);
                 window.contract = contract;
+                window.help = () => {
+                    const menu = {
+                        "player": "current player address",
+                        "web3": "web3 object",
+                        "contract": "current level contract instance",
+                        "instance": "challenge contract address",
+                        "abi": "abi of challenge contract",
+                        "help()": "Show this table"
+                    };
+
+                    console.table(menu);
+                }
                 window.help();
 
                 setContract(contract);

@@ -320,7 +320,7 @@
                         },
                         {
                             "type": "code",
-                            "data": "web3.utils.encodedPacked"
+                            "data": "web3.utils.encodePacked"
                         },
                         {
                             "type": "text",
