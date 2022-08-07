@@ -38,7 +38,8 @@
                 "home": "首頁",
                 "tutorial": "教學",
                 "faucet": "水龍頭",
-                "challenges": "挑戰"
+                "challenges": "挑戰",
+                "logout": "登出"
             }
         },
         "header": {
