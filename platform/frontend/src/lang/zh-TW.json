@@ -98,7 +98,7 @@
             },
             {
                 "title": "區塊鏈老手嗎？",
-                "buttonText": "直接開始"
+                "buttonText": "開始挑戰"
             }
         ]
     },
@@ -132,7 +132,22 @@
             },
             {
                 "type": "header",
-                "data": "2. 從水龍頭取得 ETH"
+                "data": "2. 連結錢包"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "建立好 MetaMask 後，你現在應該有個錢包地址。現在點擊右上角的藍色按鈕來連結錢包，之後在這個平台所做的任何區塊鏈交易都會與這個連結的錢包地址相關。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "3. 從水龍頭取得 ETH"
             },
             {
                 "type": "body",
@@ -162,7 +177,7 @@
             },
             {
                 "type": "header",
-                "data": "3. 開啟瀏覽器的 console"
+                "data": "4. 開啟瀏覽器的 console"
             },
             {
                 "type": "body",
@@ -212,7 +227,7 @@
             },
             {
                 "type": "header",
-                "data": "4. 查看挑戰的使用說明"
+                "data": "5. 查看挑戰的使用說明"
             },
             {
                 "type": "body",
@@ -233,7 +248,7 @@
             },
             {
                 "type": "header",
-                "data": "5. 合約"
+                "data": "6. 合約"
             },
             {
                 "type": "body",

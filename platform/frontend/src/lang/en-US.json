@@ -132,7 +132,22 @@
             },
             {
                 "type": "header",
-                "data": "2. Use faucet to get ETH"
+                "data": "2. Connect wallet"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "After MetaMask setup, you should have a wallet address. Now connect the wallet address by clicking the button in the right top of this platform, then any transaction made here will be related to the connected wallet address."
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "3. Use faucet to get ETH"
             },
             {
                 "type": "body",
@@ -162,7 +177,7 @@
             },
             {
                 "type": "header",
-                "data": "3. Open the browser's console"
+                "data": "4. Open the browser's console"
             },
             {
                 "type": "body",
@@ -212,7 +227,7 @@
             },
             {
                 "type": "header",
-                "data": "4. Use the console helpers"
+                "data": "5. Use the console helpers"
             },
             {
                 "type": "body",
@@ -233,7 +248,7 @@
             },
             {
                 "type": "header",
-                "data": "5. The contract"
+                "data": "6. The contract"
             },
             {
                 "type": "body",
