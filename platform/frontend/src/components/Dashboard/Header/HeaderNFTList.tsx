@@ -105,21 +105,23 @@ const HeaderNFTList: FC = () => {
                 solved.map((yn: boolean, idx: number) => (
                     <Grid item xs={1} key={idx}>
                         <Tooltip arrow title={multiLang?.challenges.list[idx].title ?? ""}>
-                            <Avatar
-                                variant="rounded"
-                                src={NFTImgLinks[idx]}
-                                sx={{
-                                    borderWidth: "3px",
-                                    borderStyle: "dashed",
-                                    borderColor: yn ? theme.colors.success.main : theme.colors.error.main,
-                                    padding: "1px"
-                                }}
-                                imgProps={{
-                                    style: {
-                                        opacity: yn ? "100%" : "40%",
-                                    }
-                                }}
-                            />
+                            <a href={"/challenges/" + `${idx}`}>
+                                <Avatar
+                                    variant="rounded"
+                                    src={NFTImgLinks[idx]}
+                                    sx={{
+                                        borderWidth: "3px",
+                                        borderStyle: "dashed",
+                                        borderColor: yn ? theme.colors.success.main : theme.colors.error.main,
+                                        padding: "1px"
+                                    }}
+                                    imgProps={{
+                                        style: {
+                                            opacity: yn ? "100%" : "40%",
+                                        }
+                                    }}
+                                />
+                            </a>
                         </Tooltip>
                     </Grid>
                 ))
