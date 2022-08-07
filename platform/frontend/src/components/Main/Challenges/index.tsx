@@ -81,6 +81,9 @@ const Challenge: FC = () => {
     const { contracts, solved } = useContext(Web3Context);
 
     const handleSubmit = useCallback(async () => {
+        var style = 'color: tomato; background:#eee; -webkit-text-stroke: 1px black; font-size:30px;';
+        console.log('%cCheck solved or not ...', style);
+        
         if (!active || !account || !contract) {
             setErrorMessage(multiLang?.error.connectFirst);
             setShowSnackBar(2);
