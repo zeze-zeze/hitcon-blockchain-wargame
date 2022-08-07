@@ -153,7 +153,9 @@ const App: FC = () => {
                                 date: Date.now(),
                             });
                             setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)]);
-                            window.location.href="/challenges";
+                            setTimeout(() => {
+                                window.location.href = "/challenges";
+                            }, 2000);
                         })
                         .on("error", (error: Error) => {
                             setErrorMessage(error.message);
