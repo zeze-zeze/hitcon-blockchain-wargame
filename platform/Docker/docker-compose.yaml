@@ -8,7 +8,7 @@ services:
       context: ../Nginx/
     container_name: wargame-nginx
     ports:
-      - 31337:443
+      - 31337:80
     restart: unless-stopped
 
   wargame-backend:
