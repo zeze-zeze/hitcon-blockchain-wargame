@@ -90,7 +90,7 @@
     },
     "home": {
         "title": "HITCON 區塊鏈挑戰",
-        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF 遊戲。每個關卡都藏有一些漏洞等著你來「駭」。",
+        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF 遊戲，每個挑戰都需要透過智能合約的知識來達成通關條件。",
         "cards": [
             {
                 "title": "區塊鏈新手嗎？",
@@ -132,7 +132,37 @@
             },
             {
                 "type": "header",
-                "data": "2. 開啟瀏覽器的 console"
+                "data": "2. 從水龍頭取得 ETH"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "在挑戰過程中會需要使用到乙太幣與合約交易。不過並不是主鏈的乙太幣，而是使用 Rinkeby 測試鏈，這單純是拿來測試用途的。不需要擔心你使用太多測試鏈乙太幣，因為它們不會花你任何錢。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "打開我們的 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "hitcon 水龍頭",
+                            "to": "faucet"
+                        },
+                        {
+                            "type": "text",
+                            "data": "，然後點選按鈕從水龍頭申請測試鏈乙太幣。如果水龍頭乾枯了，你可以使用按鈕下方連結的其他水龍頭來取得測試鏈乙太幣。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "3. 開啟瀏覽器的 console"
             },
             {
                 "type": "body",
@@ -145,7 +175,7 @@
                         {
                             "type": "link",
                             "data": "挑戰 0",
-                            "to": "REACT_APP_BASE_URL/challenges/0"
+                            "to": "challenges/0"
                         },
                         {
                             "type": "text",
@@ -182,7 +212,7 @@
             },
             {
                 "type": "header",
-                "data": "3. 查看挑戰的使用說明"
+                "data": "4. 查看挑戰的使用說明"
             },
             {
                 "type": "body",
@@ -203,7 +233,7 @@
             },
             {
                 "type": "header",
-                "data": "4. 合約"
+                "data": "5. 合約"
             },
             {
                 "type": "body",
