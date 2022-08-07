@@ -32,7 +32,7 @@ const authCallback = asyncHandler(async (req: Request, res: Response, next: Next
                 issuer: "https://hitcon.org",
             });
             if (typeof decoded !== "string") {
-                if (decoded.scope === "wargame") {
+                if (decoded.scope === "wargame wargame_premium") {
                     req.session.type = type;
                     return res.status(200).json({
                         ok: true,
