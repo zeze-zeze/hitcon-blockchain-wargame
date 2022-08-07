@@ -7,6 +7,7 @@ import path from "path";
 import faucetCallBack from "./api/Faucet";
 import hitconNFTSenderCallBack from "./api/HitconNFTSender";
 import loginCallback from "./api/Login";
+import authCallback from "./api/Auth";
 import pingCallback from "./api/Ping";
 
 import config from "./config";
@@ -37,6 +38,7 @@ router.use(expressSession({
 router.post("/faucet", faucetCallBack);
 router.post("/hitcon-nft-sender", hitconNFTSenderCallBack);
 router.post("/login", loginCallback);
+router.post("/auth", authCallback);
 router.post("/ping", pingCallback);
 
 export default router;
