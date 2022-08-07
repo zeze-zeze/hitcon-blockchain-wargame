@@ -544,7 +544,7 @@
         }
     },
     "success": {
-        "login": "Token successfully verified. Redirecting...",
+        "login": "Login successfully. Redirecting...",
         "requestETH": "Request ETH success.",
         "requestNFT": "Request NFT success",
         "challengeSolved": "Congratulations! You solved the challenge"
