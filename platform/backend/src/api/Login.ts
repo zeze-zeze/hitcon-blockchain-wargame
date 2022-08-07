@@ -13,7 +13,6 @@ declare module "express-session" {
 const { BadRequest } = createError;
 
 const loginCallback = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-    console.log(req.body);
     try {
         if (req.body.token === undefined) {
             req.session.type = "anonym";
