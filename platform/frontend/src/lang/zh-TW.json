@@ -90,7 +90,7 @@
     },
     "home": {
         "title": "HITCON 區塊鏈挑戰",
-        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF 遊戲，每個挑戰都需要透過智能合約的知識來達成通關條件。",
+        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF，每個挑戰都要透過智能合約的知識來達成通關條件。",
         "cards": [
             {
                 "title": "區塊鏈新手嗎？",
