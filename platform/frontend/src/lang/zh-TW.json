@@ -278,6 +278,45 @@
                         }
                     ]
                 ]
+            },
+            {
+                "type": "header",
+                "data": "7. 取得 NFT"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "當你每解完一題，你會取得一個 NFT 獎勵。要查看 NFT，除了在這個平台上方可以看到的縮圖之外，你還可以從 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "testnets.opensea.io",
+                            "to": "https://testnets.opensea.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 查看。測試鏈的 NFT 會被顯示在那。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "在解完所有題目之後，你會取得一個主鏈的 NFT，代表你已經贏下 Wargame 了。你可以查看這個 NFT 在 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "opensea.io",
+                            "to": "https://opensea.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 。"
+                        }
+                    ]
+                ]
             }
         ]
     },
