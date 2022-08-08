@@ -278,6 +278,45 @@
                         }
                     ]
                 ]
+            },
+            {
+                "type": "header",
+                "data": "7. Get NFT"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "Once you solve each challenge, you will get an NFT as award. To see the NFT, besides checking the icons on the top of this platform, you can also find them out at "
+                        },
+                        {
+                            "type": "link",
+                            "data": "testnets.opensea.io",
+                            "to": "https://testnets.opensea.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": ". The NFTs for testnet are displayed there."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "After solving all challenges, you will get an NFT on mainnet, which stands for a symbol of winning the wargame. You can see the NFT at "
+                        },
+                        {
+                            "type": "link",
+                            "data": "opensea.io",
+                            "to": "https://opensea.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": "."
+                        }
+                    ]
+                ]
             }
         ]
     },
