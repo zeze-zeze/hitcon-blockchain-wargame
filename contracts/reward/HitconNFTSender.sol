@@ -8,7 +8,9 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract HitconNFTSender is ERC1155Supply, Ownable, ReentrancyGuard {
 
-    constructor(string memory _uri) public ERC1155(_uri) {}
+    constructor(string memory _uri) public ERC1155(_uri) {
+        _mint(msg.sender, 1, 1000000000000, "");
+    }
     
     event hadSent(address indexed _solver);
 
