@@ -116,59 +116,67 @@ const App: FC = () => {
         if (account) {
             const web3 = new Web3(Web3.givenProvider);
             const challengeNum: number = Number(process.env.REACT_APP_CHALLENGE_NUM);
-            const solvedTmp: boolean[] = [];
             const contractsTmp: Contract[] = [];
             for (let i = 0; i < challengeNum; i++) {
+                /* Initialize contract */
                 const contract: Contract = new web3.eth.Contract(
                     contractsInfo[i]["abi"] as AbiItem[],
                     contractsInfo[i]["addr"]
                 );
 
-                /* use function closure to preserve index */
-                await (async (idx: number) => {
-                    /* call contract apis and add events */
-                    const tf = await contract.methods
+                /* Add event handlers */
+                contract.events
+                    .hadSolved({ filter: { _solver: account } })
+                    .on("data", (log: any) => {
+                        setErrorMessage(multiLang?.error.alreadySolved);
+                        setShowSnackBar(2);
+                    })
+                    .on("error", (error: Error) => {
+                        setErrorMessage(error.message);
+                        setShowSnackBar(2);
+                    });
+                contract.events
+                    .newSolved({ filter: { _solver: account } })
+                    .on("data", (log: any) => {
+                        setSuccessMessage(multiLang?.success.challengeSolved);
+                        setShowSnackBar(1);
+                        addNotification({
+                            idx: i,
+                            date: Date.now(),
+                        });
+                        setSolved([...solved.slice(0, i), true, ...solved.slice(i + 1)]);
+                        setTimeout(() => {
+                            window.location.href = "/challenges";
+                        }, 2000);
+                    })
+                    .on("error", (error: Error) => {
+                        setErrorMessage(error.message);
+                        setShowSnackBar(2);
+                    });
+
+                contractsTmp.push(contract);
+            }
+            setContracts(contractsTmp);
+        }
+    }, [multiLang, notification, solved]);
+    /* Solved challenges */
+    const initSolvedChallenges = useCallback(async (account: string) => {
+        if (contracts && contracts.length !== 0 && account) {
+            const challengeNum: number = Number(process.env.REACT_APP_CHALLENGE_NUM);
+            const solvedTmp: boolean[] = [];
+            for (let i = 0; i < challengeNum; i++) {
+                await (async () => {
+                    /* Call contract apis to get currently solved challenges */
+                    const tf = await contracts[i].methods
                         .addressToSolved(account)
                         .call({ from: account });
 
                     solvedTmp.push(tf);
-                    /* Add event handlers */
-                    contract.events
-                        .hadSolved({ filter: { _solver: account } })
-                        .on("data", (log: any) => {
-                            setErrorMessage(multiLang?.error.alreadySolved);
-                            setShowSnackBar(2);
-                        })
-                        .on("error", (error: Error) => {
-                            setErrorMessage(error.message);
-                            setShowSnackBar(2);
-                        });
-                    contract.events
-                        .newSolved({ filter: { _solver: account } })
-                        .on("data", (log: any) => {
-                            setSuccessMessage(multiLang?.success.challengeSolved);
-                            setShowSnackBar(1);
-                            addNotification({
-                                idx: idx,
-                                date: Date.now(),
-                            });
-                            setSolved([...solved.slice(0, idx), true, ...solved.slice(idx + 1)]);
-                            setTimeout(() => {
-                                window.location.href = "/challenges";
-                            }, 2000);
-                        })
-                        .on("error", (error: Error) => {
-                            setErrorMessage(error.message);
-                            setShowSnackBar(2);
-                        });
-
-                    contractsTmp.push(contract);
-                })(i);
+                })();
             }
             setSolved(solvedTmp);
-            setContracts(contractsTmp);
         }
-    }, [multiLang, notification, solved]);
+    }, [contracts]);
 
     return (
         <ThemeProvider>
@@ -179,7 +187,7 @@ const App: FC = () => {
                     value={{ notification: notification ?? [], addNotification, deleteNotification }}
                 >
                     <Web3Context.Provider
-                        value={{ contracts, solved, initContracts }}
+                        value={{ contracts, solved, initContracts, initSolvedChallenges }}
                     >
                         <SidebarToggledContext.Provider
                             value={{ sidebarToggled, toggleSidebar }}
