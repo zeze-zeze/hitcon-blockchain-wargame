@@ -1,8 +1,8 @@
 import { FC, useRef, useState, useEffect, useCallback, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import { CopyBlock, dracula } from "react-code-blocks";
 import { Button, Container, Grid } from "@mui/material";
 import {
@@ -20,7 +20,6 @@ import WaitEffectContext from "contexts/WaitEffectContext";
 import LanguageContext from "contexts/LanguageContext";
 import Web3Context from "contexts/Web3Context";
 import info from "challenges/contracts.json";
-import ThemedSnippet from "react-code-blocks/dist/ThemedSnippet";
 
 /* Typescript declaration merging */
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
@@ -70,6 +69,8 @@ const CopyBlockWrapper = styled(Container)(
 );
 
 const Challenge: FC = () => {
+    const theme = useTheme();
+    const navigate = useNavigate();
     const { multiLang } = useContext(LanguageContext);
     const [contract, setContract] = useState<Contract>();
     const [vuln, setVuln] = useState<string>("");
@@ -78,7 +79,6 @@ const Challenge: FC = () => {
     const challengeId = useRef<number>(Number(id));
     const { active, account } = useWeb3React();
     const { setShowSnackBar, setShowBackDrop, setErrorMessage } = useContext(WaitEffectContext);
-    const { contracts, solved } = useContext(Web3Context);
 
     const handleSubmit = useCallback(async () => {
         var style = 'color: tomato; background:#eee; -webkit-text-stroke: 1px black; font-size:30px;';
@@ -197,16 +197,23 @@ const Challenge: FC = () => {
                                         <SubSubHeaderTypography>
                                             {multiLang?.challenges.contract.submitText}
                                         </SubSubHeaderTypography>
-                                        <SubHeaderTypography>
-                                            <Button
-                                                variant="contained"
-                                                color="warning"
-                                                disabled={submitDisabled}
-                                                onClick={handleSubmit}
-                                            >
-                                                {multiLang?.challenges.contract.submitButtonText}
-                                            </Button>
-                                        </SubHeaderTypography>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => { navigate("/challenges")}}
+                                            sx={{ mx: theme.spacing(1) }}
+                                        >
+                                            {multiLang?.challenges.contract.backToChallengeList}
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="warning"
+                                            disabled={submitDisabled}
+                                            onClick={handleSubmit}
+                                            sx={{ mx: theme.spacing(1) }}
+                                        >
+                                            {multiLang?.challenges.contract.submitButtonText}
+                                        </Button>
                                     </Container>
                                 </PaperComponentWrapper>
                             </Grid>

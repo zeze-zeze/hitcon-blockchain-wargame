@@ -616,7 +616,8 @@
         "buttonText": "Start Challenge",
         "contract": {
             "submitText": "Submit",
-            "submitButtonText": "I've Finished the level!"
+            "submitButtonText": "I've Finished the level!",
+            "backToChallengeList": "Back to challenge list"
         }
     },
     "setting": {

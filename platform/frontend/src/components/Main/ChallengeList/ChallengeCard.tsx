@@ -24,7 +24,7 @@ const StatusBadge = styled(Box)(
     })
 );
 
-const ChallengeCard = styled(Card)(
+const ChallengeCardWrapper = styled(Card)(
     ({ theme }) => ({
         height: '240px',
         minWidth: '240px',
@@ -32,7 +32,7 @@ const ChallengeCard = styled(Card)(
     })
 );
 
-const ChallengeWrapper = styled(CardContent)(
+const ChallengeContainer = styled(CardContent)(
     ({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',
@@ -62,15 +62,15 @@ const ChallengeContent = styled(Box)(
     })
 );
 
-const ChallengeDesc: FC<ChallengeProps> = ({ index, title, solved }) => {
+const ChallengeCard: FC<ChallengeProps> = ({ index, title, solved }) => {
 
     const theme = useTheme();
     const navigate = useNavigate();
     const { multiLang } = useContext(LanguageContext);
 
     return (
-        <ChallengeCard>
-            <ChallengeWrapper>
+        <ChallengeCardWrapper>
+            <ChallengeContainer>
                 <ChallengeTitle variant="h4" noWrap>
                     <Box sx={{ marginRight: theme.spacing(0.5) }}>
                         <EmojiFlagsTwoToneIcon />
@@ -99,9 +99,9 @@ const ChallengeDesc: FC<ChallengeProps> = ({ index, title, solved }) => {
                         { multiLang?.challenges.buttonText }
                     </Button>
                 </ChallengeContent>
-            </ChallengeWrapper>
-        </ChallengeCard>
+            </ChallengeContainer>
+        </ChallengeCardWrapper>
     );
 };
 
-export default ChallengeDesc;
+export default ChallengeCard;

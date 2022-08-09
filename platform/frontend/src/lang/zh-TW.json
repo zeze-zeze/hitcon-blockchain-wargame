@@ -596,7 +596,8 @@
         "buttonText": "開始挑戰",
         "contract": {
             "submitText": "提交",
-            "submitButtonText": "我解完這題了"
+            "submitButtonText": "我解完這題了",
+            "backToChallengeList": "回到挑戰目錄"
         }
     },
     "setting": {

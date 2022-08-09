@@ -2,7 +2,7 @@ import { FC, useContext, useRef } from 'react';
 import { Grid } from '@mui/material';
 import MainWrapper from 'components/Main';
 
-import Challenge from './Challenge';
+import ChallengeCard from './ChallengeCard';
 import LanguageContext from 'contexts/LanguageContext';
 import Web3Context from 'contexts/Web3Context';
 
@@ -12,7 +12,7 @@ type ChallengeType = {
     tutorial: string;
 };
 
-const Challenges: FC = () => {
+const ChallengeList: FC = () => {
     const { solved } = useContext(Web3Context);
     const { multiLang } = useContext(LanguageContext);
     const challengesRef = useRef<ChallengeType[]>(multiLang?.challenges.list);
@@ -24,7 +24,7 @@ const Challenges: FC = () => {
                     challengesRef.current &&
                     challengesRef.current.map(({ title }, idx) => {
                         return (
-                            <Challenge
+                            <ChallengeCard
                                 key={idx}
                                 index={idx}
                                 title={title}
@@ -38,4 +38,4 @@ const Challenges: FC = () => {
     );
 }
 
-export default Challenges;
+export default ChallengeList;
