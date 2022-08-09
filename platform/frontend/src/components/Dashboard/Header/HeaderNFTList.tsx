@@ -112,12 +112,12 @@ const HeaderNFTList: FC = () => {
                                     sx={{
                                         borderWidth: "3px",
                                         borderStyle: "dashed",
-                                        borderColor: yn ? theme.colors.success.main : theme.colors.error.main,
+                                        borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
                                         padding: "1px"
                                     }}
                                     imgProps={{
                                         style: {
-                                            opacity: yn ? "100%" : "40%",
+                                            opacity: (active && yn) ? "100%" : "40%",
                                         }
                                     }}
                                 />
@@ -171,12 +171,12 @@ const HeaderNFTList: FC = () => {
                                     sx={{
                                         borderWidth: "3px",
                                         borderStyle: "dashed",
-                                        borderColor: yn ? theme.colors.success.main : theme.colors.error.main,
+                                        borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
                                         padding: "1px",
                                     }}
                                     imgProps={{
                                         style: {
-                                            opacity: yn ? "100%" : "40%",
+                                            opacity: (active && yn) ? "100%" : "40%",
                                         }
                                     }}
                                 />
@@ -187,10 +187,10 @@ const HeaderNFTList: FC = () => {
                                 <Typography
                                     variant="h6"
                                     sx={{
-                                        color: yn ? theme.colors.success.main : theme.colors.error.main
+                                        color: (active && yn) ? theme.colors.success.main : theme.colors.error.main
                                     }}
                                 >
-                                    {yn ? multiLang?.challenges.solved : multiLang?.challenges.notSolved}
+                                    {(active && yn) ? multiLang?.challenges.solved : multiLang?.challenges.notSolved}
                                 </Typography>
                             </Box>
                         </ListItem>
