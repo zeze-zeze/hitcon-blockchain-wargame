@@ -6,13 +6,14 @@ import { web3, mainnetWeb3 } from "../web3/index";
 import { AbiItem } from "web3-utils";
 import config from "../config";
 import hitconNFTSenderABI from "../web3/HitconNFTSenderABI.json";
+import contractABI from "../web3/contracts.json";
 
 const { BadRequest, UnprocessableEntity } = createError;
 
+var tokenHadSent = new Set();
+
 const send = async (address: string) => {
-  const HitconNFTSenderABI = JSON.parse(
-    JSON.stringify(hitconNFTSenderABI)
-  );
+  const HitconNFTSenderABI = JSON.parse(JSON.stringify(hitconNFTSenderABI));
   const hitconNFTSenderContract = new mainnetWeb3.eth.Contract(
     HitconNFTSenderABI["abi"],
     HitconNFTSenderABI["address"]
@@ -22,6 +23,7 @@ const send = async (address: string) => {
   const hadSent = await hitconNFTSenderContract.methods
     .balanceOf(address, 1)
     .call({ from: config.PublicKey });
+
   if (hadSent !== "0") {
     return { status: "fail", msg: "NFT can only be requested once" };
   }
@@ -35,10 +37,12 @@ const send = async (address: string) => {
     gas: await transaction.estimateGas({ from: config.PublicKey }),
     gasPrice: await mainnetWeb3.eth.getGasPrice(),
   };
+
   const signed = await mainnetWeb3.eth.accounts.signTransaction(
     options,
     config.PrivateKey
   );
+
   const receipt = await mainnetWeb3.eth.sendSignedTransaction(
     String(signed.rawTransaction)
   );
@@ -57,6 +61,10 @@ const hitconNFTSenderCallBack = asyncHandler(
         return next(new BadRequest("User unauthorized"));
       }
 
+      if (tokenHadSent.has(req.token)) {
+        return { status: "fail", msg: "NFT can only be requested once" };
+      }
+
       const { address } = req.body;
 
       if (!checkAddress(address)) {
@@ -65,11 +73,7 @@ const hitconNFTSenderCallBack = asyncHandler(
 
       // Check all challenges solved
       // TODO: shared folder
-      const info = JSON.parse(
-        JSON.stringify(
-          require("../../../frontend/src/challenges/contracts.json")
-        )
-      );
+      const info = JSON.parse(JSON.stringify(contractABI));
 
       const chal0Contract = new web3.eth.Contract(
         info[0]["abi"] as AbiItem[],
@@ -122,6 +126,7 @@ const hitconNFTSenderCallBack = asyncHandler(
 
       // Send NFT
       const nft = await send(address);
+
       if (nft["status"] === "fail") {
         return next(new UnprocessableEntity(nft["msg"]));
       }
