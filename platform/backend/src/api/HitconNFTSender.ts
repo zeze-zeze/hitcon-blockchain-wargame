@@ -6,9 +6,9 @@ import { web3, mainnetWeb3 } from "../web3/index";
 import { AbiItem } from "web3-utils";
 import config from "../config";
 import hitconNFTSenderABI from "../web3/HitconNFTSenderABI.json";
+import path from "path";
 
 const { BadRequest, UnprocessableEntity } = createError;
-
 const send = async (address: string) => {
   const HitconNFTSenderABI = JSON.parse(
     JSON.stringify(hitconNFTSenderABI)
@@ -67,7 +67,7 @@ const hitconNFTSenderCallBack = asyncHandler(
       // TODO: shared folder
       const info = JSON.parse(
         JSON.stringify(
-          require("../../../frontend/src/challenges/contracts.json")
+          (await import(path.resolve(__dirname, "../../../share/contracts.json"))).default
         )
       );
 
