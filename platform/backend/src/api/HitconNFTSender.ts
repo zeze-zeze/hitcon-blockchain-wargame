@@ -10,8 +10,6 @@ import contractABI from "../web3/contracts.json";
 
 const { BadRequest, UnprocessableEntity } = createError;
 
-var tokenHadSent = new Set();
-
 const send = async (address: string) => {
   const HitconNFTSenderABI = JSON.parse(JSON.stringify(hitconNFTSenderABI));
   const hitconNFTSenderContract = new mainnetWeb3.eth.Contract(
@@ -59,10 +57,6 @@ const hitconNFTSenderCallBack = asyncHandler(
       // Check whether user have the right to retrieve NFT
       if (!req.session || req.session.type !== "token") {
         return next(new BadRequest("User unauthorized"));
-      }
-
-      if (tokenHadSent.has(req.token)) {
-        return { status: "fail", msg: "NFT can only be requested once" };
       }
 
       const { address } = req.body;
