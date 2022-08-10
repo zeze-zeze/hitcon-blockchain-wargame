@@ -6,7 +6,7 @@ import { web3, mainnetWeb3 } from "../web3/index";
 import { AbiItem } from "web3-utils";
 import config from "../config";
 import hitconNFTSenderABI from "../web3/HitconNFTSenderABI.json";
-import path from "path";
+import info from "../share/contracts.json";
 
 const { BadRequest, UnprocessableEntity } = createError;
 const send = async (address: string) => {
@@ -62,14 +62,6 @@ const hitconNFTSenderCallBack = asyncHandler(
       if (!checkAddress(address)) {
         return next(new UnprocessableEntity("Incorrect Wallet Address"));
       }
-
-      // Check all challenges solved
-      // TODO: shared folder
-      const info = JSON.parse(
-        JSON.stringify(
-          (await import(path.resolve(__dirname, "../../../share/contracts.json"))).default
-        )
-      );
 
       const chal0Contract = new web3.eth.Contract(
         info[0]["abi"] as AbiItem[],

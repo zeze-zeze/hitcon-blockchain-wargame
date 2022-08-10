@@ -19,7 +19,11 @@ import { useWeb3React } from '@web3-react/core';
 import WaitEffectContext from "contexts/WaitEffectContext";
 import LanguageContext from "contexts/LanguageContext";
 import Web3Context from "contexts/Web3Context";
+<<<<<<< HEAD
 import info from "challenges/contracts.json";
+=======
+import info from "share/contracts.json";
+>>>>>>> f0d2272 (modify share folder path)
 
 /* Typescript declaration merging */
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */

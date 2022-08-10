@@ -10,7 +10,7 @@ import Web3 from 'web3';
 import { AbiItem } from "web3-utils";
 import { Contract } from "web3-eth-contract"
 
-import contractsInfo from "challenges/contracts.json";
+import contractsInfo from "share/contracts.json";
 
 import WaitEffectContext from "contexts/WaitEffectContext";
 import SidebarToggledContext from "contexts/SidebarToggledContext";
