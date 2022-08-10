@@ -6,10 +6,9 @@ import { web3, mainnetWeb3 } from "../web3/index";
 import { AbiItem } from "web3-utils";
 import config from "../config";
 import hitconNFTSenderABI from "../web3/HitconNFTSenderABI.json";
-import contractABI from "../web3/contracts.json";
+import contractABI from "../share/contracts.json";
 
 const { BadRequest, UnprocessableEntity } = createError;
-
 const send = async (address: string) => {
   const HitconNFTSenderABI = JSON.parse(JSON.stringify(hitconNFTSenderABI));
   const hitconNFTSenderContract = new mainnetWeb3.eth.Contract(
@@ -68,7 +67,7 @@ const hitconNFTSenderCallBack = asyncHandler(
       // Check all challenges solved
       // TODO: shared folder
       const info = JSON.parse(JSON.stringify(contractABI));
-
+      
       const chal0Contract = new web3.eth.Contract(
         info[0]["abi"] as AbiItem[],
         info[0]["addr"]

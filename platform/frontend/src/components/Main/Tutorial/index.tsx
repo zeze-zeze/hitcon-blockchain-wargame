@@ -88,7 +88,7 @@ const Tutorial: FC = () => {
                                                                             )
                                                                         } else if (statement.type === "link") {
                                                                             return (
-                                                                                <a href={statement.to?.replace(
+                                                                                <a target="_blank" href={statement.to?.replace(
                                                                                     "REACT_APP_BASE_URL",
                                                                                     baseURL
                                                                                 )}>{statement.data}</a>

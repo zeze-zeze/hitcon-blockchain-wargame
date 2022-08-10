@@ -105,21 +105,23 @@ const HeaderNFTList: FC = () => {
                 solved.map((yn: boolean, idx: number) => (
                     <Grid item xs={1} key={idx}>
                         <Tooltip arrow title={multiLang?.challenges.list[idx].title ?? ""}>
-                            <Avatar
-                                variant="rounded"
-                                src={NFTImgLinks[idx]}
-                                sx={{
-                                    borderWidth: "3px",
-                                    borderStyle: "dashed",
-                                    borderColor: yn ? theme.colors.success.main : theme.colors.error.main,
-                                    padding: "1px"
-                                }}
-                                imgProps={{
-                                    style: {
-                                        opacity: yn ? "100%" : "40%",
-                                    }
-                                }}
-                            />
+                            <a href={`/challenges/${idx}`}>
+                                <Avatar
+                                    variant="rounded"
+                                    src={NFTImgLinks[idx]}
+                                    sx={{
+                                        borderWidth: "3px",
+                                        borderStyle: "dashed",
+                                        borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
+                                        padding: "1px"
+                                    }}
+                                    imgProps={{
+                                        style: {
+                                            opacity: (active && yn) ? "100%" : "40%",
+                                        }
+                                    }}
+                                />
+                            </a>
                         </Tooltip>
                     </Grid>
                 ))
@@ -163,21 +165,23 @@ const HeaderNFTList: FC = () => {
                                 placement="left"
                                 title={multiLang?.challenges.list[idx].title ?? ""}
                             >
-                                <Avatar
-                                    variant="rounded"
-                                    src={NFTImgLinks[idx]}
-                                    sx={{
-                                        borderWidth: "3px",
-                                        borderStyle: "dashed",
-                                        borderColor: yn ? theme.colors.success.main : theme.colors.error.main,
-                                        padding: "1px",
-                                    }}
-                                    imgProps={{
-                                        style: {
-                                            opacity: yn ? "100%" : "40%",
-                                        }
-                                    }}
-                                />
+                                <a href={`/challenges/${idx}`}>
+                                    <Avatar
+                                        variant="rounded"
+                                        src={NFTImgLinks[idx]}
+                                        sx={{
+                                            borderWidth: "3px",
+                                            borderStyle: "dashed",
+                                            borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
+                                            padding: "1px",
+                                        }}
+                                        imgProps={{
+                                            style: {
+                                                opacity: (active && yn) ? "100%" : "40%",
+                                            }
+                                        }}
+                                    />
+                                </a>
                             </Tooltip>
                             <Box sx={{
                                 ml: theme.spacing(2)
@@ -185,10 +189,10 @@ const HeaderNFTList: FC = () => {
                                 <Typography
                                     variant="h6"
                                     sx={{
-                                        color: yn ? theme.colors.success.main : theme.colors.error.main
+                                        color: (active && yn) ? theme.colors.success.main : theme.colors.error.main
                                     }}
                                 >
-                                    {yn ? multiLang?.challenges.solved : multiLang?.challenges.notSolved}
+                                    {(active && yn) ? multiLang?.challenges.solved : multiLang?.challenges.notSolved}
                                 </Typography>
                             </Box>
                         </ListItem>

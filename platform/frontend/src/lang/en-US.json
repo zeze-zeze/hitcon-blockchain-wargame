@@ -90,7 +90,7 @@
     },
     "home": {
         "title": "HITCON Blockchain Wargame",
-        "subtitle": "Hitcon Blockchain Wargame is a Blockchain CTF Game. Each level contains a vulnerable smart contract that needs to be 'hacked'.",
+        "subtitle": "Hitcon Blockchain Wargame is a Blockchain CTF Game. Each challenge contains a smart contract that needs to be solved to satisfy win condition.",
         "cards": [
             {
                 "title": "New to blockchain?",
@@ -132,7 +132,52 @@
             },
             {
                 "type": "header",
-                "data": "2. Open the browser's console"
+                "data": "2. Connect wallet"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "After MetaMask setup, you should have a wallet address. Now connect the wallet address by clicking the button in the right top of this platform, then any transaction made here will be related to the connected wallet address."
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "3. Use faucet to get ETH"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "We need ETH to make transactions in the wargame. Not the ETH on the mainnet, we use Rinkeby testnet instead, which is for testing purpose. Don't worry if you use too much because it doesn't cost you any money."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "Open our "
+                        },
+                        {
+                            "type": "link",
+                            "data": "hitcon faucet",
+                            "to": "/faucet"
+                        },
+                        {
+                            "type": "text",
+                            "data": ", then click the button to request ETH from our faucet. If the faucet dry up, you can use other faucets on the internet below the button."
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "4. Open the browser's console"
             },
             {
                 "type": "body",
@@ -145,7 +190,7 @@
                         {
                             "type": "link",
                             "data": "challenge 0",
-                            "to": "REACT_APP_BASE_URL/challenges/0"
+                            "to": "/challenges/0"
                         },
                         {
                             "type": "text",
@@ -182,7 +227,7 @@
             },
             {
                 "type": "header",
-                "data": "3. Use the console helpers"
+                "data": "5. Use the console helpers"
             },
             {
                 "type": "body",
@@ -203,7 +248,7 @@
             },
             {
                 "type": "header",
-                "data": "4. The contract"
+                "data": "6. The contract"
             },
             {
                 "type": "body",
@@ -230,6 +275,45 @@
                         {
                             "type": "text",
                             "data": "Go ahead and expand the object to see what's inside."
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "7. Get NFT"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "Once you solve each challenge, you will get an NFT as award. To see the NFT, besides checking the icons on the top of this platform, you can also find them out at "
+                        },
+                        {
+                            "type": "link",
+                            "data": "testnets.opensea.io",
+                            "to": "https://testnets.opensea.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": ". The NFTs for testnet are displayed there."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "After solving all challenges, you will get an NFT on mainnet, which stands for a symbol of winning the wargame. You can see the NFT at "
+                        },
+                        {
+                            "type": "link",
+                            "data": "opensea.io",
+                            "to": "https://opensea.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": "."
                         }
                     ]
                 ]
@@ -320,7 +404,7 @@
                         },
                         {
                             "type": "code",
-                            "data": "web3.utils.encodedPacked"
+                            "data": "web3.utils.encodePacked"
                         },
                         {
                             "type": "text",
@@ -532,7 +616,8 @@
         "buttonText": "Start Challenge",
         "contract": {
             "submitText": "Submit",
-            "submitButtonText": "I've Finished the level!"
+            "submitButtonText": "I've Finished the level!",
+            "backToChallengeList": "Back to challenge list"
         }
     },
     "setting": {

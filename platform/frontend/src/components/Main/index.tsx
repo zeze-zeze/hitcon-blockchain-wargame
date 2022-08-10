@@ -111,8 +111,10 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
     const navigate = useNavigate();
     const { sidebarToggled } = useContext(SidebarToggledContext);
-    const { initContracts } = useContext(Web3Context);
-
+    const { contracts, initContracts, initSolvedChallenges } = useContext(Web3Context);
+    const { setShowBackDrop, setErrorMessage, setShowSnackBar } = useContext(WaitEffectContext);
+    const { multiLang } = useContext(LanguageContext);
+    const { active, account } = useWeb3React();
     /* 
      * Adjust the width & left property according to
      * 1. current screen size
@@ -120,9 +122,6 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
      */
     const calculatedLeft = sidebarToggled && lgUp ? theme.sidebar.width : 0;
     const calculatedWidth = sidebarToggled && lgUp ? `calc(100% - ${theme.sidebar.width})` : '100%';
-    const { setShowBackDrop, setErrorMessage, setShowSnackBar } = useContext(WaitEffectContext);
-    const { multiLang } = useContext(LanguageContext);
-    const { active, account } = useWeb3React();
 
     const tried = useEagerConnect();
 
@@ -131,6 +130,12 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
             initContracts(account);
         }
     }, [tried, active, account])
+
+    useEffect(() => {
+        if (tried && active && account && contracts.length !== 0) {
+            initSolvedChallenges(account);
+        }
+    }, [tried, active, account, contracts])
 
     /* Check whether session expires */
     useEffect(() => {

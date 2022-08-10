@@ -90,7 +90,7 @@
     },
     "home": {
         "title": "HITCON 區塊鏈挑戰",
-        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF 遊戲。每個關卡都藏有一些漏洞等著你來「駭」。",
+        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF，每個挑戰都要透過智能合約的知識來達成通關條件。",
         "cards": [
             {
                 "title": "區塊鏈新手嗎？",
@@ -98,7 +98,7 @@
             },
             {
                 "title": "區塊鏈老手嗎？",
-                "buttonText": "直接開始"
+                "buttonText": "開始挑戰"
             }
         ]
     },
@@ -132,7 +132,52 @@
             },
             {
                 "type": "header",
-                "data": "2. 開啟瀏覽器的 console"
+                "data": "2. 連結錢包"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "建立好 MetaMask 後，你現在應該有個錢包地址。現在點擊右上角的藍色按鈕來連結錢包，之後在這個平台所做的任何區塊鏈交易都會與這個連結的錢包地址相關。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "3. 從水龍頭取得 ETH"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "在挑戰過程中會需要使用到乙太幣與合約交易。不過並不是主鏈的乙太幣，而是使用 Rinkeby 測試鏈，這單純是拿來測試用途的。不需要擔心你使用太多測試鏈乙太幣，因為它們不會花你任何錢。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "打開我們的 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "hitcon 水龍頭",
+                            "to": "faucet"
+                        },
+                        {
+                            "type": "text",
+                            "data": "，然後點選按鈕從水龍頭申請測試鏈乙太幣。如果水龍頭乾枯了，你可以使用按鈕下方連結的其他水龍頭來取得測試鏈乙太幣。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "4. 開啟瀏覽器的 console"
             },
             {
                 "type": "body",
@@ -145,7 +190,7 @@
                         {
                             "type": "link",
                             "data": "挑戰 0",
-                            "to": "REACT_APP_BASE_URL/challenges/0"
+                            "to": "challenges/0"
                         },
                         {
                             "type": "text",
@@ -182,7 +227,7 @@
             },
             {
                 "type": "header",
-                "data": "3. 查看挑戰的使用說明"
+                "data": "5. 查看挑戰的使用說明"
             },
             {
                 "type": "body",
@@ -203,7 +248,7 @@
             },
             {
                 "type": "header",
-                "data": "4. 合約"
+                "data": "6. 合約"
             },
             {
                 "type": "body",
@@ -230,6 +275,45 @@
                         {
                             "type": "text",
                             "data": "可以展開 console 中顯示的 object 來仔細看一下內容。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "7. 取得 NFT"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "當你每解完一題，你會取得一個 NFT 獎勵。要查看 NFT，除了在這個平台上方可以看到的縮圖之外，你還可以從 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "testnets.opensea.io",
+                            "to": "https://testnets.opensea.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 查看。測試鏈的 NFT 會被顯示在那。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "在解完所有題目之後，你會取得一個主鏈的 NFT，代表你已經贏下 Wargame 了。你可以查看這個 NFT 在 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "opensea.io",
+                            "to": "https://opensea.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 。"
                         }
                     ]
                 ]
@@ -308,7 +392,7 @@
                         },
                         {
                             "type": "code",
-                            "data": "web3.utils.encodedPacked"
+                            "data": "web3.utils.encodePacked"
                         },
                         {
                             "type": "text",
@@ -512,7 +596,8 @@
         "buttonText": "開始挑戰",
         "contract": {
             "submitText": "提交",
-            "submitButtonText": "我解完這題了"
+            "submitButtonText": "我解完這題了",
+            "backToChallengeList": "回到挑戰目錄"
         }
     },
     "setting": {
