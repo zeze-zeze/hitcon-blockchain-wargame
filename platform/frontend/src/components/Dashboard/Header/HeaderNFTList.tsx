@@ -165,21 +165,23 @@ const HeaderNFTList: FC = () => {
                                 placement="left"
                                 title={multiLang?.challenges.list[idx].title ?? ""}
                             >
-                                <Avatar
-                                    variant="rounded"
-                                    src={NFTImgLinks[idx]}
-                                    sx={{
-                                        borderWidth: "3px",
-                                        borderStyle: "dashed",
-                                        borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
-                                        padding: "1px",
-                                    }}
-                                    imgProps={{
-                                        style: {
-                                            opacity: (active && yn) ? "100%" : "40%",
-                                        }
-                                    }}
-                                />
+                                <a href={`/challenges/${idx}`}>
+                                    <Avatar
+                                        variant="rounded"
+                                        src={NFTImgLinks[idx]}
+                                        sx={{
+                                            borderWidth: "3px",
+                                            borderStyle: "dashed",
+                                            borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
+                                            padding: "1px",
+                                        }}
+                                        imgProps={{
+                                            style: {
+                                                opacity: (active && yn) ? "100%" : "40%",
+                                            }
+                                        }}
+                                    />
+                                </a>
                             </Tooltip>
                             <Box sx={{
                                 ml: theme.spacing(2)
