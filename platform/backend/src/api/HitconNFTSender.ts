@@ -20,7 +20,6 @@ const send = async (address: string) => {
   const hadSent = await hitconNFTSenderContract.methods
     .balanceOf(address, 1)
     .call({ from: config.PublicKey });
-  g;
   if (hadSent !== "0") {
     return { status: "fail", msg: "NFT can only be requested once" };
   }
