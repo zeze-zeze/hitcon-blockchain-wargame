@@ -88,7 +88,14 @@
                 "logout": "登出"
             },
             "achievement": {
-                "requestNFT": "取得 NFT"
+                "requestNFT": "取得 NFT",
+                "dialog": {
+                    "title": "恭喜！您完成了所有的挑戰。",
+                    "content": "以下是您的主鏈 NFT。",
+                    "buttons": {
+                        "ok": "了解"
+                    }
+                }
             }
         }
     },

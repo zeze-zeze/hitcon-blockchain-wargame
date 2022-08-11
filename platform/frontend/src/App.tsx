@@ -194,10 +194,11 @@ const App: FC = () => {
                     <Web3Context.Provider
                         value={{ contracts, solved, initContracts, initSolvedChallenges }}
                     >
+
+                        <CssBaseline />
                         <SidebarToggledContext.Provider
                             value={{ sidebarToggled, toggleSidebar }}
                         >
-                            <CssBaseline />
                             <EffectContext.Provider
                                 value={{
                                     showBackDrop,
@@ -216,6 +217,9 @@ const App: FC = () => {
                                     width={width}
                                     height={height}
                                     numberOfPieces={showConfetti ? 400 : 0}
+                                    style={{
+                                        zIndex: 1250 // in Material UI, drawer's z-index is 1200 and modal's z-index is 1300
+                                    }}
                                 />
                                 <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>
                             </EffectContext.Provider>
