@@ -5,10 +5,10 @@ import {
     Snackbar,
     Alert,
 } from "@mui/material";
-import WaitEffectContext from "contexts/WaitEffectContext";
+import EffectContext from "contexts/EffectContext";
 
 const WaitEffect: FC = () => {
-    const { showSnackBar, showBackDrop, setShowSnackBar, successMessage, errorMessage } = useContext(WaitEffectContext);
+    const { showSnackBar, showBackDrop, setShowSnackBar, successMessage, errorMessage } = useContext(EffectContext);
     return (
         <>
             <Backdrop

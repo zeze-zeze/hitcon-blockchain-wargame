@@ -24,7 +24,7 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { styled, useTheme } from '@mui/material/styles';
 import LanguageContext from 'contexts/LanguageContext';
 import WaitEffect from 'components/WaitEffect';
-import WaitEffectContext from "contexts/WaitEffectContext";
+import EffectContext from "contexts/EffectContext";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 const LandingWrapper = styled(Container)(
@@ -76,7 +76,7 @@ const Landing: FC = () => {
     const theme = useTheme();
     const minWidthUp = useMediaQuery("(min-width:1100px)");
     const navigate = useNavigate();
-    const { setShowBackDrop, setShowSnackBar, setErrorMessage, setSuccessMessage } = useContext(WaitEffectContext);
+    const { setShowBackDrop, setShowSnackBar, setErrorMessage, setSuccessMessage } = useContext(EffectContext);
 
     const handleLogin = useCallback(async (anonym: boolean) => {
         let apiURL: string;

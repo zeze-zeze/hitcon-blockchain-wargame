@@ -13,7 +13,7 @@ import {
 } from "components/Main";
 import axios from "axios";
 import LanguageContext from "contexts/LanguageContext";
-import WaitEffectContext from "contexts/WaitEffectContext";
+import EffectContext from "contexts/EffectContext";
 
 const FaucetContentWrapper = styled(Container)(
     ({ theme }) => ({

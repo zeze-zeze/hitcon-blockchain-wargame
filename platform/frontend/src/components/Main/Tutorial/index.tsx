@@ -10,7 +10,6 @@ import {
     PaperComponentWrapper
 } from 'components/Main';
 import LanguageContext from 'contexts/LanguageContext';
-import { string } from 'prop-types';
 
 type TutorialType = {
     type: string;
@@ -30,7 +29,7 @@ type BodyType = {
 const Tutorial: FC = () => {
     const { multiLang } = useContext(LanguageContext);
     const [baseURL, setBaseURL] = useState<string>("");
-    
+
     useEffect(() => {
         switch (process.env.NODE_ENV) {
             case "development":
@@ -64,46 +63,46 @@ const Tutorial: FC = () => {
                     <PaperComponentWrapper>
                         <Container>
                             {
-                                multiLang?.tutorial.content.map((display: HeaderType | BodyType) => {
-                                    if (display.type === "header") {
-                                        return (
-                                            <SubHeaderTypography key={JSON.stringify(display)}>
-                                                {display.data}
-                                            </SubHeaderTypography>
-                                        )
-                                    } else if (display.type === "body") {
-                                        return (
-                                            <Fragment key={JSON.stringify(display)}>
-                                                {
-                                                    display.children.map((paragraph: TutorialType[]) => {
-                                                        return (
-                                                            <BodyTypography>
+                                multiLang?.tutorial.content.map((display: HeaderType | BodyType) => ((
+                                    <Fragment key={JSON.stringify(display)}>
+                                        {
+                                            display.type === "header" ? (
+                                                <SubHeaderTypography>
+                                                    {display.data}
+                                                </SubHeaderTypography>
+                                            ) : (
+                                                <Fragment>
+                                                    {
+                                                        display.children.map((paragraph: TutorialType[]) => ((
+                                                            <BodyTypography key={JSON.stringify(paragraph)}>
                                                                 {
-                                                                    paragraph.map((statement: TutorialType) => {
-                                                                        if (statement.type === "text") {
-                                                                            return statement.data;
-                                                                        } else if (statement.type === "code") {
-                                                                            return (
-                                                                                <code>{statement.data}</code>
-                                                                            )
-                                                                        } else if (statement.type === "link") {
-                                                                            return (
-                                                                                <a target="_blank" href={statement.to?.replace(
-                                                                                    "REACT_APP_BASE_URL",
-                                                                                    baseURL
-                                                                                )}>{statement.data}</a>
-                                                                            )
-                                                                        }
-                                                                    })
+                                                                    paragraph.map((statement: TutorialType) => ((
+                                                                        <Fragment key={JSON.stringify(statement)}>
+                                                                            {
+                                                                                statement.type === "text" ? (
+                                                                                    statement.data
+                                                                                ) : statement.type === "code" ? (
+                                                                                    <code>{statement.data}</code>
+                                                                                ) : statement.type === "link" ? (
+                                                                                    <a target="_blank" href={statement.to?.replace(
+                                                                                        "REACT_APP_BASE_URL",
+                                                                                        baseURL
+                                                                                    )}>{statement.data}</a>
+                                                                                ) : (
+                                                                                    <Fragment />
+                                                                                )
+                                                                            }
+                                                                        </Fragment>
+                                                                    )))
                                                                 }
                                                             </BodyTypography>
-                                                        );
-                                                    })
-                                                }
-                                            </Fragment>
-                                        );
-                                    }
-                                })
+                                                        )))
+                                                    }
+                                                </Fragment>
+                                            )
+                                        }
+                                    </Fragment>
+                                )))
                             }
                         </Container>
                     </PaperComponentWrapper>

@@ -16,9 +16,8 @@ import {
 import MainWrapper from 'components/Main';
 import Error404 from 'components/Error/_404';
 import { useWeb3React } from '@web3-react/core';
-import WaitEffectContext from "contexts/WaitEffectContext";
+import EffectContext from "contexts/EffectContext";
 import LanguageContext from "contexts/LanguageContext";
-import Web3Context from "contexts/Web3Context";
 import info from "share/contracts.json";
 
 /* Typescript declaration merging */
@@ -78,7 +77,7 @@ const Challenge: FC = () => {
     const { id } = useParams<string>();
     const challengeId = useRef<number>(Number(id));
     const { active, account } = useWeb3React();
-    const { setShowSnackBar, setShowBackDrop, setErrorMessage } = useContext(WaitEffectContext);
+    const { setShowSnackBar, setShowBackDrop, setErrorMessage } = useContext(EffectContext);
 
     const handleSubmit = useCallback(async () => {
         var style = 'color: tomato; background:#eee; -webkit-text-stroke: 1px black; font-size:30px;';
