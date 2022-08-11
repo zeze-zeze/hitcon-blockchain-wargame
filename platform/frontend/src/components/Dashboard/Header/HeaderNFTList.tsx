@@ -7,24 +7,23 @@ import { useTheme } from "@mui/material/styles";
 import LanguageContext from "contexts/LanguageContext";
 import WaitEffectContext from "contexts/WaitEffectContext";
 import Web3Context from "contexts/Web3Context";
+import NotificationContext from "contexts/NotificationContext";
 
 const HeaderNFTList: FC = () => {
     const { account, active } = useWeb3React();
-
     const {
         setShowBackDrop,
         setShowSnackBar,
         setSuccessMessage,
         setErrorMessage,
+        setShowConfetti,
         showBackDrop
     } = useContext(WaitEffectContext);
-
-
+    const { addNotification } = useContext(NotificationContext);
     const { solved } = useContext(Web3Context);
     const theme = useTheme();
     const showSolved = useMediaQuery("(min-width:940px)");
     const { multiLang } = useContext(LanguageContext);
-
     const [NFTImgLinks, setNFTImgLinks] = useState<any[]>([]);
 
     useEffect(() => {
@@ -58,15 +57,24 @@ const HeaderNFTList: FC = () => {
         }
         setShowBackDrop(true);
         try {
-            await axios
+            /*await axios
                 .post(apiURL + "/hitcon-nft-sender", {
                     address: account,
                 }, {
                     withCredentials: true
                 });
+            */
+            setShowBackDrop(false);
             setSuccessMessage(multiLang?.success.requestNFT);
             setShowSnackBar(1);
-            setShowBackDrop(false);
+            setShowConfetti(true);
+            addNotification({
+                idx: Number(process.env.REACT_APP_CHALLENGE_NUM),
+                date: Date.now(),
+            });
+            setTimeout(() => {
+                setShowConfetti(false);
+            }, 30000);
         } catch (err) {
             if (err instanceof AxiosError) {
                 if (err.code === "ERR_BAD_REQUEST") {
@@ -99,121 +107,124 @@ const HeaderNFTList: FC = () => {
         }
     }, [account, multiLang]);
 
-    return showSolved ? (
-        <Grid container justifyContent="center" alignItems="center" spacing={8}>
+    return (
+        <>  
             {
-                solved.map((yn: boolean, idx: number) => (
-                    <Grid item xs={1} key={idx}>
-                        <Tooltip arrow title={multiLang?.challenges.list[idx].title ?? ""}>
-                            <a href={`/challenges/${idx}`}>
-                                <Avatar
-                                    variant="rounded"
-                                    src={NFTImgLinks[idx]}
-                                    sx={{
-                                        borderWidth: "3px",
-                                        borderStyle: "dashed",
-                                        borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
-                                        padding: "1px"
-                                    }}
-                                    imgProps={{
-                                        style: {
-                                            opacity: (active && yn) ? "100%" : "40%",
-                                        }
-                                    }}
-                                />
-                            </a>
-                        </Tooltip>
-                    </Grid>
-                ))
-            }
+                showSolved ? (
+                    <Grid container justifyContent="center" alignItems="center" spacing={8}>
+                        {
+                            solved.map((yn: boolean, idx: number) => (
+                                <Grid item xs={1} key={idx}>
+                                    <Tooltip arrow title={multiLang?.challenges.list[idx].title ?? ""}>
+                                        <a href={`/challenges/${idx}`}>
+                                            <Avatar
+                                                variant="rounded"
+                                                src={NFTImgLinks[idx]}
+                                                sx={{
+                                                    borderWidth: "3px",
+                                                    borderStyle: "dashed",
+                                                    borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
+                                                    padding: "1px"
+                                                }}
+                                                imgProps={{
+                                                    style: {
+                                                        opacity: (active && yn) ? "100%" : "40%",
+                                                    }
+                                                }}
+                                            />
+                                        </a>
+                                    </Tooltip>
+                                </Grid>
+                            ))
+                        }
 
-            {solved.every((v) => v === true) && (
-                <>
-                    <Grid item lg={3} key={7}>
-                        <LoadingButton
-                            variant="contained"
-                            color="error"
-                            onClick={requestNFT}
-                            loading={showBackDrop}
-                            loadingIndicator="Requesting..."
-                        >
-                            {multiLang?.dashboard.header.achievement.requestNFT}
-                        </LoadingButton>
+                        {true && (
+                            <>
+                                <Grid item lg={3} key={7}>
+                                    <LoadingButton
+                                        variant="contained"
+                                        color="error"
+                                        onClick={requestNFT}
+                                        loading={showBackDrop}
+                                        loadingIndicator="Requesting..."
+                                    >
+                                        {multiLang?.dashboard.header.achievement.requestNFT}
+                                    </LoadingButton>
+                                </Grid>
+                            </>
+                        )}
                     </Grid>
-                </>
-            )}
-        </Grid>
-    ) : (
-
-        <>
-            <List sx={{
-                backgroundColor: theme.colors.alpha.black[100],
-                borderRadius: theme.spacing(0.8),
-                margin: theme.spacing(1),
-            }}>
-                {
-                    solved.map((yn: boolean, idx: number) => (
-                        <ListItem
-                            key={idx}
-                            sx={{
-                                my: theme.spacing(0.8),
-                                py: theme.spacing(1),
-                            }}
-                        >
-                            <Tooltip
-                                arrow
-                                placement="left"
-                                title={multiLang?.challenges.list[idx].title ?? ""}
-                            >
-                                <a href={`/challenges/${idx}`}>
-                                    <Avatar
-                                        variant="rounded"
-                                        src={NFTImgLinks[idx]}
-                                        sx={{
-                                            borderWidth: "3px",
-                                            borderStyle: "dashed",
-                                            borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
-                                            padding: "1px",
-                                        }}
-                                        imgProps={{
-                                            style: {
-                                                opacity: (active && yn) ? "100%" : "40%",
-                                            }
-                                        }}
-                                    />
-                                </a>
-                            </Tooltip>
-                            <Box sx={{
-                                ml: theme.spacing(2)
-                            }}>
-                                <Typography
-                                    variant="h6"
+                ) : (
+                    <List sx={{
+                        backgroundColor: theme.colors.alpha.black[100],
+                        borderRadius: theme.spacing(0.8),
+                        margin: theme.spacing(1),
+                    }}>
+                        {
+                            solved.map((yn: boolean, idx: number) => (
+                                <ListItem
+                                    key={idx}
                                     sx={{
-                                        color: (active && yn) ? theme.colors.success.main : theme.colors.error.main
+                                        my: theme.spacing(0.8),
+                                        py: theme.spacing(1),
                                     }}
                                 >
-                                    {(active && yn) ? multiLang?.challenges.solved : multiLang?.challenges.notSolved}
-                                </Typography>
-                            </Box>
+                                    <Tooltip
+                                        arrow
+                                        placement="left"
+                                        title={multiLang?.challenges.list[idx].title ?? ""}
+                                    >
+                                        <a href={`/challenges/${idx}`}>
+                                            <Avatar
+                                                variant="rounded"
+                                                src={NFTImgLinks[idx]}
+                                                sx={{
+                                                    borderWidth: "3px",
+                                                    borderStyle: "dashed",
+                                                    borderColor: (active && yn) ? theme.colors.success.main : theme.colors.error.main,
+                                                    padding: "1px",
+                                                }}
+                                                imgProps={{
+                                                    style: {
+                                                        opacity: (active && yn) ? "100%" : "40%",
+                                                    }
+                                                }}
+                                            />
+                                        </a>
+                                    </Tooltip>
+                                    <Box sx={{
+                                        ml: theme.spacing(2)
+                                    }}>
+                                        <Typography
+                                            variant="h6"
+                                            sx={{
+                                                color: (active && yn) ? theme.colors.success.main : theme.colors.error.main
+                                            }}
+                                        >
+                                            {(active && yn) ? multiLang?.challenges.solved : multiLang?.challenges.notSolved}
+                                        </Typography>
+                                    </Box>
+                                </ListItem>
+                            ))
+                        }
+                        <ListItem>
+                            {solved.every((v) => v === true) && (
+                                <Grid item lg={3} key={7}>
+                                    <LoadingButton
+                                        variant="contained"
+                                        color="error"
+                                        onClick={requestNFT}
+                                        loading={showBackDrop}
+                                        loadingIndicator="Requesting..."
+                                    >
+                                        {multiLang?.dashboard.header.achievement.requestNFT}
+                                    </LoadingButton>
+                                </Grid>
+                            )}
                         </ListItem>
-                    ))
-                }
-                <ListItem>
-                    {solved.every((v) => v === true) && (
-                        <Grid item lg={3} key={7}>
-                            <LoadingButton
-                                variant="contained"
-                                color="error"
-                                onClick={requestNFT}
-                                loading={showBackDrop}
-                                loadingIndicator="Requesting..."
-                            >
-                                {multiLang?.dashboard.header.achievement.requestNFT}
-                            </LoadingButton>
-                        </Grid>
-                    )}
-                </ListItem>
-            </List>
+                    </List>
+                )
+            }
         </>
     );
 };

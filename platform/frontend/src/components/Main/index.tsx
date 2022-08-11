@@ -15,6 +15,8 @@ import Web3Context from 'contexts/Web3Context';
 import { useWeb3React } from '@web3-react/core';
 import WaitEffectContext from 'contexts/WaitEffectContext';
 import LanguageContext from 'contexts/LanguageContext';
+import Confetti from "react-confetti";
+import useWindowDimension from 'hooks/useWindowDimension';
 
 type WrapperProps = {
     children: ReactNode,
@@ -112,9 +114,10 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
     const navigate = useNavigate();
     const { sidebarToggled } = useContext(SidebarToggledContext);
     const { contracts, initContracts, initSolvedChallenges } = useContext(Web3Context);
-    const { setShowBackDrop, setErrorMessage, setShowSnackBar } = useContext(WaitEffectContext);
+    const { showConfetti, setShowBackDrop, setErrorMessage, setShowSnackBar } = useContext(WaitEffectContext);
     const { multiLang } = useContext(LanguageContext);
     const { active, account } = useWeb3React();
+    const { windowInnerWidth, windowInnerHeight } = useWindowDimension();
     /* 
      * Adjust the width & left property according to
      * 1. current screen size
@@ -209,6 +212,11 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
             <MainComponentWrapper sx={{ left: calculatedLeft, width: calculatedWidth }}>
                 <Scrollbars autoHide>
                     <Container>
+                        <Confetti
+                            width={windowInnerWidth}
+                            height={windowInnerHeight}
+                            numberOfPieces={showConfetti ? 400 : 0}
+                        />
                         <WaitEffect />
                         {children}
                     </Container>
