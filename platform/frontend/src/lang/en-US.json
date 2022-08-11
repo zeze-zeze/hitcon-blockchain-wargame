@@ -75,6 +75,10 @@
                     {
                         "title": "Horray! You solve Challenge 5.",
                         "content": "You won NFT5."
+                    },
+                    {
+                        "title": "Horray! You solve all challenges.",
+                        "content": "You won the final NFT."
                     }
                 ]
             },

@@ -67,6 +67,7 @@ const App: FC = () => {
     const [showSnackBar, setShowSnackBar] = useState<number>(0);
     const [successMessage, setSuccessMessage] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
     /* Language */
     useEffect(() => {
@@ -199,10 +200,12 @@ const App: FC = () => {
                                     showSnackBar,
                                     successMessage,
                                     errorMessage,
+                                    showConfetti,
                                     setShowBackDrop,
                                     setShowSnackBar,
                                     setSuccessMessage,
                                     setErrorMessage,
+                                    setShowConfetti
                                 }}
                             >
                                 <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>

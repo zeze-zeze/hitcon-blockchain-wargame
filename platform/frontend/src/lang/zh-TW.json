@@ -58,23 +58,27 @@
                     },
                     {
                         "title": "太好了！你完成了挑戰一。",
-                        "content": "你獲得了 NFT1."
+                        "content": "你獲得了 NFT1。"
                     },
                     {
                         "title": "太好了！你完成了挑戰二。",
-                        "content": "你獲得了 NFT2."
+                        "content": "你獲得了 NFT2。"
                     },
                     {
                         "title": "太好了！你完成了挑戰三。",
-                        "content": "你獲得了 NFT3."
+                        "content": "你獲得了 NFT3。"
                     },
                     {
                         "title": "太好了！你完成了挑戰四。",
-                        "content": "你獲得了 NFT4."
+                        "content": "你獲得了 NFT4。"
                     },
                     {
                         "title": "太好了！你完成了挑戰五。",
-                        "content": "你獲得了 NFT5."
+                        "content": "你獲得了 NFT5。"
+                    },
+                    {
+                        "title": "太好了！你完成了所有的挑戰。",
+                        "content": "你獲得了 Final NFT。"
                     }
                 ]
             },
