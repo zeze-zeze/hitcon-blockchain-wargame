@@ -88,7 +88,14 @@
                 "logout": "Logout"
             },
             "achievement": {
-                "requestNFT": "Request NFT"
+                "requestNFT": "Request NFT",
+                "dialog": {
+                    "title": "Congratulations! You have solved all the challenges.",
+                    "content": "Here's your Mainnet NFT.",
+                    "buttons": {
+                        "ok": "OK"
+                    }
+                }
             }
         }
     },

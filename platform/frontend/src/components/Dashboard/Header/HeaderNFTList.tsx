@@ -58,22 +58,24 @@ const HeaderNFTList: FC = () => {
         }
         setShowBackDrop(true);
         try {
-            /*await axios
+            await axios
                 .post(apiURL + "/hitcon-nft-sender", {
                     address: account,
                 }, {
                     withCredentials: true
                 });
-            */
             setShowBackDrop(false);
             setSuccessMessage(multiLang?.success.requestNFT);
             setShowSnackBar(1);
             setDialogOpen(true);
-            setShowConfetti(true);
             addNotification({
                 idx: Number(process.env.REACT_APP_CHALLENGE_NUM),
                 date: Date.now(),
             });
+            setShowConfetti(true);
+            setTimeout(() => {
+                setShowConfetti(false);
+            }, 15000)
         } catch (err) {
             if (err instanceof AxiosError) {
                 if (err.code === "ERR_BAD_REQUEST") {
@@ -116,11 +118,11 @@ const HeaderNFTList: FC = () => {
                 }}
             >
                 <DialogTitle id="dialog-title">
-                    {multiLang?.landing.dialogs[0].title}
+                    {multiLang?.dashboard.header.achievement.dialog.title}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="dialog-content">
-                        {multiLang?.landing.dialogs[0].content}
+                        {multiLang?.dashboard.header.achievement.dialog.content}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -128,7 +130,7 @@ const HeaderNFTList: FC = () => {
                         setDialogOpen(false);
                         setShowConfetti(false);
                     }}>
-                        {multiLang?.landing.dialogs[0].buttons.submit}
+                        {multiLang?.dashboard.header.achievement.dialog.buttons.ok}
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -161,7 +163,7 @@ const HeaderNFTList: FC = () => {
                             ))
                         }
 
-                        {true && (
+                        {solved.every((v) => v === true) && (
                             <>
                                 <Grid item lg={3} key={7}>
                                     <LoadingButton
