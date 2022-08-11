@@ -13,7 +13,7 @@ import {
 } from "components/Main";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import LanguageContext from "contexts/LanguageContext";
-import WaitEffectContext from "contexts/WaitEffectContext";
+import EffectContext from "contexts/EffectContext";
 
 const FaucetContentWrapper = styled(Container)(({ theme }) => ({
   display: "flex",
@@ -31,7 +31,7 @@ const Faucet: FC = () => {
     setShowSnackBar,
     setSuccessMessage,
     setErrorMessage,
-  } = useContext(WaitEffectContext);
+  } = useContext(EffectContext);
 
   const requestETH = useCallback(async () => {
     let apiURL;

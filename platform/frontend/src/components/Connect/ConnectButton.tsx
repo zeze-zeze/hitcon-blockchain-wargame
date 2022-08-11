@@ -8,14 +8,14 @@ import {
 } from "@web3-react/injected-connector";
 import { injected } from './InjectedConnector';
 import { setupNetwork } from './walletNetwork';
-import WaitEffectContext from 'contexts/WaitEffectContext';
+import EffectContext from 'contexts/EffectContext';
 import LanguageContext from 'contexts/LanguageContext';
 
 const ConnectButton: FC = () => {
 
     const { activate, deactivate } = useWeb3React();
     const theme = useTheme();
-    const { setShowBackDrop, setShowSnackBar, setErrorMessage } = useContext(WaitEffectContext);
+    const { setShowBackDrop, setShowSnackBar, setErrorMessage } = useContext(EffectContext);
     const { multiLang } = useContext(LanguageContext);
 
     const handleConnectWallet = useCallback(async () => {

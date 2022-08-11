@@ -1,11 +1,11 @@
 import { FC, useCallback, useContext, useEffect, useState } from "react";
-import { Avatar, Box, Grid, List, ListItem, Tooltip, Typography, useMediaQuery } from "@mui/material";
+import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, List, ListItem, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useWeb3React } from "@web3-react/core";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useTheme } from "@mui/material/styles";
 import LanguageContext from "contexts/LanguageContext";
-import WaitEffectContext from "contexts/WaitEffectContext";
+import EffectContext from "contexts/EffectContext";
 import Web3Context from "contexts/Web3Context";
 import NotificationContext from "contexts/NotificationContext";
 
@@ -18,13 +18,14 @@ const HeaderNFTList: FC = () => {
         setErrorMessage,
         setShowConfetti,
         showBackDrop
-    } = useContext(WaitEffectContext);
+    } = useContext(EffectContext);
     const { addNotification } = useContext(NotificationContext);
     const { solved } = useContext(Web3Context);
     const theme = useTheme();
     const showSolved = useMediaQuery("(min-width:940px)");
     const { multiLang } = useContext(LanguageContext);
     const [NFTImgLinks, setNFTImgLinks] = useState<any[]>([]);
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const loadImg = async () => {
@@ -67,14 +68,12 @@ const HeaderNFTList: FC = () => {
             setShowBackDrop(false);
             setSuccessMessage(multiLang?.success.requestNFT);
             setShowSnackBar(1);
+            setDialogOpen(true);
             setShowConfetti(true);
             addNotification({
                 idx: Number(process.env.REACT_APP_CHALLENGE_NUM),
                 date: Date.now(),
             });
-            setTimeout(() => {
-                setShowConfetti(false);
-            }, 30000);
         } catch (err) {
             if (err instanceof AxiosError) {
                 if (err.code === "ERR_BAD_REQUEST") {
@@ -108,7 +107,31 @@ const HeaderNFTList: FC = () => {
     }, [account, multiLang]);
 
     return (
-        <>  
+        <>
+            <Dialog
+                open={dialogOpen}
+                onClose={() => {
+                    setDialogOpen(false);
+                    setShowConfetti(false);
+                }}
+            >
+                <DialogTitle id="dialog-title">
+                    {multiLang?.landing.dialogs[0].title}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="dialog-content">
+                        {multiLang?.landing.dialogs[0].content}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => {
+                        setDialogOpen(false);
+                        setShowConfetti(false);
+                    }}>
+                        {multiLang?.landing.dialogs[0].buttons.submit}
+                    </Button>
+                </DialogActions>
+            </Dialog>
             {
                 showSolved ? (
                     <Grid container justifyContent="center" alignItems="center" spacing={8}>

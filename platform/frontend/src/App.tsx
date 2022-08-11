@@ -1,6 +1,7 @@
 import { FC, useState, useEffect, useCallback, useMemo } from "react";
 import { Box, CssBaseline, useMediaQuery } from "@mui/material";
 import { useRoutes } from "react-router-dom";
+import Confetti from "react-confetti";
 import { styled, useTheme } from "@mui/material/styles";
 import ThemeProvider from "theme/ThemeProvider";
 import routes from "router/Router";
@@ -12,11 +13,12 @@ import { Contract } from "web3-eth-contract"
 
 import contractsInfo from "share/contracts.json";
 
-import WaitEffectContext from "contexts/WaitEffectContext";
+import EffectContext from "contexts/EffectContext";
 import SidebarToggledContext from "contexts/SidebarToggledContext";
 import NotificationContext from "contexts/NotificationContext";
 import Web3Context from "contexts/Web3Context";
 import LanguageContext from "contexts/LanguageContext";
+import useDocumentDimension from "hooks/useDocumentDimension";
 
 /* Types */
 type MessageType = {
@@ -178,6 +180,8 @@ const App: FC = () => {
             setSolved(solvedTmp);
         }
     }, [contracts]);
+    /* Confetti */
+    const { width, height } = useDocumentDimension();
 
     return (
         <ThemeProvider>
@@ -194,7 +198,7 @@ const App: FC = () => {
                             value={{ sidebarToggled, toggleSidebar }}
                         >
                             <CssBaseline />
-                            <WaitEffectContext.Provider
+                            <EffectContext.Provider
                                 value={{
                                     showBackDrop,
                                     showSnackBar,
@@ -208,8 +212,13 @@ const App: FC = () => {
                                     setShowConfetti
                                 }}
                             >
+                                <Confetti
+                                    width={width}
+                                    height={height}
+                                    numberOfPieces={showConfetti ? 400 : 0}
+                                />
                                 <Web3ReactProvider getLibrary={getLibrary}>{router}</Web3ReactProvider>
-                            </WaitEffectContext.Provider>
+                            </EffectContext.Provider>
                         </SidebarToggledContext.Provider>
                     </Web3Context.Provider>
                 </NotificationContext.Provider>
