@@ -1,6 +1,6 @@
 [
     {
-        "addr": "0x8de288ee4EC33b870fA57662018E902fDA081980",
+        "addr": "0x517B092929fA1063A2885B682D2198913E440694",
         "abi": [
             {
                 "inputs": [
@@ -204,7 +204,7 @@
         ]
     },
     {
-        "addr": "0x4063C549fFaB440279C92c797f4FD1C70FFec8Cf",
+        "addr": "0xb17a7E3048334EadB7E0a41E1CCD4C71dE55B85b",
         "abi": [
             {
                 "inputs": [
@@ -382,7 +382,7 @@
         ]
     },
     {
-        "addr": "0x9c57aFBBd2968aBE3e659b92eE15504D58addea2",
+        "addr": "0x731990D7094b36235186d556E772003F3E3e239C",
         "abi": [
             {
                 "inputs": [
@@ -573,7 +573,7 @@
         ]
     },
     {
-        "addr": "0x5C6eb43E91B2a277C575dBaaDcab0c49AEA8A895",
+        "addr": "0xeb1E1FA6Af14E8dF0Ab8fcf08D27BC0557969b55",
         "abi": [
             {
                 "inputs": [
@@ -770,7 +770,7 @@
         ]
     },
     {
-        "addr": "0x17F3c8053C6bDFA7A9D805eCE12748d78F1aAFef",
+        "addr": "0x68aAcC461F11B0185737eFa66287FBaC1Fef889d",
         "abi": [
             {
                 "inputs": [
@@ -942,7 +942,7 @@
         ]
     },
     {
-        "addr": "0xf78b619cb6669F93Dd0A60bD893F6184A75D395B",
+        "addr": "0x30A9468f3ae1B49F5Cd0d79651170D02a8444ABA",
         "abi": [
             {
                 "inputs": [
