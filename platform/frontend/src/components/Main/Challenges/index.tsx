@@ -138,6 +138,16 @@ const Challenge: FC = () => {
                 setSubmitDisabled(false);
             }, 100);
         }
+        return () => {
+            delete window.ethereum;
+            delete window.web3;
+            delete window.player;
+            delete window.contract;
+            delete window.instance;
+            delete window.abi;
+            delete window.help;
+            console.clear();
+        }
     }, [account, challengeId, multiLang]);
 
 
