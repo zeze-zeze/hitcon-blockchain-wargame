@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, List, ListItem, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
+import { Avatar, Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, List, ListItem, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
+import Image from 'material-ui-image';
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useWeb3React } from "@web3-react/core";
 import axios, { AxiosError, AxiosResponse } from "axios";
@@ -190,7 +191,33 @@ const HeaderNFTList: FC = () => {
                         {
                             solved.map((yn: boolean, idx: number) => (
                                 <Grid item xs={1} key={idx}>
-                                    <Tooltip arrow title={multiLang?.challenges.list[idx].title ?? ""}>
+                                    <Tooltip arrow title={
+                                        <Box sx={{
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            width: 224,
+                                            height: 240
+                                        }}>
+                                            <Container sx={{
+                                                my: theme.spacing(2),
+                                            }}>
+                                                <Typography align="center" variant="h4">
+                                                    {multiLang?.challenges.list[idx].title ?? ""}
+                                                </Typography>
+                                            </Container>
+                                            <Container>
+                                                <Image
+                                                    src={NFTImgLinks[idx]}
+                                                    disableSpinner
+                                                    disableTransition
+                                                    imageStyle={{
+                                                        borderRadius: "8px",
+                                                        boxShadow: "0 16px 16px 0 rgba(0,0,0,0.25),0 16px 16px 0 rgba(0,0,0,0.15)"
+                                                    }}
+                                                />
+                                            </Container>
+                                        </Box>
+                                    }>
                                         <Link to={`/challenges/${idx}`}>
                                             <Avatar
                                                 variant="rounded"
@@ -213,6 +240,7 @@ const HeaderNFTList: FC = () => {
                             ))
                         }
 
+                        {/* Show the "Request NFT" button only when the user solved all challenges */}
                         {solved.every((v) => v === true) && (
                             <>
                                 <Grid item lg={3} key={7}>
@@ -283,6 +311,7 @@ const HeaderNFTList: FC = () => {
                             ))
                         }
                         <ListItem>
+                            {/* Show the "Request NFT" button only when the user solved all challenges */}
                             {solved.every((v) => v === true) && (
                                 <Grid item lg={3} key={7}>
                                     <LoadingButton
