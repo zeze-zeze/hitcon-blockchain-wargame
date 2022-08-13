@@ -1,4 +1,4 @@
-import { FC, useCallback, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
 import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, List, ListItem, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useWeb3React } from "@web3-react/core";
@@ -25,10 +25,12 @@ const HeaderNFTList: FC = () => {
     const showSolved = useMediaQuery("(min-width:940px)");
     const { multiLang } = useContext(LanguageContext);
     const [NFTImgLinks, setNFTImgLinks] = useState<any[]>([]);
-    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+    const [token, setToken] = useState<string>("");
+    const [confettiDialogOpen, setConfettiDialogOpen] = useState<boolean>(false);
+    const [tokenDialogOpen, setTokenDialogOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        const loadImg = async () => {
+        (async () => {
             const links = [];
             for (let i = 0; i < Number(process.env.REACT_APP_CHALLENGE_NUM); i++) {
                 const imgPng = await import(`assets/chal${i}.png`);
@@ -36,8 +38,7 @@ const HeaderNFTList: FC = () => {
                 links.push(imgPath);
             }
             setNFTImgLinks(links);
-        };
-        loadImg();
+        })();
     }, []);
 
     const requestNFT = useCallback(async () => {
@@ -61,13 +62,14 @@ const HeaderNFTList: FC = () => {
             await axios
                 .post(apiURL + "/hitcon-nft-sender", {
                     address: account,
+                    token: token
                 }, {
                     withCredentials: true
                 });
             setShowBackDrop(false);
             setSuccessMessage(multiLang?.success.requestNFT);
             setShowSnackBar(1);
-            setDialogOpen(true);
+            setConfettiDialogOpen(true);
             addNotification({
                 idx: Number(process.env.REACT_APP_CHALLENGE_NUM),
                 date: Date.now(),
@@ -82,13 +84,17 @@ const HeaderNFTList: FC = () => {
                     const response: AxiosResponse = err.response as AxiosResponse;
                     if (!response.data.ok) {
                         const errMessage = response.data.message
-                        if (errMessage === "Missing Address or Amount") {
-                            setErrorMessage(multiLang?.error.missingAddressOrAmount);
+                        if (errMessage === "Missing token") {
+                            setErrorMessage(multiLang?.error.missingToken);
+                        } else if (errMessage === "Invalid token") {
+                            setErrorMessage(multiLang?.error.invalidToken);
+                        } else if (errMessage === "Missing address or amount") {
+                            setErrorMessage(multiLang?.error.walletNotLogin);
                         } else if (errMessage === "User unauthorized") {
                             setErrorMessage(multiLang?.error.NFTDenied);
                         } else if (errMessage === "Not all challenges are solved") {
                             setErrorMessage(multiLang?.error.notAllSolved);
-                        } else if (errMessage === "Incorrect Wallet Address") {
+                        } else if (errMessage === "Incorrect wallet address") {
                             setErrorMessage(multiLang?.error.incorrectAddress);
                         } else if (errMessage === "NFT can only be requested once") {
                             setErrorMessage(multiLang?.error.NFTRequestOnce);
@@ -106,31 +112,74 @@ const HeaderNFTList: FC = () => {
             setShowSnackBar(2);
             setShowBackDrop(false);
         }
-    }, [account, multiLang]);
+    }, [multiLang, account, token]);
 
     return (
         <>
+            { /* "login with token" dialog */}
             <Dialog
-                open={dialogOpen}
+                open={tokenDialogOpen}
+                onClose={() => setTokenDialogOpen(false)}
+            >
+                <DialogTitle id="dialog-title">
+                    {multiLang?.landing.dialogs[0].title}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="dialog-content">
+                        {multiLang?.landing.dialogs[0].content}
+                    </DialogContentText>
+                    <Box>
+                        <TextField
+                            required
+                            id="jwt"
+                            placeholder="eyJhbGci..."
+                            value={token}
+                            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                console.log(event.target.value);
+                                console.log(token);
+                                setToken(event.target.value)
+                            }}
+                            fullWidth
+                            sx={{
+                                mt: theme.spacing(2)
+                            }}
+                        />
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setTokenDialogOpen(false)}>
+                        {multiLang?.landing.dialogs[0].buttons.cancel}
+                    </Button>
+                    <Button onClick={() => {
+                        setTokenDialogOpen(false);
+                        requestNFT();
+                    }}>
+                        {multiLang?.landing.dialogs[0].buttons.submit}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            {/* confetti dialog */}
+            <Dialog
+                open={confettiDialogOpen}
                 onClose={() => {
-                    setDialogOpen(false);
+                    setConfettiDialogOpen(false);
                     setShowConfetti(false);
                 }}
             >
                 <DialogTitle id="dialog-title">
-                    {multiLang?.dashboard.header.achievement.dialog.title}
+                    {multiLang?.dashboard.header.achievement.dialogs[1].title}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="dialog-content">
-                        {multiLang?.dashboard.header.achievement.dialog.content}
+                        {multiLang?.dashboard.header.achievement.dialogs[1].content}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => {
-                        setDialogOpen(false);
+                        setConfettiDialogOpen(false);
                         setShowConfetti(false);
                     }}>
-                        {multiLang?.dashboard.header.achievement.dialog.buttons.ok}
+                        {multiLang?.dashboard.header.achievement.dialogs[1].buttons.ok}
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -169,7 +218,7 @@ const HeaderNFTList: FC = () => {
                                     <LoadingButton
                                         variant="contained"
                                         color="error"
-                                        onClick={requestNFT}
+                                        onClick={() => setTokenDialogOpen(true)}
                                         loading={showBackDrop}
                                         loadingIndicator="Requesting..."
                                     >

@@ -89,13 +89,23 @@
             },
             "achievement": {
                 "requestNFT": "Request NFT",
-                "dialog": {
-                    "title": "Congratulations! You have solved all the challenges.",
-                    "content": "Here's your Mainnet NFT.",
-                    "buttons": {
-                        "ok": "OK"
+                "dialogs": [
+                    {
+                        "title": "Please enter your token",
+                        "content": "You must provide your admission JWT token to win the mainnet NFT.",
+                        "buttons": {
+                            "cancel": "Cancel",
+                            "submit": "Submit"
+                        }
+                    },
+                    {
+                        "title": "Congratulations! You have solved all the challenges.",
+                        "content": "Here's your Mainnet NFT.",
+                        "buttons": {
+                            "ok": "OK"
+                        }
                     }
-                }
+                ]
             }
         }
     },
@@ -649,14 +659,15 @@
     "error": {
         "serverError": "Server Error: Please contact the administrator.",
         "unexpectedError": "Unexpected Error: Please contact the developer.",
-        "invalidToken": "Login Error: Invalid token.",
-        "loginPermissionDenied": "Login Error: Your do not have permission to play the wargame.",
-        "invalidLoginType": "Login Error: Invalid login type.",
-        "userUnauthorized": "Authentication Error: You are not authorized to perform such an action. Please login first.",
+        "missingToken": "Error: Please provide your token.",
+        "invalidToken": "Error: Invalid token.",
+        "loginPermissionDenied": "Error: Your do not have permission to play the wargame.",
+        "invalidLoginType": "Error: Invalid login type.",
+        "userUnauthorized": "Error: You are not authorized to perform such an action. Please login first.",
         "sessionExpired": "Session Expired. Redirecting to login page...",
-        "missingAddressOrAmount": "Error: Missing address or amount",
-        "incorrectAddress": "Error: Incorrect wallet address",
-        "alreadyRequested": "Error: You already requested Ether",
+        "walletNotLogin": "Error: Please connect your wallet first.",
+        "incorrectAddress": "Error: Incorrect wallet address.",
+        "alreadyRequested": "Error: You already requested Ether.",
         "connectFirst": "Error: Please connect your wallet first.",
         "alreadySolved": "Error: You have alread solved the challenge.",
         "notSolved": "Error: Unfortunately, you did not solved the challenge.",
@@ -667,6 +678,6 @@
         "NFTFailed": "Error: NFT cannot be transferred. Please contact the administrator.",
         "transactionFailed": "Error: Transaction Failed.",
         "noProvider": "Provider Error: No web3 provider was found.",
-        "authorizeError": "Authorization Error: Please authorize to access your account"
+        "authorizeError": "Authorization Error: Please authorize to access your account."
     }
 }
