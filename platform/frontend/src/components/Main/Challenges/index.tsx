@@ -92,16 +92,25 @@ const Challenge: FC = () => {
             }
         }
         setShowBackDrop(false);
-    }, [active, account, contract]);
+    }, [multiLang, active, account, contract]);
+
+    const handleAlreadySolved = useCallback(() => {
+        if (!active || !account || !contract) {
+            setErrorMessage(multiLang?.error.connectFirst);
+            setShowSnackBar(2);
+            return;
+        }
+        setErrorMessage(multiLang?.error.alreadySolved);
+        setShowSnackBar(2);
+    }, [multiLang, active, account, contract])
 
     useEffect(() => {
-        const fetchChal = async () => {
+        (async () => {
             const chalPath = await import(`challenges/chal${challengeId}.sol`);
             const chalFile = await fetch(chalPath.default);
             const chalSource = await chalFile.text();
             setVuln(chalSource);
-        };
-        fetchChal();
+        })();
     }, [challengeId]);
 
     useEffect(() => {
@@ -129,7 +138,6 @@ const Challenge: FC = () => {
                         "abi": "abi of challenge contract",
                         "help()": "Show this table"
                     };
-
                     console.table(menu);
                 }
                 window.help();
@@ -139,7 +147,6 @@ const Challenge: FC = () => {
             }, 100);
         }
         return () => {
-            delete window.ethereum;
             delete window.web3;
             delete window.player;
             delete window.contract;
@@ -149,7 +156,6 @@ const Challenge: FC = () => {
             console.clear();
         }
     }, [account, challengeId, multiLang]);
-
 
     return (
         <>
@@ -216,9 +222,7 @@ const Challenge: FC = () => {
                                             sx={{ margin: theme.spacing(1) }}
                                         >
                                             {
-                                                solved[challengeId]
-                                                    ? multiLang?.challenges.contract.solvedButtonText
-                                                    : multiLang?.challenges.contract.submitButtonText
+                                                multiLang?.challenges.contract.submitButtonText
                                             }
                                         </Button>
                                     </Container>
