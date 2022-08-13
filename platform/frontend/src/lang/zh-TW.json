@@ -610,7 +610,6 @@
         "contract": {
             "submitText": "提交",
             "submitButtonText": "我解完這題了",
-            "solvedButtonText": "您已經解完這題了",
             "backToChallengeList": "回到挑戰目錄"
         }
     },

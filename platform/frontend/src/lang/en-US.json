@@ -630,7 +630,6 @@
         "contract": {
             "submitText": "Submit",
             "submitButtonText": "I've finished the challenge!",
-            "solvedButtonText": "You've solved the challenge already",
             "backToChallengeList": "Back to challenge list"
         }
     },
