@@ -1,4 +1,4 @@
-import { FC, useRef, useState, useEffect, useCallback, useContext, useMemo } from "react";
+import { FC, useState, useEffect, useCallback, useContext, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
@@ -19,28 +19,21 @@ import { useWeb3React } from '@web3-react/core';
 import EffectContext from "contexts/EffectContext";
 import LanguageContext from "contexts/LanguageContext";
 import info from "share/contracts.json";
+import Web3Context from "contexts/Web3Context";
 
 /* Typescript declaration merging */
 /* https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript */
 declare global {
     interface Window {
-        ethereum: any;
-        web3: Web3;
-        player: string;
-        contract: Contract;
-        instance: string;
-        abi: Array<any>;
-        help: () => void;
+        ethereum?: any;
+        web3?: Web3;
+        player?: string;
+        contract?: Contract;
+        instance?: string;
+        abi?: Array<any>;
+        help?: () => void;
     }
 }
-
-type InfoType = {
-    title: string;
-    description: string;
-    tutorial: string;
-    address: string;
-    abi: Array<any>;
-};
 
 type TutorialType = {
     type: string;
@@ -78,11 +71,12 @@ const Challenge: FC = () => {
     const challengeId = useMemo(() => Number(id), [id]);
     const { active, account } = useWeb3React();
     const { setShowSnackBar, setShowBackDrop, setErrorMessage } = useContext(EffectContext);
+    const { solved } = useContext(Web3Context);
 
     const handleSubmit = useCallback(async () => {
         var style = 'color: tomato; background:#eee; -webkit-text-stroke: 1px black; font-size:30px;';
         console.log('%cCheck solved or not ...', style);
-        
+
         if (!active || !account || !contract) {
             setErrorMessage(multiLang?.error.connectFirst);
             setShowSnackBar(2);
@@ -123,7 +117,7 @@ const Challenge: FC = () => {
                 const web3 = new Web3(Web3.givenProvider);
                 window.web3 = web3;
                 window.instance = info[challengeId].addr;
-                window.abi = info[challengeId].abi; 
+                window.abi = info[challengeId].abi;
                 const contract = new web3.eth.Contract(window.abi, window.instance);
                 window.contract = contract;
                 window.help = () => {
@@ -207,11 +201,15 @@ const Challenge: FC = () => {
                                         <Button
                                             variant="contained"
                                             color="warning"
-                                            disabled={submitDisabled}
+                                            disabled={submitDisabled || solved[challengeId]}
                                             onClick={handleSubmit}
                                             sx={{ margin: theme.spacing(1) }}
                                         >
-                                            {multiLang?.challenges.contract.submitButtonText}
+                                            {
+                                                solved[challengeId]
+                                                    ? multiLang?.challenges.contract.solvedButtonText
+                                                    : multiLang?.challenges.contract.submitButtonText
+                                            }
                                         </Button>
                                     </Container>
                                 </PaperComponentWrapper>

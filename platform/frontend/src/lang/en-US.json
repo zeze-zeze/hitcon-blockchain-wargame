@@ -629,17 +629,9 @@
         "buttonText": "Start Challenge",
         "contract": {
             "submitText": "Submit",
-            "submitButtonText": "I've Finished the level!",
+            "submitButtonText": "I've finished the challenge!",
+            "solvedButtonText": "You've solved the challenge already",
             "backToChallengeList": "Back to challenge list"
-        }
-    },
-    "setting": {
-        "title": "Setting",
-        "subtitle": "Change your profile, language, etc. here",
-        "content": {
-            "language": "Language",
-            "avatar": "Avatar",
-            "reset": "Reset settings to default"
         }
     },
     "success": {
