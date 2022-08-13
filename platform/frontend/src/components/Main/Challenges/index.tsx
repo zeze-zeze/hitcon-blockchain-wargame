@@ -1,5 +1,5 @@
-import { FC, useRef, useState, useEffect, useCallback, useContext } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { FC, useRef, useState, useEffect, useCallback, useContext, useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 import { styled, useTheme } from "@mui/material/styles";
@@ -75,7 +75,7 @@ const Challenge: FC = () => {
     const [vuln, setVuln] = useState<string>("");
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
     const { id } = useParams<string>();
-    const challengeId = useRef<number>(Number(id));
+    const challengeId = useMemo(() => Number(id), [id]);
     const { active, account } = useWeb3React();
     const { setShowSnackBar, setShowBackDrop, setErrorMessage } = useContext(EffectContext);
 
@@ -102,7 +102,7 @@ const Challenge: FC = () => {
 
     useEffect(() => {
         const fetchChal = async () => {
-            const chalPath = await import(`challenges/chal${challengeId.current}.sol`);
+            const chalPath = await import(`challenges/chal${challengeId}.sol`);
             const chalFile = await fetch(chalPath.default);
             const chalSource = await chalFile.text();
             setVuln(chalSource);
@@ -118,12 +118,12 @@ const Challenge: FC = () => {
                 console.log('%cWelcome to HITCON Wargame!', style);
                 var style = 'color: blue; background:#eee; -webkit-text-stroke: 1px black; font-size:10px;';
                 console.log('%cYour address: %s', style, account);
-                console.log('%cContract address: %s', style, info[challengeId.current].addr);
+                console.log('%cContract address: %s', style, info[challengeId].addr);
                 window.player = account;
                 const web3 = new Web3(Web3.givenProvider);
                 window.web3 = web3;
-                window.instance = info[challengeId.current].addr;
-                window.abi = info[challengeId.current].abi; 
+                window.instance = info[challengeId].addr;
+                window.abi = info[challengeId].abi; 
                 const contract = new web3.eth.Contract(window.abi, window.instance);
                 window.contract = contract;
                 window.help = () => {
@@ -151,19 +151,19 @@ const Challenge: FC = () => {
         <>
             {
                 (
-                    Number.isInteger(challengeId.current)
-                    && challengeId.current >= 0
-                    && challengeId.current < Number(process.env.REACT_APP_CHALLENGE_NUM)
+                    Number.isInteger(challengeId)
+                    && challengeId >= 0
+                    && challengeId < Number(process.env.REACT_APP_CHALLENGE_NUM)
                 ) ? (
                     <MainWrapper title="Challenge">
                         <Grid container>
                             <Grid item xs={12}>
                                 <HeaderWrapper>
                                     <HeaderTypography>
-                                        {multiLang?.challenges.list[challengeId.current].title}
+                                        {multiLang?.challenges.list[challengeId].title}
                                     </HeaderTypography>
                                     <SubtitleTypography>
-                                        {multiLang?.challenges.list[challengeId.current].description}
+                                        {multiLang?.challenges.list[challengeId].description}
                                     </SubtitleTypography>
                                 </HeaderWrapper>
                             </Grid>
@@ -171,7 +171,7 @@ const Challenge: FC = () => {
                                 <PaperComponentWrapper>
                                     <Container>
                                         {
-                                            multiLang?.challenges.list[challengeId.current].tutorial
+                                            multiLang?.challenges.list[challengeId].tutorial
                                                 .map((statement: TutorialType[]) => ((
                                                     <SubSubHeaderTypography key={JSON.stringify(statement)}>
                                                         {
@@ -200,7 +200,7 @@ const Challenge: FC = () => {
                                             variant="contained"
                                             color="primary"
                                             onClick={() => { navigate("/challenges")}}
-                                            sx={{ mx: theme.spacing(1) }}
+                                            sx={{ margin: theme.spacing(1) }}
                                         >
                                             {multiLang?.challenges.contract.backToChallengeList}
                                         </Button>
@@ -209,7 +209,7 @@ const Challenge: FC = () => {
                                             color="warning"
                                             disabled={submitDisabled}
                                             onClick={handleSubmit}
-                                            sx={{ mx: theme.spacing(1) }}
+                                            sx={{ margin: theme.spacing(1) }}
                                         >
                                             {multiLang?.challenges.contract.submitButtonText}
                                         </Button>
