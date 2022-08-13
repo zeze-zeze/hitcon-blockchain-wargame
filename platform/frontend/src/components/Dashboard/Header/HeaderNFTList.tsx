@@ -275,7 +275,33 @@ const HeaderNFTList: FC = () => {
                                     <Tooltip
                                         arrow
                                         placement="left"
-                                        title={multiLang?.challenges.list[idx].title ?? ""}
+                                        title={
+                                            <Box sx={{
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                width: 224,
+                                                height: 240
+                                            }}>
+                                                <Container sx={{
+                                                    my: theme.spacing(2),
+                                                }}>
+                                                    <Typography align="center" variant="h4">
+                                                        {multiLang?.challenges.list[idx].title ?? ""}
+                                                    </Typography>
+                                                </Container>
+                                                <Container>
+                                                    <Image
+                                                        src={NFTImgLinks[idx]}
+                                                        disableSpinner
+                                                        disableTransition
+                                                        imageStyle={{
+                                                            borderRadius: "8px",
+                                                            boxShadow: "0 16px 16px 0 rgba(0,0,0,0.25),0 16px 16px 0 rgba(0,0,0,0.15)"
+                                                        }}
+                                                    />
+                                                </Container>
+                                            </Box>
+                                        }
                                     >
                                         <Link to={`/challenges/${idx}`}>
                                             <Avatar
