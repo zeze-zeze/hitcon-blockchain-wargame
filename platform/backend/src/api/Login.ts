@@ -18,7 +18,7 @@ const loginCallback = asyncHandler(async (req: Request, res: Response, next: Nex
             req.session.type = "anonym";
             return res.redirect(config.reactBaseURL);
         }
-        const { token, submit } = req.body;
+        const { token } = req.body;
         const secret = config.jwtSecret;
         const decoded = jwt.verify(token, secret, {
             issuer: "https://hitcon.org",
