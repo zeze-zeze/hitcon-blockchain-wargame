@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import createError from "http-errors";
 import asyncHandler from "express-async-handler";
+import jwt from "jsonwebtoken";
 import { checkAddress } from "../web3/utils";
 import { web3, mainnetWeb3 } from "../web3/index";
 import { AbiItem } from "web3-utils";
@@ -49,7 +50,11 @@ const hitconNFTSenderCallBack = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
       if (!req.body.address) {
-        return next(new BadRequest("Missing Address or Amount"));
+        return next(new BadRequest("Missing address or amount"));
+      }
+
+      if (!req.body.token) {
+        return next(new BadRequest("Missing token"));
       }
 
       // Check whether user have the right to retrieve NFT
@@ -57,16 +62,29 @@ const hitconNFTSenderCallBack = asyncHandler(
         return next(new BadRequest("User unauthorized"));
       }
 
-      const { address } = req.body;
+      const { address, token } = req.body;
 
       if (!checkAddress(address)) {
-        return next(new UnprocessableEntity("Incorrect Wallet Address"));
+        return next(new UnprocessableEntity("Incorrect wallet address"));
+      }
+
+      /* validate token */
+      const secret = config.jwtSecret;
+      const decoded = jwt.verify(token, secret, {
+        issuer: "https://hitcon.org",
+      });
+
+      if (typeof decoded === "string") {
+        return next(new BadRequest("Invalid token"));
+      }
+      if (decoded.scope !== "wargame wargame_premium") {
+        return next(new BadRequest("User unauthorized"));
       }
 
       // Check all challenges solved
       // TODO: shared folder
       const info = JSON.parse(JSON.stringify(contractABI));
-      
+
       const chal0Contract = new web3.eth.Contract(
         info[0]["abi"] as AbiItem[],
         info[0]["addr"]
@@ -127,7 +145,14 @@ const hitconNFTSenderCallBack = asyncHandler(
         address: address,
       });
     } catch (err) {
-      return res.status(500);
+      if (err instanceof Error && (
+        err.name === "TokenExpiredError" ||
+        err.name === "JsonWebTokenError" ||
+        err.name === "NotBeforeError")) {
+        return next(new BadRequest("Invalid token"));
+      } else {
+        return res.status(500);
+      }
     }
   }
 );

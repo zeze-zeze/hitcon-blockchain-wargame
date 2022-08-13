@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
 import createError from "http-errors";
 import asyncHandler from "express-async-handler";
 
@@ -29,11 +28,7 @@ const expiryCallBack = asyncHandler(async (req: Request, res: Response, next: Ne
         
         
     } catch (err) {
-        if (err instanceof Error) {
-            return next(new BadRequest("Invalid Token"));
-        } else {
-            return res.status(500);
-        }
+        return res.status(500);
     }
 });
 

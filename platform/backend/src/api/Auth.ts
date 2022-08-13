@@ -15,10 +15,10 @@ const { BadRequest } = createError;
 const authCallback = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
         if (req.body.type === undefined) {
-            return next(new BadRequest("Missing anonym field"));
+            return next(new BadRequest("Invalid login type"));
         }
-        if (req.body.type === "token" && req.body.token === undefined) {
-            return next(new BadRequest("Missing Token"));
+        if (req.body.type === "token" && !req.body.token) {
+            return next(new BadRequest("Missing token"));
         }
         const { type, token } = req.body;
         if (type === "anonymous") {
@@ -51,7 +51,7 @@ const authCallback = asyncHandler(async (req: Request, res: Response, next: Next
             err.name === "TokenExpiredError" ||
             err.name === "JsonWebTokenError" ||
             err.name === "NotBeforeError")) {
-            return next(new BadRequest("Invalid Token"));
+            return next(new BadRequest("Invalid token"));
         } else {
             return res.status(500);
         }

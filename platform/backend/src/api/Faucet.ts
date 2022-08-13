@@ -37,7 +37,7 @@ const faucetCallBack = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
       if (!req.body.address) {
-        return next(new BadRequest("Missing Address or Amount"));
+        return next(new BadRequest("Missing address or amount"));
       }
       if (!req.session || !req.session.type) {
         return next(new BadRequest("User unauthorized"));
@@ -46,7 +46,7 @@ const faucetCallBack = asyncHandler(
       const { address } = req.body;
 
       if (!checkAddress(address)) {
-        return next(new UnprocessableEntity("Incorrect Wallet Address"));
+        return next(new UnprocessableEntity("Incorrect wallet address"));
       }
 
       await send(address);
