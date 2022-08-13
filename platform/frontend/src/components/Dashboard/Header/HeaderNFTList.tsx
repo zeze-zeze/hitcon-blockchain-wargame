@@ -1,4 +1,5 @@
 import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, List, ListItem, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useWeb3React } from "@web3-react/core";
@@ -190,7 +191,7 @@ const HeaderNFTList: FC = () => {
                             solved.map((yn: boolean, idx: number) => (
                                 <Grid item xs={1} key={idx}>
                                     <Tooltip arrow title={multiLang?.challenges.list[idx].title ?? ""}>
-                                        <a href={`/challenges/${idx}`}>
+                                        <Link to={`/challenges/${idx}`}>
                                             <Avatar
                                                 variant="rounded"
                                                 src={NFTImgLinks[idx]}
@@ -206,7 +207,7 @@ const HeaderNFTList: FC = () => {
                                                     }
                                                 }}
                                             />
-                                        </a>
+                                        </Link>
                                     </Tooltip>
                                 </Grid>
                             ))
@@ -248,7 +249,7 @@ const HeaderNFTList: FC = () => {
                                         placement="left"
                                         title={multiLang?.challenges.list[idx].title ?? ""}
                                     >
-                                        <a href={`/challenges/${idx}`}>
+                                        <Link to={`/challenges/${idx}`}>
                                             <Avatar
                                                 variant="rounded"
                                                 src={NFTImgLinks[idx]}
@@ -264,7 +265,7 @@ const HeaderNFTList: FC = () => {
                                                     }
                                                 }}
                                             />
-                                        </a>
+                                        </Link>
                                     </Tooltip>
                                     <Box sx={{
                                         ml: theme.spacing(2)
