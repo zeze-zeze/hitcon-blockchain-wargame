@@ -160,7 +160,9 @@ const Landing: FC = () => {
                     const response: AxiosResponse = err.response as AxiosResponse;
                     if (!response.data.ok) {
                         const errMessage = response.data.message
-                        if (errMessage === "Invalid Token") {
+                        if (errMessage === "Missing token") {
+                            setErrorMessage(multiLang?.error.missingToken);
+                        } else if (errMessage === "Invalid token") {
                             setErrorMessage(multiLang?.error.invalidToken);
                         } else if (errMessage === "Permission denied") {
                             setErrorMessage(multiLang?.error.loginPermissionDenied);

@@ -70,13 +70,13 @@ const Faucet: FC = () => {
           const response: AxiosResponse = err.response as AxiosResponse;
           if (!response.data.ok) {
             const errMessage = response.data.message;
-            if (errMessage === "Missing Address or Amount") {
-              setErrorMessage(multiLang?.error.missingAddressOrAmount);
+            if (errMessage === "Missing address or amount") {
+              setErrorMessage(multiLang?.error.walletNotLogin);
             } else if (errMessage === "User unauthorized") {
               setErrorMessage(multiLang?.error.userUnauthorized);
             } else if (errMessage === "Already requested Ether") {
               setErrorMessage(multiLang?.error.alreadyRequested);
-            } else if (errMessage === "Incorrect Wallet Address") {
+            } else if (errMessage === "Incorrect wallet address") {
               setErrorMessage(multiLang?.error.incorrectAddress);
             } else {
               setErrorMessage(multiLang?.error.faucetFailed);
