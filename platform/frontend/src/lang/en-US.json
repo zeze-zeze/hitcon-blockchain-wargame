@@ -343,6 +343,8 @@
         }
     },
     "challenges": {
+        "title": "Challenges",
+        "subtitle": "Here's the list of all challenges. Have fun!",
         "list": [
             {
                 "title": "Solidity 101",

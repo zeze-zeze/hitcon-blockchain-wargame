@@ -343,6 +343,8 @@
         }
     },
     "challenges": {
+        "title": "挑戰目錄",
+        "subtitle": "這是所有挑戰的列表。祝您玩得愉快。",
         "list": [
             {
                 "title": "Solidity 101",
