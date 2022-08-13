@@ -89,13 +89,23 @@
             },
             "achievement": {
                 "requestNFT": "取得 NFT",
-                "dialog": {
-                    "title": "恭喜！您完成了所有的挑戰。",
-                    "content": "以下是您的主鏈 NFT。",
-                    "buttons": {
-                        "ok": "了解"
+                "dialogs": [
+                    {
+                        "title": "請輸入您的令牌。",
+                        "content": "您必須提供您的入場 JWT 令牌以取得主鏈 NFT。",
+                        "buttons": {
+                            "cancel": "取消",
+                            "submit": "提交"
+                        }
+                    },
+                    {
+                        "title": "恭喜！您完成了所有的挑戰。",
+                        "content": "以下是您的主鏈 NFT。",
+                        "buttons": {
+                            "ok": "了解"
+                        }
                     }
-                }
+                ]
             }
         }
     },
@@ -632,11 +642,12 @@
         "serverError": "伺服器錯誤：請聯繫系統管理員。",
         "unexpectedError": "非預期錯誤：請聯繫開發者。",
         "invalidToken": "登入錯誤：令牌無效。",
+        "missingToken": "登入錯誤：請提供令牌。",
         "loginPermissionDenied": "登入錯誤：您並沒有權限遊玩 HITCON wargame。",
         "invalidLoginType": "登入錯誤：錯誤的登入方法。",
         "userUnauthorized": "權限錯誤：您沒有足夠的權限。請先登入。",
         "sessionExpired": "Session 已過期。正重新導向至登入頁面…",
-        "missingAddressOrAmount": "錯誤：您未提供位址或金額。",
+        "walletNotLogin": "錯誤：請先登入錢包。",
         "incorrectAddress": "錯誤：乙太坊地址錯誤。",
         "alreadyRequested": "錯誤：您已取得過乙太幣了。",
         "connectFirst": "錯誤：請先連結您的錢包。",
