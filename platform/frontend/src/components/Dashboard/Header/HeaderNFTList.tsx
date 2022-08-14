@@ -94,6 +94,8 @@ const HeaderNFTList: FC = () => {
                             setErrorMessage(multiLang?.error.walletNotLogin);
                         } else if (errMessage === "User unauthorized") {
                             setErrorMessage(multiLang?.error.NFTDenied);
+                        } else if (errMessage === "NFT already required") {
+                            setErrorMessage(multiLang?.error.NFTRequestOnce);
                         } else if (errMessage === "Not all challenges are solved") {
                             setErrorMessage(multiLang?.error.notAllSolved);
                         } else if (errMessage === "Incorrect wallet address") {

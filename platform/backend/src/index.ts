@@ -35,6 +35,11 @@ app.use((err: any, req: any, res: any, next: any) => {
     });
 });
 
+/* Create NFTAcquired.txt if not exist */
+if (!fs.existsSync(config.NFTAcquired)) {
+    fs.writeFileSync(config.NFTAcquired, JSON.stringify([]));
+}
+
 if (process.env.NODE_ENV === "development") {
     /* ssl certificates */
     const server: Server = https.createServer({
