@@ -1,3 +1,4 @@
+import fs from "fs";
 import { Request, Response, NextFunction } from "express";
 import createError from "http-errors";
 import asyncHandler from "express-async-handler";
@@ -64,6 +65,12 @@ const hitconNFTSenderCallBack = asyncHandler(
 
       const { address, token } = req.body;
 
+      /* Check whether the user want to pickup the mainnet NFT twice */
+      const NFTAcquired = JSON.parse(fs.readFileSync(config.NFTAcquired).toString());
+      if (NFTAcquired.includes(token)) {
+        return next(new BadRequest("NFT already required"));
+      }
+
       if (!checkAddress(address)) {
         return next(new UnprocessableEntity("Incorrect wallet address"));
       }
@@ -82,7 +89,6 @@ const hitconNFTSenderCallBack = asyncHandler(
       }
 
       // Check all challenges solved
-      // TODO: shared folder
       const info = JSON.parse(JSON.stringify(contractABI));
 
       const chal0Contract = new web3.eth.Contract(
@@ -140,6 +146,11 @@ const hitconNFTSenderCallBack = asyncHandler(
       if (nft["status"] === "fail") {
         return next(new UnprocessableEntity(nft["msg"]));
       }
+
+      /* Write the pickup record to NFTAcquired.json */
+      NFTAcquired.push(token);
+      fs.writeFileSync(config.NFTAcquired, JSON.stringify(NFTAcquired));
+      
       return res.status(200).json({
         ok: true,
         address: address,
