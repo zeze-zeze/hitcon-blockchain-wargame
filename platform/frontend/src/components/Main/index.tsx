@@ -111,7 +111,7 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
     const navigate = useNavigate();
     const { sidebarToggled } = useContext(SidebarToggledContext);
-    const { contracts, initContracts, initSolvedChallenges } = useContext(Web3Context);
+    const { contracts, initContracts } = useContext(Web3Context);
     const { showConfetti, setShowBackDrop, setErrorMessage, setShowSnackBar } = useContext(EffectContext);
     const { multiLang } = useContext(LanguageContext);
     const { active, account } = useWeb3React();
@@ -129,13 +129,7 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
         if (tried && active && account) {
             initContracts(account);
         }
-    }, [tried, active, account])
-
-    useEffect(() => {
-        if (tried && active && account && contracts.length !== 0) {
-            initSolvedChallenges(account);
-        }
-    }, [tried, active, account, contracts])
+    }, [tried, active, account]);
 
     /* Check whether session expires */
     useEffect(() => {

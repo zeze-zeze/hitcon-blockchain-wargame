@@ -62,7 +62,7 @@ const App: FC = () => {
     const [notification, setNotification] = useState<MessageType[]>();
     const toggleSidebar = useCallback(() => setSidebarToggled(!sidebarToggled), [sidebarToggled]);
     /* Web3 */
-    const [solved, setSolved] = useState<boolean[]>([false, false, false, false, false, false]);
+    const [solved, setSolved] = useState<boolean[]>();
     const [contracts, setContracts] = useState<Contract[]>([]);
     /* Wait Effect */
     const [showBackDrop, setShowBackDrop] = useState<boolean>(false);
@@ -105,6 +105,7 @@ const App: FC = () => {
         if (notificationString === null) {
             setNotification([]);
         } else {
+            /* Prevent localstorage corruption */
             try {
                 const notification = JSON.parse(notificationString);
                 setNotification(notification);
@@ -114,18 +115,68 @@ const App: FC = () => {
             }
         }
     }, []);
+    /* Solved problems */
+    const addSolved = useCallback((idx: number): void => {
+        /* Fix the circling dependency problem by procuring the array from localStorage*/
+        let newSolved: boolean[];
+        const solvedStr = localStorage.getItem("_solved_");
+        if (solvedStr === null) {
+            newSolved = Array(Number(process.env.REACT_APP_CHALLENGE_NUM)).fill(false);
+        } else {
+            /* Prevent localstorage corruption */
+            try {
+                newSolved = JSON.parse(solvedStr);
+            } catch (error) {
+                newSolved = Array(Number(process.env.REACT_APP_CHALLENGE_NUM)).fill(false);
+            }
+        }
+        newSolved[idx] = true;
+        setSolved(newSolved);
+    }, [solved]);
+    useEffect(() => {
+        const solvedStr = localStorage.getItem("_solved_");
+        if (solvedStr === null) {
+            setSolved(Array(Number(process.env.REACT_APP_CHALLENGE_NUM)).fill(false));
+        } else {
+            /* Prevent localstorage corruption */
+            try {
+                const solved = JSON.parse(solvedStr);
+                setSolved(solved);
+            } catch (error) {
+                console.log("Cannot get notification: data corrupted");
+                setSolved(Array(Number(process.env.REACT_APP_CHALLENGE_NUM)).fill(false));
+            }
+        }
+    }, []);
+    useEffect(() => {
+        if (solved) {
+            /* Store notification to local storage whenever `notification' changed */
+            localStorage.setItem("_solved_", JSON.stringify(solved));
+        }
+    }, [solved]);
     /* Contracts */
     const initContracts = useCallback(async (account: string) => {
         if (account) {
             const web3 = new Web3(Web3.givenProvider);
             const challengeNum: number = Number(process.env.REACT_APP_CHALLENGE_NUM);
             const contractsTmp: Contract[] = [];
+            const solvedTmp: boolean[] = [];
             for (let i = 0; i < challengeNum; i++) {
+
                 /* Initialize contract */
                 const contract: Contract = new web3.eth.Contract(
                     contractsInfo[i]["abi"] as AbiItem[],
                     contractsInfo[i]["addr"]
                 );
+
+                await (async () => {
+                    /* Call contract apis to get currently solved challenges */
+                    const tf = await contract.methods
+                        .addressToSolved(account)
+                        .call({ from: account });
+
+                    solvedTmp.push(tf);
+                })();
 
                 /* Add event handlers */
                 contract.events
@@ -147,7 +198,7 @@ const App: FC = () => {
                             idx: i,
                             date: Date.now(),
                         });
-                        setSolved([...solved.slice(0, i), true, ...solved.slice(i + 1)]);
+                        addSolved(i);
                         setTimeout(() => {
                             window.location.href = "/challenges";
                         }, 2000);
@@ -160,26 +211,10 @@ const App: FC = () => {
                 contractsTmp.push(contract);
             }
             setContracts(contractsTmp);
-        }
-    }, [multiLang, notification, solved]);
-    /* Solved challenges */
-    const initSolvedChallenges = useCallback(async (account: string) => {
-        if (contracts && contracts.length !== 0 && account) {
-            const challengeNum: number = Number(process.env.REACT_APP_CHALLENGE_NUM);
-            const solvedTmp: boolean[] = [];
-            for (let i = 0; i < challengeNum; i++) {
-                await (async () => {
-                    /* Call contract apis to get currently solved challenges */
-                    const tf = await contracts[i].methods
-                        .addressToSolved(account)
-                        .call({ from: account });
-
-                    solvedTmp.push(tf);
-                })();
-            }
             setSolved(solvedTmp);
         }
-    }, [contracts]);
+    }, [multiLang, notification]);
+
     /* Confetti */
     const { width, height } = useDocumentDimension();
 
@@ -192,7 +227,11 @@ const App: FC = () => {
                     value={{ notification: notification ?? [], addNotification, deleteNotification }}
                 >
                     <Web3Context.Provider
-                        value={{ contracts, solved, initContracts, initSolvedChallenges }}
+                        value={{ 
+                            contracts,
+                            solved: solved ?? Array(Number(process.env.REACT_APP_CHALLENGE_NUM)).fill(false),
+                            initContracts
+                        }}
                     >
 
                         <CssBaseline />

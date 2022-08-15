@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useCallback, useContext, useMemo } from "react";
+import { FC, useState, useEffect, useCallback, useContext, useMemo, Fragment } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
@@ -182,14 +182,18 @@ const Challenge: FC = () => {
                                     <Container>
                                         {
                                             multiLang?.challenges.list[challengeId].tutorial
-                                                .map((statement: TutorialType[]) => ((
-                                                    <SubSubHeaderTypography key={JSON.stringify(statement)}>
+                                                .map((statement: TutorialType[], cidx: number) => ((
+                                                    <SubSubHeaderTypography key={cidx}>
                                                         {
-                                                            statement.map((component: TutorialType) => {
+                                                            statement.map((component: TutorialType, sidx) => {
                                                                 return component.type === "text" ? (
-                                                                    component.data
+                                                                    <Fragment key={sidx}>
+                                                                        {
+                                                                            component.data
+                                                                        }
+                                                                    </Fragment>
                                                                 ) : (
-                                                                    <code key={component.data}>{component.data}</code>
+                                                                    <code key={sidx}>{component.data}</code>
                                                                 )
                                                             })
                                                         }
