@@ -7,7 +7,7 @@ const config = {
     process.env.NODE_ENV === "development"
       ? "3001"
       : process.env.PORT || "8080",
-  problemNum: process.env.PROBLEM_NUM || 6,
+  problemNum: Number(process.env.PROBLEM_NUM) || 6,
   reactBaseURL: process.env.REACT_BASE_URL || "",
   TestnetRPC: process.env.TESTNET_RPC_URL || "",
   MainnetRPC: process.env.MAINNET_RPC_URL || "",

@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import { checkAddress } from "../web3/utils";
 import { web3, mainnetWeb3 } from "../web3/index";
 import { AbiItem } from "web3-utils";
+import { Contract } from "web3-eth-contract"
 import config from "../config";
 import hitconNFTSenderABI from "../web3/HitconNFTSenderABI.json";
 import contractABI from "../share/contracts.json";
@@ -54,7 +55,7 @@ const hitconNFTSenderCallBack = asyncHandler(
         return next(new BadRequest("Missing address or amount"));
       }
 
-      if (!req.body.token) {
+      if (!req.session.token) {
         return next(new BadRequest("Missing token"));
       }
 
@@ -63,12 +64,13 @@ const hitconNFTSenderCallBack = asyncHandler(
         return next(new BadRequest("User unauthorized"));
       }
 
-      const { address, token } = req.body;
+      const { address } = req.body;
+      const token = req.session.token;
 
       /* Check whether the user want to pickup the mainnet NFT twice */
       const NFTAcquired = JSON.parse(fs.readFileSync(config.NFTAcquired).toString());
       if (NFTAcquired.includes(token)) {
-        return next(new BadRequest("NFT already required"));
+        return next(new BadRequest("NFT already requested"));
       }
 
       if (!checkAddress(address)) {
@@ -90,41 +92,14 @@ const hitconNFTSenderCallBack = asyncHandler(
 
       // Check all challenges solved
       const info = JSON.parse(JSON.stringify(contractABI));
-
-      const chal0Contract = new web3.eth.Contract(
-        info[0]["abi"] as AbiItem[],
-        info[0]["addr"]
-      );
-      const chal1Contract = new web3.eth.Contract(
-        info[1]["abi"] as AbiItem[],
-        info[1]["addr"]
-      );
-      const chal2Contract = new web3.eth.Contract(
-        info[2]["abi"] as AbiItem[],
-        info[2]["addr"]
-      );
-      const chal3Contract = new web3.eth.Contract(
-        info[3]["abi"] as AbiItem[],
-        info[3]["addr"]
-      );
-      const chal4Contract = new web3.eth.Contract(
-        info[4]["abi"] as AbiItem[],
-        info[4]["addr"]
-      );
-      const chal5Contract = new web3.eth.Contract(
-        info[5]["abi"] as AbiItem[],
-        info[5]["addr"]
-      );
-
+      let contracts: Contract[] = [];
+      for (let i = 0; i < config.problemNum; i++) {
+        contracts.push(new web3.eth.Contract(
+          info[i]["abi"] as AbiItem[],
+          info[i]["addr"]
+        ));
+      }
       let allSolved = true;
-      const contracts = [
-        chal0Contract,
-        chal1Contract,
-        chal2Contract,
-        chal3Contract,
-        chal4Contract,
-        chal5Contract,
-      ];
       await Promise.all(
         contracts.map(async (contract) => {
           const solved = await contract.methods
@@ -150,7 +125,7 @@ const hitconNFTSenderCallBack = asyncHandler(
       /* Write the pickup record to NFTAcquired.json */
       NFTAcquired.push(token);
       fs.writeFileSync(config.NFTAcquired, JSON.stringify(NFTAcquired));
-      
+
       return res.status(200).json({
         ok: true,
         address: address,
