@@ -6,7 +6,6 @@ type SolvedChallengesContextType = {
     contracts: Contract[];
     solved: boolean[];
     initContracts: (account: string) => void;
-    initSolvedChallenges: (account: string) => void;
 };
 
 const SidebarToggledContext = createContext<SolvedChallengesContextType>({} as SolvedChallengesContextType);
