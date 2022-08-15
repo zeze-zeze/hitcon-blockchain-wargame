@@ -315,8 +315,8 @@
                         },
                         {
                             "type": "link",
-                            "data": "testnets.opensea.io",
-                            "to": "https://testnets.opensea.io/"
+                            "data": "testnets.opensea.io 個人頁面",
+                            "to": "https://testnets.opensea.io/account"
                         },
                         {
                             "type": "text",
@@ -330,8 +330,8 @@
                         },
                         {
                             "type": "link",
-                            "data": "opensea.io",
-                            "to": "https://opensea.io/"
+                            "data": "opensea.io 個人頁面",
+                            "to": "https://opensea.io/account"
                         },
                         {
                             "type": "text",
