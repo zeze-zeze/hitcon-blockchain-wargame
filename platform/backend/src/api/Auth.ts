@@ -6,12 +6,14 @@ import config from "../config";
 
 declare module "express-session" {
     export interface SessionData {
-        type: string
+        type: string;
+        token?: string;
     }
 }
 
 const { BadRequest } = createError;
 
+/* Login from landing page. User need to enter his/her token manually */
 const authCallback = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
         if (req.body.type === undefined) {
@@ -34,6 +36,7 @@ const authCallback = asyncHandler(async (req: Request, res: Response, next: Next
             if (typeof decoded !== "string") {
                 if (decoded.scope === "wargame wargame_premium") {
                     req.session.type = type;
+                    req.session.token = token;
                     return res.status(200).json({
                         ok: true,
                     });

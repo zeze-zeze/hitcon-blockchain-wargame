@@ -27,9 +27,7 @@ const HeaderNFTList: FC = () => {
     const showSolved = useMediaQuery("(min-width:940px)");
     const { multiLang } = useContext(LanguageContext);
     const [NFTImgLinks, setNFTImgLinks] = useState<any[]>([]);
-    const [token, setToken] = useState<string>("");
     const [confettiDialogOpen, setConfettiDialogOpen] = useState<boolean>(false);
-    const [tokenDialogOpen, setTokenDialogOpen] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -63,8 +61,7 @@ const HeaderNFTList: FC = () => {
         try {
             await axios
                 .post(apiURL + "/hitcon-nft-sender", {
-                    address: account,
-                    token: token
+                    address: account
                 }, {
                     withCredentials: true
                 });
@@ -122,50 +119,10 @@ const HeaderNFTList: FC = () => {
             setShowSnackBar(2);
             setShowBackDrop(false);
         }
-    }, [multiLang, account, token]);
+    }, [multiLang, account]);
 
     return (
         <>
-            { /* "login with token" dialog */}
-            <Dialog
-                open={tokenDialogOpen}
-                onClose={() => setTokenDialogOpen(false)}
-            >
-                <DialogTitle id="dialog-title">
-                    {multiLang?.landing.dialogs[0].title}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="dialog-content">
-                        {multiLang?.landing.dialogs[0].content}
-                    </DialogContentText>
-                    <Box>
-                        <TextField
-                            required
-                            id="jwt"
-                            placeholder="eyJhbGci..."
-                            value={token}
-                            onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                setToken(event.target.value)
-                            }}
-                            fullWidth
-                            sx={{
-                                mt: theme.spacing(2)
-                            }}
-                        />
-                    </Box>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setTokenDialogOpen(false)}>
-                        {multiLang?.landing.dialogs[0].buttons.cancel}
-                    </Button>
-                    <Button onClick={() => {
-                        setTokenDialogOpen(false);
-                        requestNFT();
-                    }}>
-                        {multiLang?.landing.dialogs[0].buttons.submit}
-                    </Button>
-                </DialogActions>
-            </Dialog>
             {/* confetti dialog */}
             <Dialog
                 open={confettiDialogOpen}
@@ -272,7 +229,7 @@ const HeaderNFTList: FC = () => {
                                             <LoadingButton
                                                 variant="contained"
                                                 color="error"
-                                                onClick={() => setTokenDialogOpen(true)}
+                                                onClick={requestNFT}
                                                 loading={showBackDrop}
                                                 loadingIndicator="Requesting..."
                                             >
