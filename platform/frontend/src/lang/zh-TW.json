@@ -89,6 +89,7 @@
             },
             "achievement": {
                 "requestNFT": "取得 NFT",
+                "viewNFT": "查看 NFT",
                 "dialogs": [
                     {
                         "title": "請輸入您的令牌。",
@@ -100,7 +101,7 @@
                     },
                     {
                         "title": "恭喜！您完成了所有的挑戰。",
-                        "content": "以下是您的主鏈 NFT。",
+                        "content": "您的主鏈 NFT 獎品已成功送出。點擊以下連結以查看您的 NFT。",
                         "buttons": {
                             "ok": "了解"
                         }

@@ -77,6 +77,11 @@ const HeaderNFTList: FC = () => {
                 date: Date.now(),
             });
             setShowConfetti(true);
+            /*
+             * Display "Request NFT" button or "View NFT" button
+             * The backend still checks for duplicate requests.
+             */
+            localStorage.setItem("_NFT_requested_", "true");
             setTimeout(() => {
                 setShowConfetti(false);
             }, 15000)
@@ -94,8 +99,9 @@ const HeaderNFTList: FC = () => {
                             setErrorMessage(multiLang?.error.walletNotLogin);
                         } else if (errMessage === "User unauthorized") {
                             setErrorMessage(multiLang?.error.NFTDenied);
-                        } else if (errMessage === "NFT already required") {
+                        } else if (errMessage === "NFT already requested") {
                             setErrorMessage(multiLang?.error.NFTRequestOnce);
+                            localStorage.setItem("_NFTRequested_", "1");
                         } else if (errMessage === "Not all challenges are solved") {
                             setErrorMessage(multiLang?.error.notAllSolved);
                         } else if (errMessage === "Incorrect wallet address") {
@@ -139,8 +145,6 @@ const HeaderNFTList: FC = () => {
                             placeholder="eyJhbGci..."
                             value={token}
                             onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                console.log(event.target.value);
-                                console.log(token);
                                 setToken(event.target.value)
                             }}
                             fullWidth
@@ -176,6 +180,11 @@ const HeaderNFTList: FC = () => {
                 <DialogContent>
                     <DialogContentText id="dialog-content">
                         {multiLang?.dashboard.header.achievement.dialogs[1].content}
+                    </DialogContentText>
+                    <DialogContentText>
+                        <a href="https://opensea.io/account" target="_blank">
+                            https://opensea.io/account
+                        </a>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -245,20 +254,37 @@ const HeaderNFTList: FC = () => {
                         {/* Show the "Request NFT" button only when the user solved all challenges */}
                         {solved.every((v) => v === true) && (
                             <>
-                                <Grid item lg={3} key={7}>
-                                    <LoadingButton
-                                        variant="contained"
-                                        color="error"
-                                        onClick={() => setTokenDialogOpen(true)}
-                                        loading={showBackDrop}
-                                        loadingIndicator="Requesting..."
-                                    >
-                                        {multiLang?.dashboard.header.achievement.requestNFT}
-                                    </LoadingButton>
-                                </Grid>
+                                {
+                                    localStorage.getItem("_NFT_requested_") === "true" ? (
+                                        <Grid item lg={3} key={7}>
+                                            <Button
+                                                variant="contained"
+                                                color="success"
+                                                component="a"
+                                                href="https://opensea.io/account"
+                                                target="_blank"
+                                            >
+                                                {multiLang?.dashboard.header.achievement.viewNFT}
+                                            </Button>
+                                        </Grid>
+                                    ) : (
+                                        <Grid item lg={3} key={7}>
+                                            <LoadingButton
+                                                variant="contained"
+                                                color="error"
+                                                onClick={() => setTokenDialogOpen(true)}
+                                                loading={showBackDrop}
+                                                loadingIndicator="Requesting..."
+                                            >
+                                                {multiLang?.dashboard.header.achievement.requestNFT}
+                                            </LoadingButton>
+                                        </Grid>
+                                    )
+                                }
                             </>
-                        )}
-                    </Grid>
+                        )
+                        }
+                    </Grid >
                 ) : (
                     <List sx={{
                         backgroundColor: theme.colors.alpha.black[100],
