@@ -254,7 +254,6 @@ const HeaderNFTList: FC = () => {
                         {/* Show the "Request NFT" button only when the user solved all challenges */}
                         {solved.every((v) => v === true) && (
                             <>
-<<<<<<< HEAD
                                 {
                                     localStorage.getItem("_NFT_requested_") === "true" ? (
                                         <Grid item lg={3}>
@@ -282,19 +281,6 @@ const HeaderNFTList: FC = () => {
                                         </Grid>
                                     )
                                 }
-=======
-                                <Grid item lg={3}>
-                                    <LoadingButton
-                                        variant="contained"
-                                        color="error"
-                                        onClick={() => setTokenDialogOpen(true)}
-                                        loading={showBackDrop}
-                                        loadingIndicator="Requesting..."
-                                    >
-                                        {multiLang?.dashboard.header.achievement.requestNFT}
-                                    </LoadingButton>
-                                </Grid>
->>>>>>> fc3da17 (Fixed solved challenges)
                             </>
                         )
                         }
