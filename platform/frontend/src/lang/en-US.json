@@ -89,6 +89,7 @@
             },
             "achievement": {
                 "requestNFT": "Request NFT",
+                "viewNFT": "View NFT",
                 "dialogs": [
                     {
                         "title": "Please enter your token",
@@ -100,7 +101,7 @@
                     },
                     {
                         "title": "Congratulations! You have solved all the challenges.",
-                        "content": "Here's your Mainnet NFT.",
+                        "content": "Your mainnet NFT gift has been successfully sent. Click on the link below to view your NFT.",
                         "buttons": {
                             "ok": "OK"
                         }
