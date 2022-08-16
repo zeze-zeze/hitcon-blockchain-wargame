@@ -31,17 +31,17 @@ const loginCallback = asyncHandler(async (req: Request, res: Response, next: Nex
                 req.session.token = token;
                 return res.redirect(config.reactBaseURL + "/home");
             } else {
-                return res.redirect(config.reactBaseURL);
+                return res.redirect(config.HitconLoginPage);
             }
         } else {
-            return res.redirect(config.reactBaseURL);
+            return res.redirect(config.HitconLoginPage);
         }
     } catch (err) {
         if (err instanceof Error && (
             err.name === "TokenExpiredError" ||
             err.name === "JsonWebTokenError" ||
             err.name === "NotBeforeError")) {
-            return res.redirect(config.reactBaseURL);
+            return res.redirect(config.HitconLoginPage);
         } else {
             return res.status(500);
         }
