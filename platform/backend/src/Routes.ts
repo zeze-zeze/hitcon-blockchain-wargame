@@ -30,7 +30,6 @@ router.use(expressSession({
         sameSite: true,
         secure: true,
         httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 12, // half a day
         path: "/"
     }, 
 }));

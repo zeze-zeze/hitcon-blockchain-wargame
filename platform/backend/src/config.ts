@@ -18,7 +18,8 @@ const config = {
   sslPrivKey:
     process.env.SSL_PRIVATE_KEY || path.resolve(__dirname, "../ssl/sample.key"),
   sslCert: process.env.SSL_CERT || path.resolve(__dirname, "../ssl/sample.crt"),
-  NFTAcquired: process.env.NFT_ACQUIRED_FILE || path.resolve(__dirname, "../NFTAcquired.json")
+  NFTAcquired: process.env.NFT_ACQUIRED_FILE || path.resolve(__dirname, "../NFTAcquired.json"),
+  HitconLoginPage: process.env.HITCON_LOGIN_PAGE || "https://hitcon.org/2022/login",
 };
 
 export default config;
