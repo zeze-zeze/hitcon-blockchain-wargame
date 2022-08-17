@@ -9,8 +9,8 @@ contract Test {
     }
 
     // Remember to manually set GasLimit in Metamask
-    // It is suggest to be higher than 300000 if ealy break is applied
-    // It is suggest to be higher than 1000000 if ealy break is not applied
+    // It is suggest to be higher than 300000 if early break is applied
+    // It is suggest to be higher than 1000000 if early break is not applied
     // Be careful for block maximum gas limit
     function hack() public {
         bytes8 key;
