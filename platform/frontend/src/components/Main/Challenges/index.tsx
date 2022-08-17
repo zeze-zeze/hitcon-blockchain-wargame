@@ -38,6 +38,7 @@ declare global {
 type TutorialType = {
     type: string;
     data: string;
+    to: string;
 };
 
 const CopyBlockWrapper = styled(Container)(
@@ -186,14 +187,18 @@ const Challenge: FC = () => {
                                                     <SubSubHeaderTypography key={cidx}>
                                                         {
                                                             statement.map((component: TutorialType, sidx) => {
-                                                                return component.type === "text" ? (
+                                                                if (component.type === "text") return (
                                                                     <Fragment key={sidx}>
                                                                         {
                                                                             component.data
                                                                         }
                                                                     </Fragment>
-                                                                ) : (
+                                                                );
+                                                                else if (component.type === "code") return (
                                                                     <code key={sidx}>{component.data}</code>
+                                                                );
+                                                                else if (component.type === "link") return (
+                                                                    <a target="_blank" href={component.to}>{component.data}</a>
                                                                 )
                                                             })
                                                         }

@@ -338,6 +338,21 @@
                             "type": "text",
                             "data": "."
                         }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "Note that the NFT is hidden by default and you may need to wait some time for mainnet to get the NFT. You can also see the owner of "
+                        },
+                        {
+                            "type": "link",
+                            "data": "HITCON NFT",
+                            "to": "https://opensea.io/assets/ethereum/0xc426b0d03c01e847abaaebd72382d2ec1dfac7a1/1"
+                        },
+                        {
+                            "type": "text",
+                            "data": " and check whether your address is included. If there is any question, please contact the service counter or email to events@hitcon.org."
+                        }
                     ]
                 ]
             }
@@ -599,6 +614,13 @@
                             "type": "text",
                             "data": " ."
                         }
+                    ],
+                    [
+                        {
+                            "type": "link",
+                            "data": "hint for Chal4",
+                            "to": "https://gist.github.com/zeze-zeze/d99a7b80fa5b7e3c35f97919e7dec5f2"
+                        }
                     ]
                 ]
             },
@@ -630,6 +652,13 @@
                         {
                             "type": "text",
                             "data": "About gas fee, we can observe the gas fee by inspecting remix or just try 22 times to bruteforce."
+                        }
+                    ],
+                    [
+                        {
+                            "type": "link",
+                            "data": "hint for Chal5",
+                            "to": "https://gist.github.com/AlbertLin0327/96411634362bf1d5f5aa64897d9a808a"
                         }
                     ]
                 ]

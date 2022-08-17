@@ -327,7 +327,7 @@
                     [
                         {
                             "type": "text",
-                            "data": "在解完所有題目之後，你會取得一個主鏈的 NFT，代表你已經贏下 Wargame 了。你可以查看這個 NFT 在 "
+                            "data": "在解完所有題目之後，你會取得一個主鏈的 NFT，代表你已經贏下 Wargame 了。你可以在 "
                         },
                         {
                             "type": "link",
@@ -336,7 +336,22 @@
                         },
                         {
                             "type": "text",
-                            "data": " 。"
+                            "data": "查看這個 NFT 。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "請注意主鏈的 NFT 預設是隱藏的，並且在按下取得 NFT 按鈕後需要等待一段時間才會拿到。也可以確認 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "HITCON NFT",
+                            "to": "https://opensea.io/assets/ethereum/0xc426b0d03c01e847abaaebd72382d2ec1dfac7a1/1"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 的 owners 看裡面有沒有你的錢包地址。如果對整個過程有任何問題，歡迎到服務台詢問或信箱聯絡 events@hitcon.org 。"
                         }
                     ]
                 ]
@@ -581,6 +596,13 @@
                             "type": "text",
                             "data": " 函數。"
                         }
+                    ],
+                    [
+                        {
+                            "type": "link",
+                            "data": "挑戰 4 提示",
+                            "to": "https://gist.github.com/zeze-zeze/d99a7b80fa5b7e3c35f97919e7dec5f2"
+                        }
                     ]
                 ]
             },
@@ -610,6 +632,13 @@
                         {
                             "type": "text",
                             "data": "關於 gas fee，我們可以透過觀察 remix 來得知或者直接爆破 22 次來滿足條件。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "link",
+                            "data": "挑戰 5 提示",
+                            "to": "https://gist.github.com/AlbertLin0327/96411634362bf1d5f5aa64897d9a808a"
                         }
                     ]
                 ]
