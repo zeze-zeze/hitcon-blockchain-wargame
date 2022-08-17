@@ -12,13 +12,22 @@ import hitconNFTSenderABI from "../web3/HitconNFTSenderABI.json";
 import contractABI from "../share/contracts.json";
 
 const { BadRequest, UnprocessableEntity } = createError;
+
+const waitForSignedTx = (signedTx: string) => {
+  return new Promise((resolve) => {
+    mainnetWeb3.eth.sendSignedTransaction(signedTx)
+      .once('transactionHash', (hash: string) => {
+        resolve(hash)
+      })
+  })
+}
+
 const send = async (address: string) => {
   const HitconNFTSenderABI = JSON.parse(JSON.stringify(hitconNFTSenderABI));
   const hitconNFTSenderContract = new mainnetWeb3.eth.Contract(
     HitconNFTSenderABI["abi"],
     HitconNFTSenderABI["address"]
   );
-
   // Check whether the address had got NFT
   const hadSent = await hitconNFTSenderContract.methods
     .balanceOf(address, 1)
@@ -26,9 +35,8 @@ const send = async (address: string) => {
   if (hadSent !== "0") {
     return { status: "fail", msg: "NFT can only be requested once" };
   }
-
   // Send NFT
-  const transaction = hitconNFTSenderContract.methods.allSolved(address);
+  const transaction = await hitconNFTSenderContract.methods.allSolved(address);
 
   const options = {
     to: HitconNFTSenderABI["address"],
@@ -41,11 +49,8 @@ const send = async (address: string) => {
     options,
     config.PrivateKey
   );
-
-  const receipt = await mainnetWeb3.eth.sendSignedTransaction(
-    String(signed.rawTransaction)
-  );
-  return { status: "success", msg: "NFT sent.", receipt: receipt };
+  const txHash = await waitForSignedTx(String(signed.rawTransaction));
+  return { status: "success", msg: "NFT sent.", txHash: txHash };
 };
 
 const hitconNFTSenderCallBack = asyncHandler(
@@ -70,7 +75,7 @@ const hitconNFTSenderCallBack = asyncHandler(
       /* Check whether the user want to pickup the mainnet NFT twice */
       const NFTAcquired = JSON.parse(fs.readFileSync(config.NFTAcquired).toString());
       if (NFTAcquired.includes(token)) {
-        return next(new BadRequest("NFT already requested"));
+        return next(new BadRequest("NFT can only be requested once"));
       }
 
       if (!checkAddress(address)) {
@@ -129,6 +134,7 @@ const hitconNFTSenderCallBack = asyncHandler(
       return res.status(200).json({
         ok: true,
         address: address,
+        txHash: nft.txHash
       });
     } catch (err) {
       if (err instanceof Error && (

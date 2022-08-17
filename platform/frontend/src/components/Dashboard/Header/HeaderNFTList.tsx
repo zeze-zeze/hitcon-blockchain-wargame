@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, List, ListItem, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import Image from 'material-ui-image';
@@ -10,6 +10,12 @@ import LanguageContext from "contexts/LanguageContext";
 import EffectContext from "contexts/EffectContext";
 import Web3Context from "contexts/Web3Context";
 import NotificationContext from "contexts/NotificationContext";
+
+type NFTResponse = {
+    ok: boolean;
+    address: string;
+    txHash: string;
+};
 
 const HeaderNFTList: FC = () => {
     const { account, active } = useWeb3React();
@@ -28,6 +34,7 @@ const HeaderNFTList: FC = () => {
     const { multiLang } = useContext(LanguageContext);
     const [NFTImgLinks, setNFTImgLinks] = useState<any[]>([]);
     const [confettiDialogOpen, setConfettiDialogOpen] = useState<boolean>(false);
+    const [transactionHash, setTransactionHash] = useState<null | string>(localStorage.getItem("_NFT_requested_"));
 
     useEffect(() => {
         (async () => {
@@ -59,12 +66,15 @@ const HeaderNFTList: FC = () => {
         }
         setShowBackDrop(true);
         try {
-            await axios
+            const result = await axios
                 .post(apiURL + "/hitcon-nft-sender", {
                     address: account
                 }, {
-                    withCredentials: true
+                    withCredentials: true,
+                    timeout: 10 * 60 * 1000
                 });
+            const txHash: string = result.data.txHash;
+            setTransactionHash(txHash);
             setShowBackDrop(false);
             setSuccessMessage(multiLang?.success.requestNFT);
             setShowSnackBar(1);
@@ -78,7 +88,7 @@ const HeaderNFTList: FC = () => {
              * Display "Request NFT" button or "View NFT" button
              * The backend still checks for duplicate requests.
              */
-            localStorage.setItem("_NFT_requested_", "true");
+            localStorage.setItem("_NFT_requested_", txHash);
             setTimeout(() => {
                 setShowConfetti(false);
             }, 15000)
@@ -96,9 +106,6 @@ const HeaderNFTList: FC = () => {
                             setErrorMessage(multiLang?.error.walletNotLogin);
                         } else if (errMessage === "User unauthorized") {
                             setErrorMessage(multiLang?.error.NFTDenied);
-                        } else if (errMessage === "NFT already requested") {
-                            setErrorMessage(multiLang?.error.NFTRequestOnce);
-                            localStorage.setItem("_NFTRequested_", "1");
                         } else if (errMessage === "Not all challenges are solved") {
                             setErrorMessage(multiLang?.error.notAllSolved);
                         } else if (errMessage === "Incorrect wallet address") {
@@ -141,6 +148,14 @@ const HeaderNFTList: FC = () => {
                     <DialogContentText>
                         <a href="https://opensea.io/account" target="_blank">
                             https://opensea.io/account
+                        </a>
+                    </DialogContentText>
+                    <DialogContentText id="dialog-content">
+                        {multiLang?.dashboard.header.achievement.dialogs[1].transaction}
+                    </DialogContentText>
+                    <DialogContentText>
+                        <a href={`https://etherscan.io/tx/${transactionHash}`} target="_blank">
+                            {`https://etherscan.io/tx/${transactionHash}`}
                         </a>
                     </DialogContentText>
                 </DialogContent>
@@ -212,14 +227,12 @@ const HeaderNFTList: FC = () => {
                         {solved.every((v) => v === true) && (
                             <>
                                 {
-                                    localStorage.getItem("_NFT_requested_") === "true" ? (
+                                    transactionHash !== null ? (
                                         <Grid item lg={3}>
                                             <Button
                                                 variant="contained"
                                                 color="success"
-                                                component="a"
-                                                href="https://opensea.io/account"
-                                                target="_blank"
+                                                onClick={() => setConfettiDialogOpen(true)}
                                             >
                                                 {multiLang?.dashboard.header.achievement.viewNFT}
                                             </Button>
@@ -324,17 +337,33 @@ const HeaderNFTList: FC = () => {
                         <ListItem>
                             {/* Show the "Request NFT" button only when the user solved all challenges */}
                             {solved.every((v) => v === true) && (
-                                <Grid item lg={3}>
-                                    <LoadingButton
-                                        variant="contained"
-                                        color="error"
-                                        onClick={requestNFT}
-                                        loading={showBackDrop}
-                                        loadingIndicator="Requesting..."
-                                    >
-                                        {multiLang?.dashboard.header.achievement.requestNFT}
-                                    </LoadingButton>
-                                </Grid>
+                                <>
+                                {
+                                    transactionHash !== null ? (
+                                        <Grid item lg={3}>
+                                            <Button
+                                                variant="contained"
+                                                color="success"
+                                                onClick={() => setConfettiDialogOpen(true)}
+                                            >
+                                                {multiLang?.dashboard.header.achievement.viewNFT}
+                                            </Button>
+                                        </Grid>
+                                    ) : (
+                                        <Grid item lg={3}>
+                                            <LoadingButton
+                                                variant="contained"
+                                                color="error"
+                                                onClick={requestNFT}
+                                                loading={showBackDrop}
+                                                loadingIndicator="Requesting..."
+                                            >
+                                                {multiLang?.dashboard.header.achievement.requestNFT}
+                                            </LoadingButton>
+                                        </Grid>
+                                    )
+                                }
+                            </>
                             )}
                         </ListItem>
                     </List>
