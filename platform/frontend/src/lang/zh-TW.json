@@ -102,6 +102,7 @@
                     {
                         "title": "恭喜！您完成了所有的挑戰。",
                         "content": "您的主鏈 NFT 獎品已成功送出。點擊以下連結以查看您的 NFT。",
+                        "transaction": "在 etherscan 查看您的交易紀錄",
                         "buttons": {
                             "ok": "了解"
                         }
@@ -661,6 +662,7 @@
         "NFTFailed": "錯誤：無法取得 NFT。請聯繫系統管理員。",
         "transactionFailed": "錯誤：交易失敗。",
         "noProvider": "錯誤：您並沒有任何 Web3 provider。",
+        "alreadyProcessing": "Metamask 已經在執行了。請點擊 Metamask 附加元件。",
         "authorizeError": "認證錯誤：請認證以登入錢包。"
     }
 }

@@ -34,6 +34,8 @@ const ConnectButton: FC = () => {
                     setErrorMessage(multiLang?.error.noProvider);
                 } else if (error instanceof UserRejectedRequestErrorInjected) {
                     setErrorMessage(multiLang?.error.authorizeError);
+                } else if (error.message === "Already processing eth_requestAccounts. Please wait.") {
+                    setErrorMessage(multiLang?.error.alreadyProcessing);
                 } else {
                     setErrorMessage(multiLang?.error.unexpectedError);
                 }

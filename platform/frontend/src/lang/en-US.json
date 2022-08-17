@@ -102,6 +102,7 @@
                     {
                         "title": "Congratulations! You have solved all the challenges.",
                         "content": "Your mainnet NFT gift has been successfully sent. Click on the link below to view your NFT.",
+                        "transaction": "View your transaction on etherscan",
                         "buttons": {
                             "ok": "OK"
                         }
@@ -672,6 +673,7 @@
         "NFTFailed": "Error: NFT cannot be transferred. Please contact the administrator.",
         "transactionFailed": "Error: Transaction Failed.",
         "noProvider": "Provider Error: No web3 provider was found.",
+        "alreadyProcessing": "Metamask is already processing. Please click on the Metamask extension",
         "authorizeError": "Authorization Error: Please authorize to access your account."
     }
 }
