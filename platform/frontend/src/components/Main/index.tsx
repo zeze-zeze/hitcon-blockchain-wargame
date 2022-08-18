@@ -161,7 +161,7 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
                     setTimeout(() => {
                         setShowSnackBar(0);
                         setShowBackDrop(false);
-                        navigate("/");
+                        window.location.href = "https://hitcon.org/2022/event";
                     }, 2000);
                 }
             } catch (err) {
@@ -187,7 +187,7 @@ const MainWrapper: FC<MainWrapperProps> = ({ title, children }) => {
                 setTimeout(() => {
                     setShowSnackBar(0);
                     setShowBackDrop(false);
-                    navigate("/");
+                    window.location.href = "https://hitcon.org/2022/event";
                 }, 2000); // set timeout for users to read the message
             }
         };

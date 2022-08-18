@@ -101,8 +101,9 @@ const HeaderUserMenu: FC = () => {
                     <Button
                         color="primary"
                         variant="text"
-                        component={NavLink}
-                        to="/"
+                        onClick={() => {
+                            window.location.href = "https://hitcon.org/2022/event";
+                        }}
                         fullWidth
                     >
                         <LogoutIcon sx={{ mr: 1 }} />

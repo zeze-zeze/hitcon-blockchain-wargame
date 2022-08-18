@@ -121,7 +121,12 @@ const SidebarMenu: FC = () => {
                     </Button>
                 </ListItem>
                 <ListItem>
-                    <Button component={NavLink} startIcon={<LogoutIcon />} to="/" >
+                    <Button
+                        onClick={() => {
+                            window.location.href = "https://hitcon.org/2022/event";
+                        }}
+                        startIcon={<LogoutIcon />}
+                    >
                         {multiLang?.dashboard.sidebar.entries.logout}
                     </Button>
                 </ListItem>
