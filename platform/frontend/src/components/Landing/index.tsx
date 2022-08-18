@@ -190,41 +190,6 @@ const Landing: FC = () => {
                 <title>Hitcon Wargame</title>
             </Helmet>
             <WaitEffect />
-            { /* "login with token" dialog */}
-            <Dialog
-                open={tokenDialogOpen}
-                onClose={() => setTokenDialogOpen(false)}
-            >
-                <DialogTitle id="dialog-title">
-                    {multiLang?.landing.dialogs[0].title}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="dialog-content">
-                        {multiLang?.landing.dialogs[0].content}
-                    </DialogContentText>
-                    <Box>
-                        <TextField
-                            required
-                            id="jwt"
-                            placeholder="eyJhbGci..."
-                            value={token}
-                            onChange={(event: ChangeEvent<HTMLInputElement>) => setToken(event.target.value)}
-                            fullWidth
-                            sx={{
-                                mt: theme.spacing(2)
-                            }}
-                        />
-                    </Box>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setTokenDialogOpen(false)}>
-                        {multiLang?.landing.dialogs[0].buttons.cancel}
-                    </Button>
-                    <Button onClick={() => handleLogin(false)}>
-                        {multiLang?.landing.dialogs[0].buttons.submit}
-                    </Button>
-                </DialogActions>
-            </Dialog>
             { /* "login anonymously" dialog */}
             <Dialog
                 open={anonymDialogOpen}
@@ -279,16 +244,6 @@ const Landing: FC = () => {
                                 </Select>
                             </FormControl>
                             <LandingButtonsWrapper>
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    onClick={() => {
-                                        setTokenDialogOpen(true);
-                                    }}
-                                    sx={{ margin: theme.spacing(3) }}
-                                >
-                                    {multiLang?.landing.buttons[0].text}
-                                </Button>
                                 <Button
                                     color="error"
                                     variant="contained"
