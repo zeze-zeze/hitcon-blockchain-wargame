@@ -30,6 +30,9 @@ const loginCallback = asyncHandler(async (req: Request, res: Response, next: Nex
                 req.session.type = "token";
                 req.session.token = token;
                 return res.redirect(config.reactBaseURL + "/home");
+            } else if (decoded.scope === "wargame wargame_normal") {
+                req.session.type = "anonymous";
+                return res.redirect(config.reactBaseURL);
             } else {
                 return res.redirect(config.HitconLoginPage);
             }
