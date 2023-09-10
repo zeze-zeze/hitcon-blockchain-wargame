@@ -1,0 +1,715 @@
+{
+    "landing": {
+        "title": "HITCON 區塊鏈挑戰",
+        "subtitle": "歡迎來到 HITCON 區塊鏈挑戰",
+        "lang": "語言",
+        "buttons": [
+            {
+                "text": "使用入場券登入"
+            },
+            {
+                "text": "匿名開始挑戰"
+            }
+        ],
+        "dialogs": [
+            {
+                "title": "請輸入您的令牌",
+                "content": "如果您想在解完所有題目後取得 NFT，您必須提供您的入場 JWT 令牌。",
+                "buttons": {
+                    "cancel": "取消",
+                    "submit": "提交"
+                }
+            },
+            {
+                "title": "匿名登入",
+                "content": "如果您匿名登入的話，您將無法在解完所有題目後取得 NFT。",
+                "buttons": {
+                    "cancel": "取消",
+                    "submit": "我知道了"
+                }
+            }
+        ]
+    },
+    "dashboard": {
+        "sidebar": {
+            "iconTitle": "HITCON 區塊鏈挑戰",
+            "subheader": "目錄",
+            "entries": {
+                "home": "首頁",
+                "tutorial": "教學",
+                "faucet": "水龍頭",
+                "challenges": "挑戰",
+                "logout": "登出"
+            }
+        },
+        "header": {
+            "tooltip": {
+                "toggleMenu": "切換目錄",
+                "notification": "通知",
+                "achievement": "成就"
+            },
+            "notification": {
+                "title": "通知",
+                "empty": "暫無",
+                "messages": [
+                    {
+                        "title": "太好了！你完成了挑戰零。",
+                        "content": "你獲得了 NFT0."
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰一。",
+                        "content": "你獲得了 NFT1。"
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰二。",
+                        "content": "你獲得了 NFT2。"
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰三。",
+                        "content": "你獲得了 NFT3。"
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰四。",
+                        "content": "你獲得了 NFT4。"
+                    },
+                    {
+                        "title": "太好了！你完成了挑戰五。",
+                        "content": "你獲得了 NFT5。"
+                    },
+                    {
+                        "title": "太好了！你完成了所有的挑戰。",
+                        "content": "你獲得了 Final NFT。"
+                    }
+                ]
+            },
+            "userMenu": {
+                "connectWallet": "連結錢包",
+                "disconnectWallet": "登出錢包",
+                "logout": "登出"
+            },
+            "achievement": {
+                "requestNFT": "取得 NFT",
+                "viewNFT": "查看 NFT",
+                "dialogs": [
+                    {
+                        "title": "請輸入您的令牌。",
+                        "content": "您必須提供您的入場 JWT 令牌以取得主鏈 NFT。",
+                        "buttons": {
+                            "cancel": "取消",
+                            "submit": "提交"
+                        }
+                    },
+                    {
+                        "title": "恭喜！您完成了所有的挑戰。",
+                        "content": "您的主鏈 NFT 獎品已成功送出。點擊以下連結以查看您的 NFT。",
+                        "transaction": "在 etherscan 查看您的交易紀錄",
+                        "buttons": {
+                            "ok": "了解"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "home": {
+        "title": "HITCON 區塊鏈挑戰",
+        "subtitle": "HITCON 區塊鏈挑戰是一個區塊鏈 CTF，每個挑戰都要透過智能合約的知識來達成通關條件。",
+        "cards": [
+            {
+                "title": "區塊鏈新手嗎？",
+                "buttonText": "前往教學"
+            },
+            {
+                "title": "區塊鏈老手嗎？",
+                "buttonText": "開始挑戰"
+            }
+        ]
+    },
+    "tutorial": {
+        "title": "教學",
+        "subtitle": "此教學將帶領大家學會 Metamask，Solidity 等乙太坊基礎知識",
+        "content": [
+            {
+                "type": "header",
+                "data": "1. 建立 MetaMask"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "如果還沒建立 MetaMask，首先安裝 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "MetaMask 擴充功能",
+                            "to": "https://metamask.io/"
+                        },
+                        {
+                            "type": "text",
+                            "data": "（使用 Chrome、Firefox、Brave 或 Opera 瀏覽器）。在擴充功能中建立一個錢包然後點選擴充功能左上方的「網路」，並選擇「Rinkeby 測試網路」。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "2. 連結錢包"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "建立好 MetaMask 後，你現在應該有個錢包地址。現在點擊右上角的藍色按鈕來連結錢包，之後在這個平台所做的任何區塊鏈交易都會與這個連結的錢包地址相關。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "3. 從水龍頭取得 ETH"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "在挑戰過程中會需要使用到乙太幣與合約交易。不過並不是主鏈的乙太幣，而是使用 Rinkeby 測試鏈，這單純是拿來測試用途的。不需要擔心你使用太多測試鏈乙太幣，因為它們不會花你任何錢。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "打開我們的 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "hitcon 水龍頭",
+                            "to": "faucet"
+                        },
+                        {
+                            "type": "text",
+                            "data": "，然後點選按鈕從水龍頭申請測試鏈乙太幣。如果水龍頭乾枯了，你可以使用按鈕下方連結的其他水龍頭來取得測試鏈乙太幣。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "4. 開啟瀏覽器的 console"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "打開"
+                        },
+                        {
+                            "type": "link",
+                            "data": "挑戰 0",
+                            "to": "challenges/0"
+                        },
+                        {
+                            "type": "text",
+                            "data": "。然後打開瀏覽器的 console："
+                        },
+                        {
+                            "type": "code",
+                            "data": "更多工具 > 開發人員工具"
+                        },
+                        {
+                            "type": "text",
+                            "data": "。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "你應該會看到一些訊息。其中一個就是你目前正在使用的錢包地址。這是挑戰中重要的一項資訊！你將會在解題過程中常常使用到它："
+                        }
+                    ],
+                    [
+                        {
+                            "type": "code",
+                            "data": "player"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "另外如果在挑戰過程中看到一些警告或錯誤，它們會提供你一些解題相關的有用資訊。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "5. 查看挑戰的使用說明"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "code",
+                            "data": "help()"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "忘記一些功能怎麼使用時可以複習一下。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "6. 合約"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "在 console 輸入以下指令："
+                        }
+                    ],
+                    [
+                        {
+                            "type": "code",
+                            "data": "contract"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "這個是連結題目合約的物件。你不需要自己從頭用 web3 連結合約，因為這個平台有幫你完成前置作業，不過你想的話還是可以自己實做，因此可以直接使用這個物件來與合約互動。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "可以展開 console 中顯示的 object 來仔細看一下內容。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "header",
+                "data": "7. 取得 NFT"
+            },
+            {
+                "type": "body",
+                "children": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "當你每解完一題，你會取得一個 NFT 獎勵。要查看 NFT，除了在這個平台上方可以看到的縮圖之外，你還可以從 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "testnets.opensea.io 個人頁面",
+                            "to": "https://testnets.opensea.io/account"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 查看。測試鏈的 NFT 會被顯示在那。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "在解完所有題目之後，你會取得一個主鏈的 NFT，代表你已經贏下 Wargame 了。你可以在 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "opensea.io 個人頁面",
+                            "to": "https://opensea.io/account"
+                        },
+                        {
+                            "type": "text",
+                            "data": "查看這個 NFT 。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "請注意主鏈的 NFT 預設是隱藏的，並且在按下取得 NFT 按鈕後需要等待一段時間才會拿到。也可以確認 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "HITCON NFT",
+                            "to": "https://opensea.io/assets/ethereum/0xc426b0d03c01e847abaaebd72382d2ec1dfac7a1/1"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 的 owners 看裡面有沒有你的錢包地址。如果對整個過程有任何問題，歡迎到服務台詢問或信箱聯絡 events@hitcon.org 。"
+                        }
+                    ]
+                ]
+            }
+        ]
+    },
+    "faucet": {
+        "title": "水龍頭",
+        "subtitle": "取得一些 Rinkeby 測試鏈乙太幣",
+        "content": {
+            "address": "以太幣地址（一個地址只能取得一次）",
+            "amount": "金額",
+            "buttonText": "取得乙太幣",
+            "needMore": "需要更多測試鏈乙太幣嗎？",
+            "walletNotConnected": "未連結錢包"
+        }
+    },
+    "challenges": {
+        "title": "挑戰目錄",
+        "subtitle": "這是所有挑戰的列表。祝您玩得愉快。",
+        "list": [
+            {
+                "title": "Solidity 101",
+                "description": "學習用 web3 呼叫函數",
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "很高興見到你開始了挑戰，我們將要通過第零關。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "首先從下方程式碼可以看到 modifier "
+                        },
+                        {
+                            "type": "code",
+                            "data": "winCondition"
+                        },
+                        {
+                            "type": "text",
+                            "data": "，它就是我們的目標，其中可以看到 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "require"
+                        },
+                        {
+                            "type": "text",
+                            "data": "，必須要滿足裡面的條件。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "使用 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "await contract.methods.<要執行的函數>(函數的參數).send({from:player})"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 可以呼叫目標函數。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "title": "I love hitcon",
+                "description": "學習用 web3 做 encode 與 hash",
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "我們可以使用 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.encodePacked"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 來編碼字串，並用 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.keccak256"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 來做 hash。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "title": "Points",
+                "description": "學習 int 與 unsigned int",
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "目標是達到 10000000000 分，但是我們每次最多只能拿到 10 分。如果我們輸入負的分數會發生什麼事？"
+                        }
+                    ]
+                ]
+            },
+            {
+                "title": "Authentication",
+                "description": "學習讀區塊鏈上的 slot",
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "在區塊鏈上的 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "private"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 變數並不是真的無法讀取。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "我們可以透過 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.eth.getStorageAt(instance, 0)"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 來讀取第一個 slot。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "另外使用 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.toAscii"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 可以把 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "byte32"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 轉成 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "string"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 型別，或是 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "web3.utils.fromAscii"
+                        },
+                        {
+                            "type": "text",
+                            "data": "把字串轉成 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "byte32"
+                        },
+                        {
+                            "type": "text",
+                            "data": "。"
+                        }
+                    ]
+                ]
+            },
+            {
+                "title": "Math Homework",
+                "description": "學習用合約與合約互動",
+                "tutorial": [
+                    [
+                        {
+                            "type": "text",
+                            "data": "使用線上的編輯器 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "Remix",
+                            "to": "https://remix.ethereum.org/"
+                        }, 
+                        {
+                            "type": "text",
+                            "data": " 來實作 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "plus"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 與 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "minus"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 函數在另一個合約中。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "再寫個 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "vuln4"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 的 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "interface"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 呼叫 "
+                        },
+                        {
+                            "type": "code",
+                            "data": "submit"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 函數。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "link",
+                            "data": "挑戰 4 提示",
+                            "to": "https://gist.github.com/zeze-zeze/d99a7b80fa5b7e3c35f97919e7dec5f2"
+                        }
+                    ]
+                ]
+            },
+            {
+                "title": "Final Gates",
+                "description": "學習辨別 msg.sender 和 tx.origin、得知 gasleft 的值、計算 xor",
+                "tutorial": [
+                    [
+                        {
+                            "type": "code",
+                            "data": "msg.sender"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 是直接呼叫合約的對象，即有可能為錢包地址或合約地址；"
+                        },
+                        {
+                            "type": "code",
+                            "data": "tx.origin"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 則是最原始的錢包地址。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "text",
+                            "data": "關於 gas fee，我們可以透過觀察 "
+                        },
+                        {
+                            "type": "link",
+                            "data": "Remix",
+                            "to": "https://remix.ethereum.org/"
+                        },
+                        {
+                            "type": "text",
+                            "data": " 來得知或者直接爆破 22 次來滿足條件。"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "link",
+                            "data": "挑戰 5 提示",
+                            "to": "https://gist.github.com/AlbertLin0327/96411634362bf1d5f5aa64897d9a808a"
+                        }
+                    ]
+                ]
+            }
+        ],
+        "challenge": "挑戰",
+        "solved": "已完成",
+        "notSolved": "未完成",
+        "buttonText": "開始挑戰",
+        "contract": {
+            "submitText": "提交",
+            "submitButtonText": "我解完這題了",
+            "backToChallengeList": "回到挑戰目錄"
+        }
+    },
+    "setting": {
+        "title": "設定",
+        "subtitle": "您可以在此改變您的大頭貼、語言等",
+        "content": {
+            "language": "語言",
+            "avatar": "大頭貼",
+            "reset": "Reset Everything"
+        }
+    },
+    "success": {
+        "login": "登入成功。重新導向…",
+        "requestETH": "成功取得乙太幣",
+        "requestNFT": "成功取得 NFT",
+        "challengeSolved": "太好了！您成功解了這個題目"
+    },
+    "error": {
+        "serverError": "伺服器錯誤：請聯繫系統管理員。",
+        "unexpectedError": "非預期錯誤：請聯繫開發者。",
+        "invalidToken": "登入錯誤：令牌無效。",
+        "missingToken": "登入錯誤：請提供令牌。",
+        "loginPermissionDenied": "登入錯誤：您並沒有權限遊玩 HITCON wargame。",
+        "invalidLoginType": "登入錯誤：錯誤的登入方法。",
+        "userUnauthorized": "權限錯誤：您沒有足夠的權限。請先登入。",
+        "sessionExpired": "Session 已過期。正重新導向至登入頁面…",
+        "walletNotLogin": "錯誤：請先登入錢包。",
+        "incorrectAddress": "錯誤：乙太坊地址錯誤。",
+        "alreadyRequested": "錯誤：您已取得過乙太幣了。",
+        "connectFirst": "錯誤：請先連結您的錢包。",
+        "alreadySolved": "錯誤：您重複解了這個題目。",
+        "notSolved": "錯誤：您並沒有解掉這個題目。",
+        "notAllSolved": "錯誤：您並沒有解掉所有題目。",
+        "NFTDenied": "錯誤：抱歉，您並沒有權限取得 NFT。",
+        "NFTRequestOnce": "錯誤：您只能取得一個 NFT。",
+        "faucetFailed": "錯誤：水龍頭無法運行。請聯繫系統管理員。",
+        "NFTFailed": "錯誤：無法取得 NFT。請聯繫系統管理員。",
+        "transactionFailed": "錯誤：交易失敗。",
+        "noProvider": "錯誤：您並沒有任何 Web3 provider。",
+        "alreadyProcessing": "Metamask 已經在執行了。請點擊 Metamask 附加元件。",
+        "authorizeError": "認證錯誤：請認證以登入錢包。"
+    }
+}

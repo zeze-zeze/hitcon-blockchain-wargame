@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  wargame-nginx:
+    depends_on:
+      - wargame-backend
+    build:
+      dockerfile: Dockerfile
+      context: ../Nginx/
+    container_name: wargame-nginx
+    ports:
+      - 31337:80
+    restart: unless-stopped
+
+  wargame-backend:
+    build:
+      dockerfile: Dockerfile
+      context: ../backend
+    volumes:
+      - ../backend:/app
+    deploy:
+      mode: replicated
+      replicas: 3
+      endpoint_mode: dnsrr
+    restart: unless-stopped
